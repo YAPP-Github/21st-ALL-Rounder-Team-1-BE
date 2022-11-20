@@ -1,0 +1,6 @@
+spring:
+  graphql:
+    graphql:
+      enabled: true         # GraphQL PlayGround Config
+      printer:
+        enabled: true       # Print GraphQL Query
