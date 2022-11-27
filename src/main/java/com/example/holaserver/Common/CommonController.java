@@ -11,4 +11,5 @@ public class CommonController {
     public boolean heartBeat() {
         return true;
     }
+
 }
