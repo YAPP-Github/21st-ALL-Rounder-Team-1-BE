@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommonController {
     @GetMapping("heartbeat")
     public boolean heartBeat() {
-        return true;
+        return false;
     }
-
 }
