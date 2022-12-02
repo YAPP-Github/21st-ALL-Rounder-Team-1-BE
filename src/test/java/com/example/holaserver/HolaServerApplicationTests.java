@@ -8,6 +8,7 @@ class HolaServerApplicationTests {
 
     @Test
     void contextLoads() {
+        return;
     }
 
 }
