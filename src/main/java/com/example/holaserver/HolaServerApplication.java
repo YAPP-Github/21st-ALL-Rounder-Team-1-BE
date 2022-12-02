@@ -2,9 +2,9 @@ package com.example.holaserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
 
-@SpringBootApplication(exclude={DataSourceAutoConfiguration.class}) // db 무시
+@SpringBootApplication
 public class HolaServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(HolaServerApplication.class, args);
