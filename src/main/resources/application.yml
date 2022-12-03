@@ -6,7 +6,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/hola-db
+    url: jdbc:mysql://localhost:3306/hola_db
     username: admin
     password: hola-db-pw
   jpa:
@@ -24,7 +24,7 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
-    url: jdbc:mysql://localhost:3306/hola-db
+    url: jdbc:mysql://localhost:3306/hola_db
     user: admin
     password: hola-db-pw
 
