@@ -2,3 +2,33 @@ server:
   port: 3000
   servlet:
     context-path: /
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hola-db
+    username: admin
+    password: hola-db-pw
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      use-new-id-generator-mappings: false
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    url: jdbc:mysql://localhost:3306/hola-db
+    user: admin
+    password: hola-db-pw
+
+logging:
+  level:
+    org.hibernate:SQL: debug
+    org.hibernate:type: trace

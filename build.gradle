@@ -21,15 +21,21 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.flywaydb:flyway-core'
-    compileOnly 'org.projectlombok:lombok'
+    implementation 'org.flywaydb:flyway-mysql'
+    implementation 'mysql:mysql-connector-java:8.0.29'
+    implementation 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework:spring-webflux'
-    testImplementation 'org.springframework.graphql:spring-graphql-test'
+    testCompileOnly 'org.projectlombok:lombok'
+    implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+jar {
+    enabled = false
 }
+
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}
