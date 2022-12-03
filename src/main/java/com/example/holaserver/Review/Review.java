@@ -2,6 +2,7 @@ package com.example.holaserver.Review;
 
 import com.example.holaserver.Common.BaseTimeEntity;
 import com.example.holaserver.User.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,4 +24,11 @@ public class Review extends BaseTimeEntity {
     private String reviewText;
 
     private Timestamp removedAt;
+
+    @Builder
+    public Review(Long storeId, Long userId, String reviewText){
+        this.storeId = storeId;
+        this.userId = userId;
+        this.reviewText = reviewText;
+    }
 }
