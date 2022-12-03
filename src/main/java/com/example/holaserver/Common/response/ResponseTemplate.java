@@ -1,4 +1,4 @@
-package com.example.holaserver.response;
+package com.example.holaserver.Common.response;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;

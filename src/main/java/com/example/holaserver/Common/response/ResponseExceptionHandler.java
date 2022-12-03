@@ -1,4 +1,4 @@
-package com.example.holaserver.response;
+package com.example.holaserver.Common.response;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
