@@ -3,7 +3,7 @@ services:
   db:
     container_name: hola-local-mysql
     platform: linux/amd64
-    image: mysql:latest
+    image: mysql:8.0
     environment:
       MYSQL_DATABASE: hola-db
       MYSQL_USER: admin
