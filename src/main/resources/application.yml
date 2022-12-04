@@ -4,9 +4,28 @@ server:
     context-path: /
 
 spring:
+  profiles:
+    group:
+      local:
+        - local_docker_mysql
+        - common
+      development:
+        - dev_RDS
+        - common
+      production:
+        - prod_RDS
+        - common
+---
+spring:
   config:
     activate:
-      on-profile: local
+      on-profile: common
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local_docker_mysql
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/hola_db
@@ -23,7 +42,6 @@ spring:
     properties:
       hibernate.format_sql: true
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-
   flyway:
     enabled: true
     baseline-on-migrate: true
@@ -34,60 +52,35 @@ spring:
 spring:
   config:
     activate:
-      on-profile: dev
+      on-profile: dev_RDS
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://hola-database-dev.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db
     username: admin
-    password: hola-db-dev-pw
-  jpa:
-    open-in-view: true
-    hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
-      use-new-id-generator-mappings: false
-    show-sql: true
-    properties:
-      hibernate.format_sql: true
-      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-
+    password: ''
   flyway:
     enabled: true
     baseline-on-migrate: true
     url: jdbc:mysql://hola-database-dev.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db
     user: admin
-    password: hola-db-dev-pw
+    password: ''
 ---
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile: prod_RDS
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/hola_db
+    url: jdbc:mysql://jdbc:mysql://hola-database-prd.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db:3306/hola_db
     username: admin
-    password: hola-db-pw
-  jpa:
-    open-in-view: true
-    hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
-      use-new-id-generator-mappings: false
-    show-sql: true
-    properties:
-      hibernate.format_sql: true
-      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-
+    password: ''
   flyway:
     enabled: true
     baseline-on-migrate: true
-    url: jdbc:mysql://localhost:3306/hola_db
+    url: jdbc:mysql://hola-database-prd.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db
     user: admin
-    password: hola-db-pw
-
-
+    password: ''
+---
 logging:
   level:
     org.hibernate:SQL: debug
