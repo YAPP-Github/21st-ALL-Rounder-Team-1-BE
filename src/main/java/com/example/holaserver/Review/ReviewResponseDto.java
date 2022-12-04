@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public class ReviewResponseDto {
-    private Long userId;
-    private Long storeId;
-    private String reviewText;
+    private final Long userId;
+    private final Long storeId;
+    private final String reviewText;
 
     public ReviewResponseDto(Review entity){
         this.userId = entity.getUserId();
