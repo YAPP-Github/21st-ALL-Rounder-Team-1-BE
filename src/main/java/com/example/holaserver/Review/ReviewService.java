@@ -22,7 +22,6 @@ public class ReviewService {
     public ReviewResponseDto loadReview(Long reviewId){
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new NoSuchElementException());
-        ReviewResponseDto responseDto = new ReviewResponseDto(review);
-        return responseDto;
+        return new ReviewResponseDto(review);
     }
 }
