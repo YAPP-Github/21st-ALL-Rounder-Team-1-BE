@@ -8,7 +8,7 @@ phases:
       - echo START BUILD
       - chmod +x ./gradlew
       - ./gradlew clean build
-      - my build/libs/*.jar app.jar
+      - mv build/libs/*.jar app.jar
   post_build:
     commands:
       - echo START POST_BUILD
