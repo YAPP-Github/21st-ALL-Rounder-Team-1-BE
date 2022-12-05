@@ -13,7 +13,6 @@ phases:
       - echo START POST_BUILD
       - echo $(basename ./build/libs/*.jar)
       - pwd
-
 cache:
   paths:
     - '/root/.gradle/caches/**/*'
