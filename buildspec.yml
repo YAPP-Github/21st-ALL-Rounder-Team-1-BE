@@ -8,11 +8,15 @@ phases:
       - echo START BUILD
       - chmod +x ./gradlew
       - ./gradlew clean build
+      - my build/libs/*.jar app.jar
   post_build:
     commands:
       - echo START POST_BUILD
       - echo $(basename ./build/libs/*.jar)
       - pwd
+artifact:
+  files:
+    - app.jar
 cache:
   paths:
     - '/root/.gradle/caches/**/*'
