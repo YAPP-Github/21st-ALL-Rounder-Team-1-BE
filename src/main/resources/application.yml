@@ -20,17 +20,6 @@ spring:
   config:
     activate:
       on-profile: common
-
----
-spring:
-  config:
-    activate:
-      on-profile: local_docker_mysql
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/hola_db
-    username: admin
-    password: hola-db-pw
   jpa:
     open-in-view: true
     hibernate:
@@ -42,6 +31,17 @@ spring:
     properties:
       hibernate.format_sql: true
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local_docker_mysql
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hola_db
+    username: admin
+    password: hola-db-pw
   flyway:
     enabled: true
     baseline-on-migrate: true

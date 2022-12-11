@@ -32,13 +32,13 @@ dependencies {
     implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
 }
 
-sourceSets {
-    main {
-        resources {
-            srcDirs("src/main/resources", "src/main/resources/secrets")
-        }
-    }
-}
+//sourceSets {
+//    main {
+//        resources {
+//            srcDirs("src/main/resources")
+//        }
+//    }
+//}
 
 jar {
     enabled = false
