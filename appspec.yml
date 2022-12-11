@@ -16,6 +16,6 @@ hooks:
       timeout: 60
       runas: ec2-user
   ValidateService:
-    - location: healthCheck.sh
+    - location: heartBeat.sh
       timeout: 60
       runas: ec2-user
