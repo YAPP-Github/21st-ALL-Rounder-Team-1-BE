@@ -3,11 +3,13 @@ version: 0.2
 phases:
   build:
     commands:
+      - echo [HOLA_SERVER_DEPLOYMENT_SYSTEM]
       - echo Build Starting on `date`
       - chmod +x ./gradlew
       - ./gradlew build
   post_build:
     commands:
+      - echo [HOLA_SERVER_DEPLOYMENT_SYSTEM]
       - echo $(basename ./build/libs/*.jar)
       - pwd
 
@@ -15,6 +17,7 @@ artifacts:
   files:
     - appspec.yml
     - build/libs/*.jar
+    - scripts/**
   discard-paths: yes
 
 cache:

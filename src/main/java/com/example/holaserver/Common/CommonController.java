@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class CommonController {
     @GetMapping("heartbeat")
-    public boolean heartBeat() {
-        return false;
+    public String heartBeat() {
+        return 'OK';
     }
 }
