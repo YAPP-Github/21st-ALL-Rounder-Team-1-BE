@@ -9,7 +9,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class CommonController {
     @GetMapping("heartbeat")
-    public String heartBeat() {
-        return "OK";
-    }
+    public String heartBeat() { return "OK"; }
 }
