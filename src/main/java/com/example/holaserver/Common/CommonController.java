@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommonController {
     @GetMapping("heartbeat")
     public String heartBeat() {
-        return 'OK';
+        return "OK";
     }
 }
