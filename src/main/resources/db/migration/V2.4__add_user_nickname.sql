@@ -1,0 +1,1 @@
+ALTER TABLE User ADD COLUMN `nickname` VARCHAR(30) AFTER name
