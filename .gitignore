@@ -39,4 +39,4 @@ out/
 .vscode/
 
 ### Secret Key ###
-!**/src/main/resources/db/jasypt-encryptor-password.txt
+**/secret/

@@ -49,7 +49,7 @@ spring:
     baseline-on-migrate: true
     url: jdbc:mysql://localhost:3306/hola_db
     user: admin
-    password: ENC(oFRJX8VzezprvyTYHLYDVLCmYWuVGFJw)
+    password: ENC(gDZTvPH7urlB3yp35pHzr/0LkJIe5TyC)
 ---
 spring:
   config:
@@ -59,13 +59,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://hola-database-dev.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db
     username: admin
-    password: ENC(KKjYpSHPkVTD/GYXxIOptJnQ/O6qHIbW)
+    password: ENC(f/w+GUWCYrFzrQCmr9awZZ4EInrNxDpW)
   flyway:
     enabled: true
     baseline-on-migrate: true
     url: jdbc:mysql://hola-database-dev.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db
     user: admin
-    password: ENC(KKjYpSHPkVTD/GYXxIOptJnQ/O6qHIbW)
+    password: ENC(f/w+GUWCYrFzrQCmr9awZZ4EInrNxDpW)
 ---
 spring:
   config:
@@ -75,13 +75,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://jdbc:mysql://hola-database-prd.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db:3306/hola_db
     username: admin
-    password: ''
+    password: ENC(f/w+GUWCYrFzrQCmr9awZZ4EInrNxDpW)
   flyway:
     enabled: true
     baseline-on-migrate: true
     url: jdbc:mysql://hola-database-prd.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db
     user: admin
-    password: ''
+    password: ENC(f/w+GUWCYrFzrQCmr9awZZ4EInrNxDpW)
 ---
 logging:
   level:
