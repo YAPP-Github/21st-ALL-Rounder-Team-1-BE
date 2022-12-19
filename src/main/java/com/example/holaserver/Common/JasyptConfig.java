@@ -14,6 +14,7 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 @Configuration
 @EnableEncryptableProperties
@@ -41,7 +42,7 @@ public class JasyptConfig {
             InputStream inputStream = new ClassPathResource("secret/rds-dev-secret-key.txt").getInputStream();
             File file = File.createTempFile("rds-dev-secret-key",".txt");
             FileUtils.copyInputStreamToFile(inputStream, file);
-            return FileUtils.readFileToString(file);
+            return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
         } catch (IOException e){
             throw new RuntimeException("Not found Jasypt password file.");
         }
