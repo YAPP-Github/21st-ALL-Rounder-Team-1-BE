@@ -39,13 +39,13 @@ spring:
   config:
     activate:
       on-profile: local_docker_mysql
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/hola_db
-#    username: admin
-#    password: hola-db-pw
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hola_db
+    username: admin
+    password: hola-db-pw
   flyway:
-    enabled: false    # 임시
+    enabled: true    # 임시
     baseline-on-migrate: true
     url: jdbc:mysql://localhost:3306/hola_db
     user: admin
