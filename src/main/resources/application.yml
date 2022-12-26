@@ -38,7 +38,7 @@ spring:
         registration:
           kakao:
             client-id: ENC(7RDQutIREzg2KjhNKLL1Rs0t9hhKLb0NTtYmvNCQ0jnTz77At+QUAaevxa7fjTW4)
-            client-secret: 	ENC(hLdaCtaN7omaYTCH137YYqATd1zi8C3mU18GILWYAn+B4Wm2B1D8jbBpllGO2WIr)
+            client-secret: ENC(hLdaCtaN7omaYTCH137YYqATd1zi8C3mU18GILWYAn+B4Wm2B1D8jbBpllGO2WIr)
             scope:
               - profile_nickname
               - account_email
