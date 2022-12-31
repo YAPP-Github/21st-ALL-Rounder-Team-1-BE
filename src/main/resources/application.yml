@@ -31,22 +31,25 @@ spring:
     properties:
       hibernate.format_sql: true
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
 ---
 spring:
   config:
     activate:
       on-profile: local_docker_mysql
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/hola_db
-#    username: admin
-#    password: hola-db-pw
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hola_db
+    username: admin
+    password: hola-db-pw
   flyway:
-    enabled: false    # 임시
+    enabled: true    # 임시
     baseline-on-migrate: true
     url: jdbc:mysql://localhost:3306/hola_db
     user: admin
-    password: hola-db-pw
+    password: ENC(DOsrC3KSq2v+kPkt+mNllsiojS7aOWCu)
 ---
 spring:
   config:
@@ -56,13 +59,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://hola-database-dev.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db
     username: admin
-    password: ''
+    password: ENC(3nZX/W12Sk1jB85jqPIotd2ayIw5yOCx)
   flyway:
     enabled: true
     baseline-on-migrate: true
     url: jdbc:mysql://hola-database-dev.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db
     user: admin
-    password: ''
+    password: ENC(Pcm8kY3Tqz5sNy4ECAzerxYvJaUrN/6Y)
 ---
 spring:
   config:
@@ -72,13 +75,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://jdbc:mysql://hola-database-prd.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db:3306/hola_db
     username: admin
-    password: ''
+    password: ENC(7WUN/qb/1UYvOAtFHuv7iSRRhWGWbfCn)
   flyway:
     enabled: true
     baseline-on-migrate: true
     url: jdbc:mysql://hola-database-prd.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db
     user: admin
-    password: ''
+    password: ENC(7WUN/qb/1UYvOAtFHuv7iSRRhWGWbfCn)
 ---
 logging:
   level:

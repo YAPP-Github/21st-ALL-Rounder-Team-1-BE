@@ -31,6 +31,9 @@ dependencies {
     testImplementation 'org.springframework:spring-webflux'
     testCompileOnly 'org.projectlombok:lombok'
     implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
+    implementation 'junit:junit:4.13.1'
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.6'
 }
 
 //sourceSets {
@@ -46,9 +49,15 @@ jar {
 }
 
 bootRun {
-    String activeProfile = System.properties['spring.profile.active']
+    String activeProfile = System.properties['spring.profiles.active']
     println "PROFILE: $activeProfile"
-    systemProperty "spring.profile.active", activeProfile
+    systemProperty "spring.profiles.active", activeProfile
+}
+
+tasks {
+    processResources {
+        duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
+    }
 }
 
 //tasks.named('test') {

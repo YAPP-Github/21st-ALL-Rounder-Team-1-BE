@@ -1,0 +1,8 @@
+ALTER TABLE `Store` MODIFY COLUMN `is_ready` TINYINT AFTER `registration_number`;
+ALTER TABLE `User` MODIFY COLUMN `email` VARCHAR(45) AFTER `type`;
+ALTER TABLE `User` MODIFY COLUMN `phone_number` VARCHAR(45) AFTER `email`;
+ALTER TABLE `Item` MODIFY COLUMN `is_hided` BOOLEAN AFTER `img_path`;
+ALTER TABLE `Item` MODIFY COLUMN `is_ready` BOOLEAN AFTER `is_hided`;
+ALTER TABLE `Customer_Satisfaction` ADD COLUMN `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL;
+ALTER TABLE `Customer_Satisfaction` ADD COLUMN `modified_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP;
+ALTER TABLE `Customer_Satisfaction` ADD COLUMN `removed_at` TIMESTAMP NULL;
