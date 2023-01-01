@@ -4,6 +4,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
@@ -21,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class JasyptConfig {
     @Bean("jasyptStringEncryptor")
-    public StringEncryptor stringEncryptor() {
+    public StringEncryptor stringEncryptor() throws IOException {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
         config.setPassword(getJasyptEncryptorPassword());
@@ -37,14 +38,16 @@ public class JasyptConfig {
         return encryptor;
     }
 
-    private String getJasyptEncryptorPassword() {
+    private String getJasyptEncryptorPassword() throws IOException {
+        InputStream inputStream = new ClassPathResource("secret/rds-dev-secret-key.txt").getInputStream();
+        File file = File.createTempFile("rds-dev-secret-key",".txt");
         try{
-            InputStream inputStream = new ClassPathResource("secret/rds-dev-secret-key.txt").getInputStream();
-            File file = File.createTempFile("rds-dev-secret-key",".txt");
             FileUtils.copyInputStreamToFile(inputStream, file);
             return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
         } catch (IOException e){
             throw new RuntimeException("Not found Jasypt password file.");
+        } finally {
+            IOUtils.closeQuietly(inputStream);
         }
     }
 }

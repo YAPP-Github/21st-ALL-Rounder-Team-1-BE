@@ -1,0 +1,54 @@
+<configuration scan="true" scanPeriod="30 seconds">
+    <!-- 로그 패턴에 색상 적용 %clr(pattern){color} -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+
+    <!-- log 변수 값 설정 -->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="[%d{yyyy-MM-dd HH:mm:ss}:%-3relative]  %clr(%-5level) %clr(${PID:-}){magenta} %clr(---){faint} %clr([%15.15thread]){faint} %clr(%-40.40logger{36}){cyan} %clr(:){faint} %msg%n"/>
+
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>.\log\logback\logback-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{HH:mm:ss.SSS} [%-5level] - %msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <!-- Loggers -->
+    <!-- <logger name="org.apache.catalina" level="ERROR">
+    </logger>
+
+    <logger name="org.apache.commons" level="ERROR">
+    </logger>
+
+    <logger name="org.springframework" level="DEBUG" >
+    </logger>
+
+    <logger name="egovframework.*" level="DEBUG">
+    </logger>
+
+    <logger name="java.sql" level="DEBUG">
+    </logger>
+
+    <logger name="org.mybatis.spring" level="DEBUG">
+    </logger>
+
+    <logger name="egovframework.sqlmappers" level="TRACE">
+    </logger> -->
+
+    <root level="INFO">
+        <appender-ref ref="ROLLING"/>
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
