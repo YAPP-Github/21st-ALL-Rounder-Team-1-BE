@@ -1,6 +1,3 @@
-rdsKey:
-  - file:///~/secret/rds-dev-secret-key.txt/
-
 server:
   port: 3000
   servlet:
@@ -63,15 +60,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://hola-database-dev.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db
     username: admin
-    password: ${password}
-#    password: ENC(3nZX/W12Sk1jB85jqPIotd2ayIw5yOCx)
+    password: ENC(3nZX/W12Sk1jB85jqPIotd2ayIw5yOCx)
   flyway:
     enabled: true
     baseline-on-migrate: true
     url: jdbc:mysql://hola-database-dev.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db
     user: admin
-    password: ${password}
-#    password: ENC(Pcm8kY3Tqz5sNy4ECAzerxYvJaUrN/6Y)
+    password: ENC(Pcm8kY3Tqz5sNy4ECAzerxYvJaUrN/6Y)
 ---
 spring:
   config:
