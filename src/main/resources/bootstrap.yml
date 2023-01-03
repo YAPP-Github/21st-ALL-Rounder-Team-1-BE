@@ -1,6 +1,6 @@
 aws:
   secretsmanager:
-    name: dev-rds-key
+    name: pump-rds-dev-key
 cloud:
   aws:
     region:
