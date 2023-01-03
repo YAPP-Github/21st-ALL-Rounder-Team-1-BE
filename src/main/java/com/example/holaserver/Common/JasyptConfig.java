@@ -1,6 +1,7 @@
 package com.example.holaserver.Common;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.FileUtils;
