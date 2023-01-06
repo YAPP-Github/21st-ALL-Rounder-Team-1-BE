@@ -40,7 +40,7 @@ public class UserService {
             kakaoUser = User.oauth2Register()
                     .name(kakaoUserInfo.getName())
                     .email(kakaoUserInfo.getEmail())
-                    .type(Type.TYPE_USER)
+                    .type(Type.USER)
                     .oauthIdentity(userId)
                     .oauthType("Kakao")
                     .build();
