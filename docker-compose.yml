@@ -22,10 +22,10 @@ services:
     build: .
     ports:
       - "3000:3000"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/hola_db
-      SPRING_DATASOURCE_USERNAME: "admin"
-      SPRING_DATASOURCE_PASSWORD: "hola-db-pw"
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/hola_db
+#      SPRING_DATASOURCE_USERNAME: admin
+#      SPRING_DATASOURCE_PASSWORD: hola-db-pw
     volumes:
       - ./app:/app
     working_dir: /app

@@ -33,10 +33,15 @@ dependencies {
     implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
     implementation 'junit:junit:4.13.1'
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
-    implementation group: 'commons-io', name: 'commons-io', version: '2.6'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'io.jsonwebtoken:jjwt-api:0.11.1'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.1', 'io.jsonwebtoken:jjwt-jackson:0.11.1'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.7'
+    implementation 'ch.qos.logback:logback-classic:1.2.9'
+    implementation 'ch.qos.logback:logback-core:1.2.9'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.0'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-aws-secrets-manager-config:2.2.6.RELEASE'
+//    implementation 'commons-io:commons-io:2.5'
 }
 
 //sourceSets {
@@ -52,9 +57,9 @@ jar {
 }
 
 bootRun {
-    String activeProfile = System.properties['spring.profile.active']
+    String activeProfile = System.properties['spring.profiles.active']
     println "PROFILE: $activeProfile"
-    systemProperty "spring.profile.active", activeProfile
+    systemProperty "spring.profiles.active", activeProfile
 }
 
 tasks {

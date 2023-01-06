@@ -7,6 +7,7 @@
 ## API Example
 * (Optional)
 # Checklist
+- [ ] 머지 대상 확인
 - [ ] 스키마 업데이트
   - [ ] flyway 테스트 완료
   - [ ] 다이어그램 업데이트 완료
