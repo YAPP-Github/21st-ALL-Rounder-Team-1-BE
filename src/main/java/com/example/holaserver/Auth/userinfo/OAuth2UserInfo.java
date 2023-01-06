@@ -1,4 +1,4 @@
-package com.example.holaserver.Common.auth.userinfo;
+package com.example.holaserver.Auth.userinfo;
 
 import java.util.Map;
 

@@ -15,6 +15,7 @@ spring:
       production:
         - prod_RDS
         - common
+    include: oauth
 ---
 spring:
   config:
@@ -44,7 +45,7 @@ spring:
               - account_email
             client-name: Kakao #꼭 있어야하는건지는 모르겠음
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:3000/login/oauth2/code/kakao
+            redirect-uri: http://localhost:3000/login/oauth/kakao
             client-authentication-method: POST
         provider:
           kakao:
@@ -52,6 +53,13 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
+jwt:
+  token:
+    secret-key: ENC(GxD4/mAC8zzpTpiWJbfhLmi6QAYXOc10pjmOVcMawbcnNnc7ptcKj0C9TAJSZuQXf2ef8C9BCTiFePY9aKy79/T1YwU2vC7gwMQVXJa4CVgzw9cNEtfo2jcHrGMzZli0xZ7vK3ibeTVPon5ZygRkdPwzzrnP+G/qT7fy/sKJ17ie6mBofs8bl/F0sVnuDYct)
+  access-token:
+    expire-length: 1800000
+  refresh-token:
+    expire-length: 1209600000
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor

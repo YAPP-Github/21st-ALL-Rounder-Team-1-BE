@@ -33,7 +33,7 @@ public class User extends BaseTimeEntity {
     private Timestamp removedAt;
 
     @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
-    public User(String name,String email, Type type, String oauthType, String oauthIndentity) {
+    public User(String name, String email, Type type, String oauthType, String oauthIndentity) {
         this.name = name;
         this.email = email;
         this.type = type;
