@@ -35,13 +35,13 @@ public class UserService {
         String userId = Long.toString(kakaoUserInfo.getId());
         User kakaoUser;
         if(findUser(userId, "Kakao")){
-            kakaoUser = userRepository.findByOauthIndentity(userId);
+            kakaoUser = userRepository.findByOauthIdentity(userId);
         } else {
             kakaoUser = User.oauth2Register()
                     .name(kakaoUserInfo.getName())
                     .email(kakaoUserInfo.getEmail())
                     .type(Type.TYPE_USER)
-                    .oauthIndentity(userId)
+                    .oauthIdentity(userId)
                     .oauthType("Kakao")
                     .build();
             userRepository.save(kakaoUser);
@@ -101,7 +101,7 @@ public class UserService {
     }
 
     Boolean findUser (String oauthIdentity, String oauthType) {
-        return userRepository.existsByOauthIndentityAndOauthType(oauthIdentity, oauthType);
+        return userRepository.existsByOauthIdentityAndOauthType(oauthIdentity, oauthType);
     }
 
 }

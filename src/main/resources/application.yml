@@ -26,8 +26,7 @@ spring:
     hibernate:
       ddl-auto: none
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
       use-new-id-generator-mappings: false
     show-sql: true
     properties:
@@ -69,11 +68,11 @@ spring:
   config:
     activate:
       on-profile: local_docker_mysql
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/hola_db
-#    username: admin
-#    password: hola-db-pw
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hola_db
+    username: admin
+    password: hola-db-pw
   flyway:
     enabled: false    # 임시
     baseline-on-migrate: true

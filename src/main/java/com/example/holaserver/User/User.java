@@ -6,7 +6,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity(name="`User`")
+@Entity
+@Table(name="User")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,7 +25,7 @@ public class User extends BaseTimeEntity {
 
     private String oauthType;
 
-    private String oauthIndentity;
+    private String oauthIdentity;
 
     private Byte rating;
 
@@ -33,11 +34,11 @@ public class User extends BaseTimeEntity {
     private Timestamp removedAt;
 
     @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
-    public User(String name, String email, Type type, String oauthType, String oauthIndentity) {
+    public User(String name, String email, Type type, String oauthType, String oauthIdentity) {
         this.name = name;
         this.email = email;
         this.type = type;
         this.oauthType = oauthType;
-        this.oauthIndentity = oauthIndentity;
+        this.oauthIdentity = oauthIdentity;
     }
 }
