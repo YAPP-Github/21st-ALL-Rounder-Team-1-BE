@@ -1,0 +1,7 @@
+#aws:
+#  secretsmanager:
+#    name: pump-rds-dev-key
+#cloud:
+#  aws:
+#    region:
+#      static: ap-northeast-2

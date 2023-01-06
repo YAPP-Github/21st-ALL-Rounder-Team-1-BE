@@ -1,19 +1,27 @@
 package com.example.holaserver.Common;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import org.junit.runner.Request;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.ResourcePatternUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 @Configuration
@@ -21,7 +29,7 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class JasyptConfig {
     @Bean("jasyptStringEncryptor")
-    public StringEncryptor stringEncryptor() {
+    public StringEncryptor stringEncryptor() throws IOException {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
         config.setPassword(getJasyptEncryptorPassword());
@@ -37,14 +45,19 @@ public class JasyptConfig {
         return encryptor;
     }
 
-    private String getJasyptEncryptorPassword() {
+    private String getJasyptEncryptorPassword() throws IOException {
+//        Resource resource = new InputStreamResource(getClass().getResourceAsStream("secret/rds-dev-secret-key.txt"));
+
+        InputStream inputStream = new ClassPathResource("secret/rds-dev-secret-key.txt").getInputStream();
+        File file = File.createTempFile("rds-dev-secret-key",".txt");
         try{
-            InputStream inputStream = new ClassPathResource("secret/rds-dev-secret-key.txt").getInputStream();
-            File file = File.createTempFile("rds-dev-secret-key",".txt");
             FileUtils.copyInputStreamToFile(inputStream, file);
+            System.out.println("T: " + FileUtils.readFileToString(file, StandardCharsets.UTF_8));
             return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
         } catch (IOException e){
             throw new RuntimeException("Not found Jasypt password file.");
+        } finally {
+            IOUtils.closeQuietly(inputStream);
         }
     }
 }

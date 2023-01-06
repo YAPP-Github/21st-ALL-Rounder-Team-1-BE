@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 public class HolaServerApplication {
     public static void main(String[] args) {
+        System.out.println("START PUMP SERVER APPLICATION");
         SpringApplication.run(HolaServerApplication.class, args);
     }
 }

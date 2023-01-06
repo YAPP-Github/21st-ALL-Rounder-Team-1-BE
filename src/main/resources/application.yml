@@ -49,6 +49,7 @@ spring:
     baseline-on-migrate: true
     url: jdbc:mysql://localhost:3306/hola_db
     user: admin
+#    password: hola-db-pw
     password: ENC(DOsrC3KSq2v+kPkt+mNllsiojS7aOWCu)
 ---
 spring:
@@ -87,3 +88,4 @@ logging:
   level:
     org.hibernate:SQL: debug
     org.hibernate:type: trace
+#  config: 'classpath: logback-${spring.profiles.active}.xml'
