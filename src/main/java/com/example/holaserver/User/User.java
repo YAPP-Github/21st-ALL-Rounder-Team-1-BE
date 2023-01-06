@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity
+@Entity(name="`User`")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

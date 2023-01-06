@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity
+@Entity(name="\"Review\"")
 @Getter
 @NoArgsConstructor
 public class Review extends BaseTimeEntity {

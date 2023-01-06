@@ -26,7 +26,8 @@ spring:
     hibernate:
       ddl-auto: none
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
       use-new-id-generator-mappings: false
     show-sql: true
     properties:

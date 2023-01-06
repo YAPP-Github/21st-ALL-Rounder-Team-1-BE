@@ -76,8 +76,6 @@ public class UserService {
         if(result.getBody() == null){
             System.out.println("어디서부터 잘못된걸까..?");
         }
-        System.out.println("Response 확인용 : " +  response.getAccess_token());
-        //System.out.println("Response 확인 22 : " + response.getRefreshToken());
 
         String token = response.getAccess_token();
 
