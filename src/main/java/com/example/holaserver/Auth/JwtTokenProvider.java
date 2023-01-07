@@ -12,14 +12,13 @@ import java.util.Random;
 @Component
 @Slf4j
 public class JwtTokenProvider {
-
     @Value("1800000")
     private Long accessTokenValidityInMilliseconds;
 
     @Value("1209600000")
     private Long refreshTokenValidityInMilliseconds;
 
-    @Value("ENC(GxD4/mAC8zzpTpiWJbfhLmi6QAYXOc10pjmOVcMawbcnNnc7ptcKj0C9TAJSZuQXf2ef8C9BCTiFePY9aKy79/T1YwU2vC7gwMQVXJa4CVgzw9cNEtfo2jcHrGMzZli0xZ7vK3ibeTVPon5ZygRkdPwzzrnP+G/qT7fy/sKJ17ie6mBofs8bl/F0sVnuDYct)")
+    @Value("${JWT_SECRET}")
     private String secretKey;
 
     public String createAccessToken(String payload) {
@@ -36,7 +35,7 @@ public class JwtTokenProvider {
     public String createToken(String payload, long expireLength) {
         Claims claims = Jwts.claims().setSubject(payload);
         Date now = new Date();
-        Date validity = new Date(now.getTime() + expireLength);
+        Date validity = new Date(now.getTime() + accessTokenValidityInMilliseconds);
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)

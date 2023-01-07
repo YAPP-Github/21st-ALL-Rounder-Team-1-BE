@@ -38,15 +38,17 @@ public class UserService {
             kakaoUser = userRepository.findByOauthIdentity(userId);
         } else {
             kakaoUser = User.oauth2Register()
-                    .name(kakaoUserInfo.getName())
-                    .email(kakaoUserInfo.getEmail())
+                    .name(kakaoUserInfo.getKakao_account().getProfile().getNickname())
+                    .email(kakaoUserInfo.getKakao_account().getEmail())
                     .type(Type.USER)
+                    .rating((byte) 1)
+                    .imgPath(kakaoUserInfo.getKakao_account().getProfile().getProfile_image_url())
                     .oauthIdentity(userId)
                     .oauthType("Kakao")
                     .build();
             userRepository.save(kakaoUser);
         }
-        String token = jwtTokenProvider.createToken(accessToken, 120000);
+        String token = jwtTokenProvider.createToken(accessToken, 1800000);
         LoginResponse response = new LoginResponse(kakaoUserInfo.getId(), kakaoUser, token);
         return response;
     }
@@ -73,9 +75,6 @@ public class UserService {
 
         OauthTokenResponse response = result.getBody();
         System.out.println(result.getBody());
-        if(result.getBody() == null){
-            System.out.println("어디서부터 잘못된걸까..?");
-        }
 
         String token = response.getAccess_token();
 
