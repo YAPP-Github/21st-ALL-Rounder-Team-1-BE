@@ -1,5 +1,7 @@
 package com.example.holaserver.User;
 
+import com.example.holaserver.Auth.KaKaoLoginResponse;
+import com.example.holaserver.Auth.OauthService;
 import com.example.holaserver.Common.response.ResponseTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class UserController {
     private final UserService userService;
+    private final OauthService oauthService;
     @GetMapping("/login/oauth/kakao")
-    public ResponseTemplate<LoginResponse> login(@RequestParam String code){
+    public ResponseTemplate<KaKaoLoginResponse> login(@RequestParam String code){
 
-        LoginResponse loginResponse = userService.login(code);
+        KaKaoLoginResponse kaKaoLoginResponse = oauthService.kakaoLogin(code);
 
-        return new ResponseTemplate<>(loginResponse, "로그인 성공");
+        return new ResponseTemplate<>(kaKaoLoginResponse, "로그인 성공");
     }
 
 }

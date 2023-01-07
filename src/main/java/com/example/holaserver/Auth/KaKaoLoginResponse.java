@@ -1,16 +1,17 @@
-package com.example.holaserver.User;
+package com.example.holaserver.Auth;
 
+import com.example.holaserver.User.Type;
+import com.example.holaserver.User.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class LoginResponse {
+public class KaKaoLoginResponse {
     private Long id;
     private String name;
     private String email;
-
     private String imgPath;
     private Type type;
     private String tokenType;
@@ -18,7 +19,7 @@ public class LoginResponse {
     private String refreshToken;
 
     @Builder
-    public LoginResponse(Long id, String name, String email, String imgPath, Type type, String tokenType, String accessToken, String refreshToken) {
+    public KaKaoLoginResponse(Long id, String name, String email, String imgPath, Type type, String tokenType, String accessToken, String refreshToken) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -30,12 +31,11 @@ public class LoginResponse {
     }
 
     @Builder
-    public LoginResponse(Long id, User user, String token){
+    public KaKaoLoginResponse(Long id, User user, String token){
         this.id = id;
         this.name = user.getName();
         this.email = user.getEmail();
         this.imgPath = user.getImgPath();
-        this.type = user.getType();
         this.tokenType = user.getOauthType();
         this.accessToken = token;
     }

@@ -1,4 +1,4 @@
-package com.example.holaserver.User;
+package com.example.holaserver.Auth;
 
 import lombok.Getter;
 
