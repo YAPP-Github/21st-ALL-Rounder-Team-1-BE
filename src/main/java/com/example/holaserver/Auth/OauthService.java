@@ -27,6 +27,9 @@ public class OauthService {
     @Value("${CLIENT_ID}")
     String CLIENT_ID;
 
+    @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
+    String REDIRECT_URI;
+
     public KaKaoLoginResponse kakaoLogin(String code) {
         // 1. "인가 코드"로 "액세스 토큰" 요청
         String accessToken = getAccessToken(code);
@@ -63,7 +66,7 @@ public class OauthService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", CLIENT_ID);
-        body.add("redirect_uri", "http://localhost:3000/api/login/oauth/kakao");
+        body.add("redirect_uri", REDIRECT_URI);
         body.add("code", code);
 
         URI uri = UriComponentsBuilder
