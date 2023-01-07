@@ -1,7 +1,7 @@
 server:
   port: 3000
   servlet:
-    context-path: /
+    context-path: /api
 
 spring:
   profiles:
@@ -15,6 +15,7 @@ spring:
       production:
         - prod_RDS
         - common
+    include: oauth
 ---
 spring:
   config:
@@ -31,6 +32,34 @@ spring:
     properties:
       hibernate.format_sql: true
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+#kakao
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ENC(7RDQutIREzg2KjhNKLL1Rs0t9hhKLb0NTtYmvNCQ0jnTz77At+QUAaevxa7fjTW4)
+            client-secret: ENC(hLdaCtaN7omaYTCH137YYqATd1zi8C3mU18GILWYAn+B4Wm2B1D8jbBpllGO2WIr)
+            scope:
+              - profile_nickname
+              - account_email
+            client-name: Kakao #꼭 있어야하는건지는 모르겠음
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:3000/api/login/oauth/kakao
+            client-authentication-method: POST
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+jwt:
+  token:
+    secret-key: ENC(GxD4/mAC8zzpTpiWJbfhLmi6QAYXOc10pjmOVcMawbcnNnc7ptcKj0C9TAJSZuQXf2ef8C9BCTiFePY9aKy79/T1YwU2vC7gwMQVXJa4CVgzw9cNEtfo2jcHrGMzZli0xZ7vK3ibeTVPon5ZygRkdPwzzrnP+G/qT7fy/sKJ17ie6mBofs8bl/F0sVnuDYct)
+  access-token:
+    expire-length: 1800000
+  refresh-token:
+    expire-length: 1209600000
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor

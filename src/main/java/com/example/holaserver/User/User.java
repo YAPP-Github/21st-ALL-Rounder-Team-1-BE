@@ -1,15 +1,13 @@
 package com.example.holaserver.User;
 
 import com.example.holaserver.Common.BaseTimeEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Table(name="User")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,17 +17,30 @@ public class User extends BaseTimeEntity {
 
     private String name;
 
+    private String email;
+
     @Enumerated(EnumType.STRING)
     @Setter
     private Type type;
 
     private String oauthType;
 
-    private String oauthIndentity;
+    private String oauthIdentity;
 
     private Byte rating;
 
     private String imgPath;
 
     private Timestamp removedAt;
+
+    @Builder
+    public User(String name, String email, Type type, String oauthType, Byte rating, String imgPath, String oauthIdentity) {
+        this.name = name;
+        this.email = email;
+        this.type = type;
+        this.rating = rating;
+        this.imgPath = imgPath;
+        this.oauthType = oauthType;
+        this.oauthIdentity = oauthIdentity;
+    }
 }

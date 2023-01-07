@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/common")
 public class CommonController {
     @GetMapping("heartbeat")
     public String heartBeat() { return "OK"; }
