@@ -54,7 +54,7 @@ jar {
 }
 
 bootRun {
-    String activeProfile = System.properties['spring.profiles.active']
+    String activeProfile = System.properties['--spring.profiles.active']
     println "PROFILE: $activeProfile"
     systemProperty "spring.profiles.active", activeProfile
 }
