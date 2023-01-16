@@ -9,14 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 
 @Getter
 @ToString
 @NoArgsConstructor
 public class PrincipalDetails implements UserDetails {
     private User user;
-    private Map<String, Object> attributes;
 
     public PrincipalDetails(User user) {
         this.user = user;

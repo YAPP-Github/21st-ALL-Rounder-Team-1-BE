@@ -16,10 +16,10 @@ public class PrincipalDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         Long id = Long.parseLong(userId);
-        User byEmail= userRepository.findById(id)
+        User byId= userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("해당 사용자가 존재하지 않습니다. " + userId));
-        if (byEmail != null) {
-            return new PrincipalDetails(byEmail);
+        if (byId != null) {
+            return new PrincipalDetails(byId);
         }
         return null;
     }

@@ -18,11 +18,12 @@ public class UserService {
     private final UserRepository userRepository;
 
     public Long getUserId(){
-        Authentication user = SecurityContextHolder.getContext().getAuthentication();
-
-        PrincipalDetails principalDetails = (PrincipalDetails) user.getPrincipal();
-        Long userId = principalDetails.getUserId();
-        return userId;
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principalDetails instanceof PrincipalDetails){
+            return principalDetails.getUserId();
+        } else {
+            return null;
+        }
     }
 
     public UserInfoResponse loadMyInfo(Long userId){

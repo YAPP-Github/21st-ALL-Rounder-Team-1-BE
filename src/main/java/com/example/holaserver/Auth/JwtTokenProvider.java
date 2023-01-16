@@ -21,7 +21,8 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class JwtTokenProvider {
     private final PrincipalDetailsService principalDetailsService;
-    @Value("1800000")
+
+    @Value("180000000000")
     private Long accessTokenValidityInMilliseconds;
 
     @Value("1209600000")
@@ -29,6 +30,11 @@ public class JwtTokenProvider {
 
     @Value("${JWT_SECRET}")
     private String secretKey;
+
+    private Key getSigninKey() {
+        byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
 
     public String createAccessToken(Long userId) {
         return createToken(userId);
@@ -44,7 +50,6 @@ public class JwtTokenProvider {
      */
 
     public String createToken(Long userId) {
-        Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
         Date now = new Date();
         Claims claims = Jwts.claims()
                 .setSubject("access_token")
@@ -54,7 +59,8 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setClaims(claims)
-                .signWith(key, SignatureAlgorithm.HS256)  .compact();
+                .signWith(getSigninKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
 
     // Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
@@ -65,12 +71,13 @@ public class JwtTokenProvider {
     // 토큰의 유효성 + 만료일자 확인  // -> 토큰이 expire되지 않았는지 True/False로 반환해줌.
     public boolean validateToken(String token) {
         try {
-            Jws<Claims> claimsJws = Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(getSigninKey())
                     .build()
-                    .parseClaimsJws(token);
-            return !claimsJws.getBody().getExpiration().before(new Date());
-        } catch (JwtException | IllegalArgumentException exception) {
+                    .parseClaimsJws(token)
+                    .getBody();
+            return !claims.getExpiration().before(new Date());
+        } catch (Exception e) {
             return false;
         }
     }
@@ -84,7 +91,7 @@ public class JwtTokenProvider {
     public String getPayload(String token){
         try {
             return  (String) Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
+                    .setSigningKey(getSigninKey())
                     .build()
                     .parseClaimsJws(token)
                     .getBody()

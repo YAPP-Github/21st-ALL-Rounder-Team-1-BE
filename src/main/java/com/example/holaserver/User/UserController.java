@@ -33,7 +33,6 @@ public class UserController {
     @GetMapping("/user/myinfo")
     public ResponseTemplate<UserInfoResponse> loadMyinfo() {
         Long userId = userService.getUserId();
-        System.out.println("userId : " + userId);
         UserInfoResponse response = userService.loadMyInfo(userId);
         return new ResponseTemplate<>(response, "마이페이지 정보 로딩 성공");
 
