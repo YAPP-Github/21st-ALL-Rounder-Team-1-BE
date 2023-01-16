@@ -7,13 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 
 @Service
 @Getter
 @RequiredArgsConstructor
-@Slf4j
+@Transactional
 public class UserService {
     private final UserRepository userRepository;
 
@@ -36,5 +37,11 @@ public class UserService {
 
     public Boolean findDuplicated(String nickname){
         return userRepository.existsByNickname(nickname);
+    }
+
+    public User updateBoss(Long userId, BossSaveDto bossSaveDto){
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException());
+        user.saveBoss(bossSaveDto.getName(), bossSaveDto.getEmail(), bossSaveDto.getPhoneNumber());
+        return user;
     }
 }

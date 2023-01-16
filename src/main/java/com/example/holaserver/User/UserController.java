@@ -5,10 +5,7 @@ import com.example.holaserver.Auth.OauthService;
 import com.example.holaserver.Common.response.ResponseTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -35,7 +32,13 @@ public class UserController {
         Long userId = userService.getUserId();
         UserInfoResponse response = userService.loadMyInfo(userId);
         return new ResponseTemplate<>(response, "마이페이지 정보 로딩 성공");
+    }
 
+    @PatchMapping("/user/manager")
+    public ResponseTemplate<User> updateBossInfo(@RequestBody BossSaveDto bossSaveDto){
+        Long userId = userService.getUserId();
+        User response = userService.updateBoss(userId, bossSaveDto);
+        return new ResponseTemplate<>(response, "사장님 정보 입력 성공");
     }
 
 }
