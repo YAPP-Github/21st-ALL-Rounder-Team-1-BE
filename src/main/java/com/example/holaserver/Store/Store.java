@@ -1,8 +1,11 @@
 package com.example.holaserver.Store;
 
-
+import com.example.holaserver.Common.BaseTimeEntity;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,24 +14,61 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
+@Getter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class Store {
+@NoArgsConstructor
+public class Store extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long userId;
     private String name;
+    private String status;
     private String latitude;
     private String longitude;
     private String businessHour;
+    private String notice;
     private String address;
     private String instaAccount;
     private String callNumber;
     private Integer remommendation;
     private String registrationNumber;
+    private Boolean isDayOff;
+    private Boolean isReady;
     private Date createdAt;
     private Date modifiedAt;
     private Date removedAt;
 
-    public Store() {}
+    @Builder
+    public Store(
+            Long userId,
+            String name,
+            String status,
+            String latitude,
+            String longitude,
+            String businessHour,
+            String notice,
+            String address,
+            String instaAccount,
+            String callNumber,
+            Integer remommendation,
+            String registrationNumber,
+            Boolean isDayOff,
+            Boolean isReady
+    ) {
+        this.userId = userId;
+        this.name = name;
+        this.status = status;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.businessHour = businessHour;
+        this.notice = notice;
+        this.address = address;
+        this.instaAccount = instaAccount;
+        this.callNumber = callNumber;
+        this.remommendation = remommendation;
+        this.registrationNumber = registrationNumber;
+        this.isDayOff = isDayOff;
+        this.isReady = isReady;
+    }
 }
