@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Table(name="Review")
 @Getter
 @NoArgsConstructor
 public class Review extends BaseTimeEntity {
