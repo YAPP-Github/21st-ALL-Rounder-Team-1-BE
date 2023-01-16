@@ -17,6 +17,8 @@ public class User extends BaseTimeEntity {
 
     private String name;
 
+    private String nickname;
+
     private String email;
 
     @Enumerated(EnumType.STRING)
