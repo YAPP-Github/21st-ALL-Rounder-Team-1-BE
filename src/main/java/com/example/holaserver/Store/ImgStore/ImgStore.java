@@ -1,4 +1,4 @@
-package com.example.holaserver.Store;
+package com.example.holaserver.Store.ImgStore;
 
 import com.example.holaserver.Common.BaseTimeEntity;
 import lombok.Getter;
@@ -13,13 +13,13 @@ import java.sql.Timestamp;
 @Entity
 @Getter
 @NoArgsConstructor
-public class CategoryStore extends BaseTimeEntity {
+public class ImgStore extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long storeId;
 
-    private String categoryText;
+    private String path;
 
     private Timestamp removedAt;
 }

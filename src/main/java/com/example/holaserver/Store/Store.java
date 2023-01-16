@@ -29,6 +29,7 @@ public class Store extends BaseTimeEntity {
     private String businessHour;
     private String notice;
     private String address;
+    private String[] imgPath;
     private String instaAccount;
     private String callNumber;
     private Integer remommendation;
@@ -49,9 +50,9 @@ public class Store extends BaseTimeEntity {
             String businessHour,
             String notice,
             String address,
+            String[] imgPath,
             String instaAccount,
             String callNumber,
-            Integer remommendation,
             String registrationNumber,
             Boolean isDayOff,
             Boolean isReady
@@ -64,9 +65,9 @@ public class Store extends BaseTimeEntity {
         this.businessHour = businessHour;
         this.notice = notice;
         this.address = address;
+        this.imgPath = imgPath;
         this.instaAccount = instaAccount;
         this.callNumber = callNumber;
-        this.remommendation = remommendation;
         this.registrationNumber = registrationNumber;
         this.isDayOff = isDayOff;
         this.isReady = isReady;
