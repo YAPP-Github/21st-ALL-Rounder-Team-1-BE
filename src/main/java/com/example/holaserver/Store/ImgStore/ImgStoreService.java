@@ -14,9 +14,11 @@ public class ImgStoreService {
     private final ImgStoreRepository imgStoreRepository;
 
     @Transactional
-    public List<Long> saveImgStore(Long storeId, String pathsData) {
+    public List<Long> saveImgStore(Long storeId, String pathDatas) {
         List<Long> imgStoreIds = new ArrayList<Long>();
-        for (String path : pathsData.split(",")) {
+        pathDatas = pathDatas.replace("[", "");
+        pathDatas = pathDatas.replace("]", "");
+        for (String path : pathDatas.split(",")) {
             ImgStore imgStore = this.createSaveImgStoreBuilder(new SaveImgStoreDto(storeId, path));
             imgStoreIds.add(this.imgStoreRepository.save(imgStore).getId());
         }

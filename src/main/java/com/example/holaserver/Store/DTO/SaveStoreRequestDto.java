@@ -33,7 +33,6 @@ public class SaveStoreRequestDto {
                 .businessHour(businessHour)
                 .notice(notice)
                 .address(address)
-                .imgPath(imgPath)
                 .instaAccount(instaAccount)
                 .callNumber(callNumber)
                 .registrationNumber(registrationNumber)
