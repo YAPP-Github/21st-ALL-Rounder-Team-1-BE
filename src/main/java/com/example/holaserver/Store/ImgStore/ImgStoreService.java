@@ -1,12 +1,32 @@
 package com.example.holaserver.Store.ImgStore;
 
 import com.example.holaserver.Store.ImgStore.DTO.SaveImgStoreDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
 public class ImgStoreService {
-    public Long saveImgStore(SaveImgStoreDto saveImgStoreDto) {
+    private final ImgStoreRepository imgStoreRepository;
 
-
+    @Transactional
+    public List<Long> saveImgStore(Long storeId, String pathsData) {
+        List<Long> imgStoreIds = new ArrayList<Long>();
+        for (String path : pathsData.split(",")) {
+            ImgStore imgStore = this.createSaveImgStoreBuilder(new SaveImgStoreDto(storeId, path));
+            imgStoreIds.add(this.imgStoreRepository.save(imgStore).getId());
+        }
+        return imgStoreIds;
     }
 
-
+    public ImgStore createSaveImgStoreBuilder(SaveImgStoreDto imgStoreDto) {
+        return ImgStore.builder()
+                .storeId(imgStoreDto.getStoreId())
+                .path(imgStoreDto.getPath())
+                .build();
+    }
 }
