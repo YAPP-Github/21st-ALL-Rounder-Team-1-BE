@@ -1,6 +1,7 @@
 package com.example.holaserver.Store;
 
 import com.example.holaserver.Store.DTO.SaveStoreRequestDto;
+import com.example.holaserver.Store.ImgStore.DTO.SaveImgStoreDto;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,9 @@ public class StoreService {
 
     public Long saveStore(SaveStoreRequestDto storeDto) {
         Store store = this.makeSaveStoreBuilder(storeDto);
-
-
-        return storeRepository.save(store).getId();
+        Long storeId = storeRepository.save(store).getId();
+        this.imgStoreService.saveImgStore(new SaveImgStoreDto(storeId, storeDto.getImgPath()));
+        return storeId;
     }
 
     private Store makeSaveStoreBuilder(SaveStoreRequestDto storeDto) {

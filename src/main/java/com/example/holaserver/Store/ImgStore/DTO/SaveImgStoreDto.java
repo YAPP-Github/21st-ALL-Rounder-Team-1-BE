@@ -1,19 +1,16 @@
 package com.example.holaserver.Store.ImgStore.DTO;
 
 import com.example.holaserver.Store.ImgStore.ImgStore;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SaveImgStoreDto {
     private Long storeId;
     private String path;
-    private Date removed_at;
 
     @Builder
     public ImgStore toEntity() {
