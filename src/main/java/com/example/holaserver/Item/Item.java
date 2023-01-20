@@ -1,7 +1,8 @@
 package com.example.holaserver.Item;
 
 import com.example.holaserver.Common.BaseTimeEntity;
-import com.example.holaserver.Store.Store;
+import com.example.holaserver.Item.Enum.Unit;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

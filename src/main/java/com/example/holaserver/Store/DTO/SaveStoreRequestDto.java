@@ -1,13 +1,11 @@
 package com.example.holaserver.Store.DTO;
 
 import com.example.holaserver.Store.Store;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import java.util.Date;
+import lombok.*;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class SaveStoreRequestDto {
     private String name;
     private String latitude;
@@ -19,12 +17,8 @@ public class SaveStoreRequestDto {
     private String instaAccount;
     private String callNumber;
     private String registrationNumber;
-    private Date createdAt;
-    private Date modifiedAt;
-    private Date removedAt;
 
-    @Builder
-    public Store toEntity() {
+    public Store createSaveStoreBuilder() {
         return Store.builder()
                 .name(name)
                 .status("VIEW")

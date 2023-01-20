@@ -20,16 +20,12 @@ public class ImgStoreService {
         pathDatas = pathDatas.replace("]", "");
         if (pathDatas.equals("")) return imgStoreIds;
         for (String path : pathDatas.split(",")) {
-            ImgStore imgStore = this.createSaveImgStoreBuilder(new SaveImgStoreDto(storeId, path));
+//            ImgStore imgStore = this.createSaveImgStoreBuilder(new SaveImgStoreDto(storeId, path));
+            ImgStore imgStore = new SaveImgStoreDto(storeId, path).createSaveImgStoreBuilder();
             imgStoreIds.add(this.imgStoreRepository.save(imgStore).getId());
         }
         return imgStoreIds;
     }
 
-    public ImgStore createSaveImgStoreBuilder(SaveImgStoreDto imgStoreDto) {
-        return ImgStore.builder()
-                .storeId(imgStoreDto.getStoreId())
-                .path(imgStoreDto.getPath())
-                .build();
-    }
+
 }
