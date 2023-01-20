@@ -2,15 +2,15 @@ package com.example.holaserver.Item;
 
 import com.example.holaserver.Common.BaseTimeEntity;
 import com.example.holaserver.Item.Enum.Unit;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Getter
 public class Item extends BaseTimeEntity {
     @Id

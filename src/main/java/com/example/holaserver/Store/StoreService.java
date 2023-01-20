@@ -4,9 +4,11 @@ import com.example.holaserver.Store.DTO.SaveStoreRequestDto;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -15,10 +17,13 @@ public class StoreService {
     private final ImgStoreService imgStoreService;
 
     @Transactional
-    public Long saveStore(SaveStoreRequestDto storeDto) {
+    public Map<String, Object> saveStore(SaveStoreRequestDto storeDto) {
         Long storeId = storeRepository.save(storeDto.createSaveStoreBuilder()).getId();
         List<Long> imgPathIds = this.imgStoreService.saveImgStore(storeId, storeDto.getImgPath());
         if (imgPathIds.size() == 0) throw new Error("이미지 저장 에러");
-        return storeId;
+        ModelAndView result = new ModelAndView();
+        result.addObject("storeId", storeId);
+        result.addObject("imgStoreIds", imgPathIds);
+        return result.getModel();
     }
 }

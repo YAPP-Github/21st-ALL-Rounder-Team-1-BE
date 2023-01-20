@@ -14,4 +14,15 @@ public class SaveItemDto {
     private Unit unit;
     private String brand;
     private String category;
+
+    public Item createSaveItemBuilder() {
+        return Item.builder()
+                .storeId(storeId)
+                .title(title)
+                .price(price)
+                .unit(unit)
+                .brand(brand)
+                .category(category)
+                .build();
+    }
 }

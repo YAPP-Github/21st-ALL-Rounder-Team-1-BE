@@ -3,6 +3,7 @@ package com.example.holaserver.Store.ImgStore;
 import com.example.holaserver.Store.ImgStore.DTO.SaveImgStoreDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ import java.util.List;
 public class ImgStoreService {
     private final ImgStoreRepository imgStoreRepository;
 
-    @Transactional
     public List<Long> saveImgStore(Long storeId, String pathDatas) {
         List<Long> imgStoreIds = new ArrayList<Long>();
         pathDatas = pathDatas.replace("[", "");
@@ -24,6 +24,7 @@ public class ImgStoreService {
             ImgStore imgStore = new SaveImgStoreDto(storeId, path).createSaveImgStoreBuilder();
             imgStoreIds.add(this.imgStoreRepository.save(imgStore).getId());
         }
+
         return imgStoreIds;
     }
 

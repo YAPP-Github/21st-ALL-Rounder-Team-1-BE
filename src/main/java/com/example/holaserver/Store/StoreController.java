@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,7 +17,7 @@ public class StoreController {
     private final StoreService storeService;
 
     @PostMapping("/store")
-    public ResponseTemplate<Long> saveStore(@RequestBody SaveStoreRequestDto saveRequestDto) throws Exception {
+    public ResponseTemplate<Map<String, Object>> saveStore(@RequestBody SaveStoreRequestDto saveRequestDto) throws Exception {
         return new ResponseTemplate<>(storeService.saveStore(saveRequestDto), "가게 정보 저장 성공");
     }
 }
