@@ -8,14 +8,14 @@ import java.util.Date;
 
 @Getter
 @NoArgsConstructor
-public class StoreSaveRequestDto {
+public class SaveStoreRequestDto {
     private String name;
     private String latitude;
     private String longitude;
     private String businessHour;
     private String notice;
     private String address;
-    private String[] imgPath;
+    private String imgPath;
     private String instaAccount;
     private String callNumber;
     private String registrationNumber;

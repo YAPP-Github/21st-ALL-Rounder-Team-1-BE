@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -29,15 +30,12 @@ public class Store extends BaseTimeEntity {
     private String businessHour;
     private String notice;
     private String address;
-    private String[] imgPath;
+    private String imgPath;
     private String instaAccount;
     private String callNumber;
-    private Integer remommendation;
     private String registrationNumber;
     private Boolean isDayOff;
     private Boolean isReady;
-    private Date createdAt;
-    private Date modifiedAt;
     private Date removedAt;
 
     @Builder
@@ -50,7 +48,7 @@ public class Store extends BaseTimeEntity {
             String businessHour,
             String notice,
             String address,
-            String[] imgPath,
+            String imgPath,
             String instaAccount,
             String callNumber,
             String registrationNumber,
