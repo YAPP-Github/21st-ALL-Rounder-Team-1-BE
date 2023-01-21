@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Getter
 @RequiredArgsConstructor
 public class AuthService {
-    public Long getUserId() {
+    public Long getPayloadByToken() {
         PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principalDetails instanceof PrincipalDetails){
             return principalDetails.getUserId();

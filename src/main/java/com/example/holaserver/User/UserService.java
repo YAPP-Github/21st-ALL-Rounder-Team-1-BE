@@ -2,13 +2,11 @@ package com.example.holaserver.User;
 
 import com.example.holaserver.Auth.AuthService;
 import com.example.holaserver.Auth.OauthService;
-import com.example.holaserver.Auth.PrincipalDetails;
 import com.example.holaserver.User.Dto.BossSaveDto;
 import com.example.holaserver.User.Dto.UserInfoResponse;
 import javassist.NotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +23,7 @@ public class UserService {
     private final AuthService authService;
 
     public UserInfoResponse loadMyInfo() throws NotFoundException{
-        Long userId = authService.getUserId();
+        Long userId = authService.getPayloadByToken();
         if(userId == null) throw new NotFoundException("올바르지 않은 토큰입니다.");
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException());
         UserInfoResponse response = UserInfoResponse.builder()
@@ -39,7 +37,7 @@ public class UserService {
     }
 
     public User updateBoss(BossSaveDto bossSaveDto) throws NotFoundException {
-        Long userId = authService.getUserId();
+        Long userId = authService.getPayloadByToken();
         if(userId == null) throw new NotFoundException("올바르지 않은 토큰입니다.");
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException());
         user.saveBoss(bossSaveDto.getName(), bossSaveDto.getEmail(), bossSaveDto.getPhoneNumber());
