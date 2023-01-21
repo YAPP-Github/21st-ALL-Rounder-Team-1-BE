@@ -1,13 +1,11 @@
 package com.example.holaserver.Store;
 
 import com.example.holaserver.Common.response.ResponseTemplate;
-import com.example.holaserver.Store.DTO.SaveStoreRequestDto;
+import com.example.holaserver.Store.DTO.StoreSaveRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 
@@ -17,7 +15,7 @@ public class StoreController {
     private final StoreService storeService;
 
     @PostMapping("/store")
-    public ResponseTemplate<Map<String, Object>> saveStore(@RequestBody SaveStoreRequestDto saveRequestDto) throws Exception {
-        return new ResponseTemplate<>(storeService.saveStore(saveRequestDto), "가게 정보 저장 성공");
+    public ResponseTemplate<Map<String, Object>> storeSave(@RequestBody StoreSaveRequestDto saveRequestDto) throws Exception {
+        return new ResponseTemplate<>(storeService.saveStoreAndRelationInfo(saveRequestDto), "가게 정보 저장 성공");
     }
 }

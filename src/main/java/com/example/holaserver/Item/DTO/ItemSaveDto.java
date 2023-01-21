@@ -7,8 +7,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class SaveItemDto {
-    private Long storeId;
+public class ItemSaveDto {
     private String title;
     private Long price;
     private Unit unit;
@@ -17,7 +16,6 @@ public class SaveItemDto {
 
     public Item createSaveItemBuilder() {
         return Item.builder()
-                .storeId(storeId)
                 .title(title)
                 .price(price)
                 .unit(unit)

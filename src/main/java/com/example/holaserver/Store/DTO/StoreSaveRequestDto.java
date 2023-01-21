@@ -1,12 +1,13 @@
 package com.example.holaserver.Store.DTO;
 
+import com.example.holaserver.Item.DTO.ItemSaveDto;
 import com.example.holaserver.Store.Store;
 import lombok.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class SaveStoreRequestDto {
+public class StoreSaveRequestDto {
     private String name;
     private String latitude;
     private String longitude;
@@ -17,6 +18,7 @@ public class SaveStoreRequestDto {
     private String instaAccount;
     private String callNumber;
     private String registrationNumber;
+    private ItemSaveDto[] items;
 
     public Store createSaveStoreBuilder() {
         return Store.builder()

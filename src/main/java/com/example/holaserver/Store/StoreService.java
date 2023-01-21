@@ -1,6 +1,7 @@
 package com.example.holaserver.Store;
 
-import com.example.holaserver.Store.DTO.SaveStoreRequestDto;
+import com.example.holaserver.Item.ItemService;
+import com.example.holaserver.Store.DTO.StoreSaveRequestDto;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,15 +16,29 @@ import java.util.Map;
 public class StoreService {
     private final StoreRepository storeRepository;
     private final ImgStoreService imgStoreService;
+    private final ItemService itemService;
+
 
     @Transactional
-    public Map<String, Object> saveStore(SaveStoreRequestDto storeDto) {
-        Long storeId = storeRepository.save(storeDto.createSaveStoreBuilder()).getId();
-        List<Long> imgPathIds = this.imgStoreService.saveImgStore(storeId, storeDto.getImgPath());
+    public Map<String, Object> saveStoreAndRelationInfo(StoreSaveRequestDto storeDto) {
+        Long storeId = this.saveStore(storeDto);
+        List<Long> imgPathIds = this.saveImgStore(storeId, storeDto.getImgPath());
         if (imgPathIds.size() == 0) throw new Error("이미지 저장 에러");
         ModelAndView result = new ModelAndView();
         result.addObject("storeId", storeId);
         result.addObject("imgStoreIds", imgPathIds);
         return result.getModel();
+    }
+
+    private Long saveStore(StoreSaveRequestDto storeDto) {
+        return storeRepository.save(storeDto.createSaveStoreBuilder()).getId();
+    }
+    
+    private List<Long> saveImgStore(Long storeId, String pathDatas) {
+        return this.imgStoreService.saveImgStore(storeId, pathDatas);
+    }
+
+    private List<Long> saveItem() {
+
     }
 }

@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SaveImgStoreDto {
+public class ImgSaveStoreDto {
     private Long storeId;
     private String path;
 
