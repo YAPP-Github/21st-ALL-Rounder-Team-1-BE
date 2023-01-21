@@ -34,7 +34,7 @@ public class StoreService {
     }
 
     private Long saveStore(StoreSaveRequestDto storeDto) {
-        return storeRepository.save(storeDto.createSaveStoreBuilder()).getId();
+        return storeRepository.save(storeDto.createSaveStoreBuilder(123L)).getId();
     }
     
     private List<Long> saveImgStores(Long storeId, String pathDatas) {
