@@ -1,4 +1,4 @@
-package com.example.holaserver.Common;
+package com.example.holaserver.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,5 +1,6 @@
-package com.example.holaserver.User;
+package com.example.holaserver.User.Dto;
 
+import com.example.holaserver.User.User;
 import lombok.Builder;
 import lombok.Getter;
 

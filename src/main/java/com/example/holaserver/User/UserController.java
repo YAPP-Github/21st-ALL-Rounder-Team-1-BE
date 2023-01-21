@@ -1,8 +1,10 @@
 package com.example.holaserver.User;
 
-import com.example.holaserver.Auth.KaKaoLoginResponse;
+import com.example.holaserver.Auth.KakaoLoginResponse;
 import com.example.holaserver.Auth.OauthService;
 import com.example.holaserver.Common.response.ResponseTemplate;
+import com.example.holaserver.User.Dto.BossSaveDto;
+import com.example.holaserver.User.Dto.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +17,9 @@ public class UserController {
     private final UserService userService;
     private final OauthService oauthService;
     @GetMapping("/login/oauth/kakao")
-    public ResponseTemplate<KaKaoLoginResponse> kakaoLogin(@RequestParam String code){
+    public ResponseTemplate<KakaoLoginResponse> kakaoLogin(@RequestParam String code){
 
-        KaKaoLoginResponse kaKaoLoginResponse = oauthService.kakaoLogin(code);
+        KakaoLoginResponse kaKaoLoginResponse = oauthService.kakaoLogin(code);
 
         return new ResponseTemplate<>(kaKaoLoginResponse, "로그인 성공");
     }

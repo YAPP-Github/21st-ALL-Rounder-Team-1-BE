@@ -30,7 +30,7 @@ public class OauthService {
     @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     String REDIRECT_URI;
 
-    public KaKaoLoginResponse kakaoLogin(String code) {
+    public KakaoLoginResponse kakaoLogin(String code) {
         String accessToken = getAccessToken(code);
 
         SocialUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
@@ -52,7 +52,7 @@ public class OauthService {
             savedUserIdx = userRepository.save(kakaoUser).getId();
         }
         String token = jwtTokenProvider.createToken(savedUserIdx);
-        KaKaoLoginResponse response = new KaKaoLoginResponse(kakaoUserInfo.getId(), kakaoUser, token);
+        KakaoLoginResponse response = new KakaoLoginResponse(kakaoUserInfo.getId(), kakaoUser, token);
         return response;
     }
 

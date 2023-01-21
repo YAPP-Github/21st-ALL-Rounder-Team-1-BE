@@ -1,4 +1,4 @@
-package com.example.holaserver.Common;
+package com.example.holaserver.Config;
 
 import com.example.holaserver.Auth.JwtAuthenticationFilter;
 import com.example.holaserver.Auth.JwtTokenProvider;

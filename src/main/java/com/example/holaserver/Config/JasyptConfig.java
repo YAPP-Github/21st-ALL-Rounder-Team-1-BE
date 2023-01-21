@@ -1,4 +1,4 @@
-package com.example.holaserver.Common;
+package com.example.holaserver.Config;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.Value;

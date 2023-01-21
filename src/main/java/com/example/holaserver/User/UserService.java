@@ -1,10 +1,10 @@
 package com.example.holaserver.User;
 
 import com.example.holaserver.Auth.PrincipalDetails;
+import com.example.holaserver.User.Dto.BossSaveDto;
+import com.example.holaserver.User.Dto.UserInfoResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
