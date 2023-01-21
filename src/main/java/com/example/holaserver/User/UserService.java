@@ -1,8 +1,11 @@
 package com.example.holaserver.User;
 
+import com.example.holaserver.Auth.AuthService;
+import com.example.holaserver.Auth.OauthService;
 import com.example.holaserver.Auth.PrincipalDetails;
 import com.example.holaserver.User.Dto.BossSaveDto;
 import com.example.holaserver.User.Dto.UserInfoResponse;
+import javassist.NotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,16 +21,12 @@ import java.util.NoSuchElementException;
 public class UserService {
     private final UserRepository userRepository;
 
-    public Long getUserId(){
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principalDetails instanceof PrincipalDetails){
-            return principalDetails.getUserId();
-        } else {
-            return null;
-        }
-    }
+    private final OauthService oauthService;
+    private final AuthService authService;
 
-    public UserInfoResponse loadMyInfo(Long userId){
+    public UserInfoResponse loadMyInfo() throws NotFoundException{
+        Long userId = authService.getUserId();
+        if(userId == null) throw new NotFoundException("올바르지 않은 토큰입니다.");
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException());
         UserInfoResponse response = UserInfoResponse.builder()
                 .entity(user)
@@ -39,7 +38,9 @@ public class UserService {
         return userRepository.existsByNickname(nickname);
     }
 
-    public User updateBoss(Long userId, BossSaveDto bossSaveDto){
+    public User updateBoss(BossSaveDto bossSaveDto) throws NotFoundException {
+        Long userId = authService.getUserId();
+        if(userId == null) throw new NotFoundException("올바르지 않은 토큰입니다.");
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException());
         user.saveBoss(bossSaveDto.getName(), bossSaveDto.getEmail(), bossSaveDto.getPhoneNumber());
         return user;

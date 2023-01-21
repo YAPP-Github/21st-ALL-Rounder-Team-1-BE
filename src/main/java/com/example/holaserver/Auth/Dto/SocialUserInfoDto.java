@@ -1,4 +1,4 @@
-package com.example.holaserver.Auth;
+package com.example.holaserver.Auth.Dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package com.example.holaserver.Auth;
+package com.example.holaserver.Auth.Dto;
 
 import com.example.holaserver.User.Type;
 import com.example.holaserver.User.User;

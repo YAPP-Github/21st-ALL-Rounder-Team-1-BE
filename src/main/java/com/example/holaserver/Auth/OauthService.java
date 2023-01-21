@@ -1,5 +1,8 @@
 package com.example.holaserver.Auth;
 
+import com.example.holaserver.Auth.Dto.KakaoLoginResponse;
+import com.example.holaserver.Auth.Dto.OauthTokenResponse;
+import com.example.holaserver.Auth.Dto.SocialUserInfoDto;
 import com.example.holaserver.User.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
