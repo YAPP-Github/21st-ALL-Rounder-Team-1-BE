@@ -12,7 +12,7 @@ import java.util.List;
 public class ImgStoreService {
     private final ImgStoreRepository imgStoreRepository;
 
-    public List<Long> saveImgStore(Long storeId, String pathDatas) {
+    public List<Long> saveImgStores(Long storeId, String pathDatas) {
         List<Long> imgStoreIds = new ArrayList<Long>();
         pathDatas = pathDatas.replace("[", "");
         pathDatas = pathDatas.replace("]", "");

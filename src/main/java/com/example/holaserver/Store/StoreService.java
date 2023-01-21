@@ -1,5 +1,6 @@
 package com.example.holaserver.Store;
 
+import com.example.holaserver.Item.DTO.ItemSaveDto;
 import com.example.holaserver.Item.ItemService;
 import com.example.holaserver.Store.DTO.StoreSaveRequestDto;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
@@ -22,11 +23,13 @@ public class StoreService {
     @Transactional
     public Map<String, Object> saveStoreAndRelationInfo(StoreSaveRequestDto storeDto) {
         Long storeId = this.saveStore(storeDto);
-        List<Long> imgPathIds = this.saveImgStore(storeId, storeDto.getImgPath());
+        List<Long> imgPathIds = this.saveImgStores(storeId, storeDto.getImgPath());
+        List<Long> itemIds = this.saveItems(storeId, storeDto.getItems());
         if (imgPathIds.size() == 0) throw new Error("이미지 저장 에러");
         ModelAndView result = new ModelAndView();
         result.addObject("storeId", storeId);
         result.addObject("imgStoreIds", imgPathIds);
+        result.addObject("itemIds", itemIds);
         return result.getModel();
     }
 
@@ -34,11 +37,11 @@ public class StoreService {
         return storeRepository.save(storeDto.createSaveStoreBuilder()).getId();
     }
     
-    private List<Long> saveImgStore(Long storeId, String pathDatas) {
-        return this.imgStoreService.saveImgStore(storeId, pathDatas);
+    private List<Long> saveImgStores(Long storeId, String pathDatas) {
+        return this.imgStoreService.saveImgStores(storeId, pathDatas);
     }
 
-    private List<Long> saveItem() {
-
+    private List<Long> saveItems(Long storeId, ItemSaveDto[] itemDto) {
+        return this.itemService.saveItems(storeId, itemDto);
     }
 }

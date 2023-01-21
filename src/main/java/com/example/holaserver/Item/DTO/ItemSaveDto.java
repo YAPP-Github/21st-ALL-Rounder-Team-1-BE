@@ -14,8 +14,9 @@ public class ItemSaveDto {
     private String brand;
     private String category;
 
-    public Item createSaveItemBuilder() {
+    public Item createSaveItemBuilder(Long storeId) {
         return Item.builder()
+                .storeId(storeId)
                 .title(title)
                 .price(price)
                 .unit(unit)
