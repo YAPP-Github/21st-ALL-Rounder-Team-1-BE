@@ -20,8 +20,9 @@ public class StoreSaveRequestDto {
     private String registrationNumber;
     private ItemSaveDto[] items;
 
-    public Store createSaveStoreBuilder() {
+    public Store createSaveStoreBuilder(Long userId) {
         return Store.builder()
+                .userId(userId)
                 .name(name)
                 .status("VIEW")
                 .latitude(latitude)
