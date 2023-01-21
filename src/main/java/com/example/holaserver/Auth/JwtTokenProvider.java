@@ -63,12 +63,10 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
     public String resolveToken(HttpServletRequest request) {
         return request.getHeader("JWT");
     }
 
-    // 토큰의 유효성 + 만료일자 확인  // -> 토큰이 expire되지 않았는지 True/False로 반환해줌.
     public boolean validateToken(String token) {
         try {
             Claims claims = Jwts.parserBuilder()
@@ -82,7 +80,6 @@ public class JwtTokenProvider {
         }
     }
 
-    //JWT 토큰에서 인증정보 조회
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = principalDetailsService.loadUserByUsername(this.getPayload(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
@@ -96,8 +93,8 @@ public class JwtTokenProvider {
                     .parseClaimsJws(token)
                     .getBody()
                     .get("userId");
-//        } catch (ExpiredJwtException e) {
-//            return e.getClaims().getSubject();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims().getSubject();
         } catch (JwtException e){
             throw new RuntimeException("유효하지 않은 토큰 입니다");
         }

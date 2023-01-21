@@ -21,10 +21,6 @@ public class PrincipalDetails implements UserDetails {
     }
 
 
-    /**
-     * UserDetails 구현
-     * 해당 유저의 권한목록 리턴
-     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 

@@ -31,10 +31,8 @@ public class OauthService {
     String REDIRECT_URI;
 
     public KaKaoLoginResponse kakaoLogin(String code) {
-        // 1. "인가 코드"로 "액세스 토큰" 요청
         String accessToken = getAccessToken(code);
 
-        // 2. 토큰으로 카카오 API 호출
         SocialUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
         String oauthIdentity = Long.toString(kakaoUserInfo.getId());
         User kakaoUser;
@@ -58,13 +56,10 @@ public class OauthService {
         return response;
     }
 
-    // 1. "인가 코드"로 "액세스 토큰" 요청
     private String getAccessToken(String code) {
-        // HTTP Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-        // HTTP Body 생성
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", CLIENT_ID);
@@ -85,14 +80,11 @@ public class OauthService {
         return token;
     }
 
-    // 2. 토큰으로 카카오 API 호출
     private SocialUserInfoDto getKakaoUserInfo(String accessToken) {
-        // HTTP Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-        // HTTP 요청 보내기
         HttpEntity<String> request = new HttpEntity<String>(headers);
         ResponseEntity<SocialUserInfoDto> response = restTemplate.exchange(
                 "https://kapi.kakao.com/v2/user/me",
