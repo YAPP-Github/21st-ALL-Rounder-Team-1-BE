@@ -22,10 +22,10 @@ import java.util.Random;
 public class JwtTokenProvider {
     private final PrincipalDetailsService principalDetailsService;
 
-    @Value("180000000000")
+    @Value("${ACCESS_VALIDITY}")
     private Long accessTokenValidityInMilliseconds;
 
-    @Value("1209600000")
+    @Value("${REFRESH_VALIDITY}")
     private Long refreshTokenValidityInMilliseconds;
 
     @Value("${JWT_SECRET}")
