@@ -17,7 +17,10 @@ public class User extends BaseTimeEntity {
 
     private String name;
 
+    private String nickname;
     private String email;
+
+    private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
     @Setter
@@ -42,5 +45,12 @@ public class User extends BaseTimeEntity {
         this.imgPath = imgPath;
         this.oauthType = oauthType;
         this.oauthIdentity = oauthIdentity;
+    }
+
+    public void saveBoss(String name, String email, String phoneNumber){
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.type = Type.BOSS;
     }
 }

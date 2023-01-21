@@ -1,5 +1,8 @@
 package com.example.holaserver.Auth;
 
+import com.example.holaserver.Auth.Dto.KakaoLoginResponse;
+import com.example.holaserver.Auth.Dto.OauthTokenResponse;
+import com.example.holaserver.Auth.Dto.SocialUserInfoDto;
 import com.example.holaserver.User.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -30,39 +33,36 @@ public class OauthService {
     @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     String REDIRECT_URI;
 
-    public KaKaoLoginResponse kakaoLogin(String code) {
-        // 1. "인가 코드"로 "액세스 토큰" 요청
+    public KakaoLoginResponse kakaoLogin(String code) {
         String accessToken = getAccessToken(code);
 
-        // 2. 토큰으로 카카오 API 호출
         SocialUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
-        String userId = Long.toString(kakaoUserInfo.getId());
+        String oauthIdentity = Long.toString(kakaoUserInfo.getId());
         User kakaoUser;
-        if(findUser(userId, "Kakao")){
-            kakaoUser = userRepository.findByOauthIdentity(userId);
+        Long savedUserIdx;
+        if(findUser(oauthIdentity, "Kakao")){
+            kakaoUser = userRepository.findByOauthIdentity(oauthIdentity);
+            savedUserIdx = kakaoUser.getId();
         } else {
             kakaoUser = User.builder()
                     .name(kakaoUserInfo.getKakao_account().getProfile().getNickname())
                     .email(kakaoUserInfo.getKakao_account().getEmail())
                     .rating((byte) 1)
                     .imgPath(kakaoUserInfo.getKakao_account().getProfile().getProfile_image_url())
-                    .oauthIdentity(userId)
+                    .oauthIdentity(oauthIdentity)
                     .oauthType("Kakao")
                     .build();
-            userRepository.save(kakaoUser);
+            savedUserIdx = userRepository.save(kakaoUser).getId();
         }
-        String token = jwtTokenProvider.createToken(accessToken, 1800000);
-        KaKaoLoginResponse response = new KaKaoLoginResponse(kakaoUserInfo.getId(), kakaoUser, token);
+        String token = jwtTokenProvider.createToken(savedUserIdx);
+        KakaoLoginResponse response = new KakaoLoginResponse(kakaoUserInfo.getId(), kakaoUser, token);
         return response;
     }
 
-    // 1. "인가 코드"로 "액세스 토큰" 요청
     private String getAccessToken(String code) {
-        // HTTP Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-        // HTTP Body 생성
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", CLIENT_ID);
@@ -83,14 +83,11 @@ public class OauthService {
         return token;
     }
 
-    // 2. 토큰으로 카카오 API 호출
     private SocialUserInfoDto getKakaoUserInfo(String accessToken) {
-        // HTTP Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-        // HTTP 요청 보내기
         HttpEntity<String> request = new HttpEntity<String>(headers);
         ResponseEntity<SocialUserInfoDto> response = restTemplate.exchange(
                 "https://kapi.kakao.com/v2/user/me",
