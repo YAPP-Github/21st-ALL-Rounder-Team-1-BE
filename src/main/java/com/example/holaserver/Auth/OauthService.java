@@ -36,11 +36,11 @@ public class OauthService {
 
         // 2. 토큰으로 카카오 API 호출
         SocialUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
-        String userId = Long.toString(kakaoUserInfo.getId());
+        String oauthIdentity = Long.toString(kakaoUserInfo.getId());
         User kakaoUser;
         Long savedUserIdx;
-        if(findUser(userId, "Kakao")){
-            kakaoUser = userRepository.findByOauthIdentity(userId);
+        if(findUser(oauthIdentity, "Kakao")){
+            kakaoUser = userRepository.findByOauthIdentity(oauthIdentity);
             savedUserIdx = kakaoUser.getId();
         } else {
             kakaoUser = User.builder()
@@ -48,7 +48,7 @@ public class OauthService {
                     .email(kakaoUserInfo.getKakao_account().getEmail())
                     .rating((byte) 1)
                     .imgPath(kakaoUserInfo.getKakao_account().getProfile().getProfile_image_url())
-                    .oauthIdentity(userId)
+                    .oauthIdentity(oauthIdentity)
                     .oauthType("Kakao")
                     .build();
             savedUserIdx = userRepository.save(kakaoUser).getId();
