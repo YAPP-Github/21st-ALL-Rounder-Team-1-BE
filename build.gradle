@@ -29,7 +29,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework:spring-webflux'
-    testImplementation 'org.mockito:mockito-all:1.9.5'
     testCompileOnly 'org.projectlombok:lombok'
     implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
     implementation 'junit:junit:4.13.1'
