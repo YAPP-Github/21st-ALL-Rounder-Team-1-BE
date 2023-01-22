@@ -1,6 +1,8 @@
 package com.example.holaserver.Item;
 
 import com.example.holaserver.Item.DTO.ItemSaveBody;
+import com.example.holaserver.Store.Store;
+import com.example.holaserver.Store.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +16,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepository itemRepository;
+    // TODO: 순환참조 딤 store <-> item
+    private final StoreService storeService;
 
     public Map<String, Object> saveItems(Long storeId, ItemSaveBody[] itemSaveBodies) {
         List<Item> items = Arrays.stream(itemSaveBodies).map(item -> item.createSaveItemBuilder(storeId))
@@ -22,6 +26,7 @@ public class ItemService {
         List<Long> itemIds = itemRepository.saveAll(items).stream().map(Item::getId)
                 .collect(Collectors.toList());
         result.addObject("itemIds", itemIds);
+        storeService.updateStoreStatusById(storeId);
         return result.getModel();
     }
 }

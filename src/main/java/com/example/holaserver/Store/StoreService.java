@@ -2,6 +2,7 @@ package com.example.holaserver.Store;
 
 import com.example.holaserver.Store.DTO.StoreSaveBody;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
+import javassist.tools.web.BadHttpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -9,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +36,12 @@ public class StoreService {
     
     private List<Long> saveImgStores(Long storeId, String pathDatas) {
         return this.imgStoreService.saveImgStores(storeId, pathDatas);
+    }
+
+    public void updateStoreStatusById(Long storeId) {
+        StoreSaveBody storeSaveBody = new StoreSaveBody();
+        Optional<Store> storeResult = Optional.ofNullable(this.storeRepository.findById(storeId)
+                .orElseThrow(NoSuchElementException::new));
+        storeResult.ifPresent(store -> this.storeRepository.save(storeSaveBody.updateStoreStatusBuilder(storeId, store)));
     }
 }
