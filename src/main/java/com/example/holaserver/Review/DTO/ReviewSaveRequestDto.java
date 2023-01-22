@@ -1,12 +1,13 @@
 package com.example.holaserver.Review.DTO;
 
 import com.example.holaserver.Review.Review;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ReviewSaveRequestDto {
     private Long userId;
     private Long storeId;
