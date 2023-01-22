@@ -18,7 +18,6 @@ public class StoreSaveRequestDto {
     private String instaAccount;
     private String callNumber;
     private String registrationNumber;
-    private ItemSaveDto[] items;
 
     public Store createSaveStoreBuilder(Long userId) {
         return Store.builder()

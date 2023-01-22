@@ -24,12 +24,10 @@ public class StoreService {
     public Map<String, Object> saveStoreAndRelationInfo(StoreSaveRequestDto storeDto) {
         Long storeId = this.saveStore(storeDto);
         List<Long> imgPathIds = this.saveImgStores(storeId, storeDto.getImgPath());
-        List<Long> itemIds = this.saveItems(storeId, storeDto.getItems());
         if (imgPathIds.size() == 0) throw new Error("이미지 저장 에러");
         ModelAndView result = new ModelAndView();
         result.addObject("storeId", storeId);
         result.addObject("imgStoreIds", imgPathIds);
-        result.addObject("itemIds", itemIds);
         return result.getModel();
     }
 
@@ -39,9 +37,5 @@ public class StoreService {
     
     private List<Long> saveImgStores(Long storeId, String pathDatas) {
         return this.imgStoreService.saveImgStores(storeId, pathDatas);
-    }
-
-    private List<Long> saveItems(Long storeId, ItemSaveDto[] itemDto) {
-        return this.itemService.saveItems(storeId, itemDto);
     }
 }
