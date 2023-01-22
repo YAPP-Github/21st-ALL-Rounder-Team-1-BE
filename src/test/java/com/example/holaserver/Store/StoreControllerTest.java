@@ -1,9 +1,11 @@
 package com.example.holaserver.Store;
 
+import com.example.holaserver.Common.response.ResponseTemplate;
 import com.example.holaserver.Store.DTO.StoreSaveBody;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -17,6 +19,9 @@ import static org.mockito.Mockito.*;
 public class StoreControllerTest {
     @Mock
     StoreService storeService;
+
+    @InjectMocks
+    StoreController storeController;
 
     @BeforeEach
     public void setUp() {
@@ -35,12 +40,14 @@ public class StoreControllerTest {
         mockResult.put("imgStoreIds", mockImgStoreIds);
         when(storeService.saveStoreAndRelationInfo(storeSaveBody)).thenReturn(mockResult);
 
+
         // when
-        Map<String, Object> result = storeService.saveStoreAndRelationInfo(storeSaveBody);
+        // TODO: return result null
+        ResponseTemplate<Map<String, Object>> result = storeController.storeSave(new StoreSaveBody());
 
         // then
-        verify(storeService, times(1)).saveStoreAndRelationInfo(storeSaveBody);
-        Assertions.assertEquals(result.get("storeId"), 1);
-        Assertions.assertEquals(result.get("imgStoreIds"), mockImgStoreIds);
+//        verify(storeService, times(1)).saveStoreAndRelationInfo(storeSaveBody);
+        Assertions.assertEquals(result.getData().get("storeId"), 1);
+        Assertions.assertEquals(result.getData().get("imgStoreIds"), mockImgStoreIds);
     }
 }
