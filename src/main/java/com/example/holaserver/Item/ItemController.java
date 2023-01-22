@@ -2,7 +2,6 @@ package com.example.holaserver.Item;
 
 import com.example.holaserver.Common.response.ResponseTemplate;
 import com.example.holaserver.Item.DTO.ItemSaveBody;
-import com.example.holaserver.Item.DTO.ItemSavePathVariable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

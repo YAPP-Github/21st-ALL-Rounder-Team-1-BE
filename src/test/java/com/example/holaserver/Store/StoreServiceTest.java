@@ -23,7 +23,6 @@ public class StoreServiceTest {
     @Test
     public void saveStore_는_StoreSaveRequestDto_를_받아_storeId_를_반환한다() {
         // given
-        MockitoAnnotations.initMocks(this);
         StoreSaveParameter storeDto = new StoreSaveParameter(
                 "name",
                 "1234",
