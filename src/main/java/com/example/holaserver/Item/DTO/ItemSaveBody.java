@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class ItemSaveDto {
+public class ItemSaveBody {
     private String title;
     private Long price;
     private Unit unit;

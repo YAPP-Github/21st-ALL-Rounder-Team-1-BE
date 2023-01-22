@@ -1,6 +1,5 @@
 package com.example.holaserver.Store;
 
-import com.example.holaserver.Item.DTO.ItemSaveDto;
 import com.example.holaserver.Store.DTO.StoreSaveParameter;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;

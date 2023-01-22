@@ -1,11 +1,14 @@
 package com.example.holaserver.Item;
 
-import com.example.holaserver.Item.DTO.ItemSaveDto;
+import com.example.holaserver.Item.DTO.ItemSaveBody;
+import com.example.holaserver.Item.DTO.ItemSavePathVariable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -13,10 +16,13 @@ import java.util.stream.Collectors;
 public class ItemService {
     private final ItemRepository itemRepository;
 
-    public List<Long> saveItems(Long storeId, ItemSaveDto[] itemDto) {
-        List<Item> items = Arrays.stream(itemDto).map(item -> item.createSaveItemBuilder(storeId))
+    public Map<String, Object> saveItems(Long storeId, ItemSaveBody[] itemSaveBodies) {
+        List<Item> items = Arrays.stream(itemSaveBodies).map(item -> item.createSaveItemBuilder(storeId))
                 .collect(Collectors.toList());
-        return itemRepository.saveAll(items).stream().map(Item::getId)
+        ModelAndView result = new ModelAndView();
+        List<Long> itemIds = itemRepository.saveAll(items).stream().map(Item::getId)
                 .collect(Collectors.toList());
+        result.addObject("itemIds", itemIds);
+        return result.getModel();
     }
 }

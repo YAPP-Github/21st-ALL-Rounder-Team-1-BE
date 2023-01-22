@@ -1,6 +1,5 @@
 package com.example.holaserver.Store.DTO;
 
-import com.example.holaserver.Item.DTO.ItemSaveDto;
 import com.example.holaserver.Store.Store;
 import lombok.*;
 
