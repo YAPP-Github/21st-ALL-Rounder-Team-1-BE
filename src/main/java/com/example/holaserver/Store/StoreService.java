@@ -5,6 +5,7 @@ import com.example.holaserver.Item.ItemService;
 import com.example.holaserver.Store.DTO.StoreSaveRequestDto;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,7 +19,6 @@ public class StoreService {
     private final StoreRepository storeRepository;
     private final ImgStoreService imgStoreService;
     private final ItemService itemService;
-
 
     @Transactional
     public Map<String, Object> saveStoreAndRelationInfo(StoreSaveRequestDto storeDto) {

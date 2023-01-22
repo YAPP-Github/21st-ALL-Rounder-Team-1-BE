@@ -5,7 +5,7 @@ import com.example.holaserver.Store.Store;
 import lombok.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 public class StoreSaveRequestDto {
     private String name;

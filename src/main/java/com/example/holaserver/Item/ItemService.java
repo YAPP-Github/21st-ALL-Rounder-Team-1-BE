@@ -4,7 +4,6 @@ import com.example.holaserver.Item.DTO.ItemSaveDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,5 +19,4 @@ public class ItemService {
         return itemRepository.saveAll(items).stream().map(Item::getId)
                 .collect(Collectors.toList());
     }
-
 }
