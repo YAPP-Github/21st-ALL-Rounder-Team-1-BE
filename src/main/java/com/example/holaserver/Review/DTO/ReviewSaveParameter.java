@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewSaveRequestDto {
+public class ReviewSaveParameter {
     private Long userId;
     private Long storeId;
     private String reviewText;

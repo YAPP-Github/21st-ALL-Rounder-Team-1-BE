@@ -2,10 +2,9 @@ package com.example.holaserver.Store;
 
 import com.example.holaserver.Item.DTO.ItemSaveDto;
 import com.example.holaserver.Item.ItemService;
-import com.example.holaserver.Store.DTO.StoreSaveRequestDto;
+import com.example.holaserver.Store.DTO.StoreSaveParameter;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,7 +20,7 @@ public class StoreService {
     private final ItemService itemService;
 
     @Transactional
-    public Map<String, Object> saveStoreAndRelationInfo(StoreSaveRequestDto storeDto) {
+    public Map<String, Object> saveStoreAndRelationInfo(StoreSaveParameter storeDto) {
         Long storeId = this.saveStore(storeDto);
         List<Long> imgPathIds = this.saveImgStores(storeId, storeDto.getImgPath());
         List<Long> itemIds = this.saveItems(storeId, storeDto.getItems());
@@ -33,7 +32,7 @@ public class StoreService {
         return result.getModel();
     }
 
-    private Long saveStore(StoreSaveRequestDto storeDto) {
+    private Long saveStore(StoreSaveParameter storeDto) {
         return storeRepository.save(storeDto.createSaveStoreBuilder(123L)).getId();
     }
     

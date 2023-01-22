@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StoreSaveRequestDto {
+public class StoreSaveParameter {
     private String name;
     private String latitude;
     private String longitude;

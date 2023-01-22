@@ -4,12 +4,12 @@ import com.example.holaserver.Review.Review;
 import lombok.Getter;
 
 @Getter
-public class ReviewResponseDto {
+public class ReviewResponse {
     private final Long userId;
     private final Long storeId;
     private final String reviewText;
 
-    public ReviewResponseDto(Review entity){
+    public ReviewResponse(Review entity){
         this.userId = entity.getUserId();
         this.storeId = entity.getStoreId();
         this.reviewText = entity.getReviewText();

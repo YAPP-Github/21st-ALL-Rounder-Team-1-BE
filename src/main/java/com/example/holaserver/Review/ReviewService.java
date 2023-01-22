@@ -1,7 +1,7 @@
 package com.example.holaserver.Review;
 
-import com.example.holaserver.Review.DTO.ReviewResponseDto;
-import com.example.holaserver.Review.DTO.ReviewSaveRequestDto;
+import com.example.holaserver.Review.DTO.ReviewResponse;
+import com.example.holaserver.Review.DTO.ReviewSaveParameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
 
-    public Long saveReview(ReviewSaveRequestDto requestDto){
+    public Long saveReview(ReviewSaveParameter requestDto){
         Review review = Review.builder()
                 .storeId(requestDto.getStoreId())
                 .userId(requestDto.getUserId())
@@ -21,9 +21,9 @@ public class ReviewService {
         return reviewRepository.save(review).getId();
     }
 
-    public ReviewResponseDto loadReview(Long reviewId){
+    public ReviewResponse loadReview(Long reviewId){
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new NoSuchElementException());
-        return new ReviewResponseDto(review);
+        return new ReviewResponse(review);
     }
 }
