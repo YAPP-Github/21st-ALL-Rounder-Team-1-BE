@@ -13,8 +13,6 @@ import static org.mockito.Mockito.*;
 
 @WebMvcTest
 public class StoreServiceTest {
-    ItemSaveDto[] itemSaveDtos = new ItemSaveDto[0];
-
     @Mock
     StoreRepository storeRepository;
 
@@ -37,13 +35,13 @@ public class StoreServiceTest {
                 "[\"path1\",\"path2\",\"path3\"]",
                 "@yunmin",
                 "010-1234-4321",
-                "110-4321",
-                itemSaveDtos
+                "110-4321"
         );
         // when
         when(storeRepository.save((Store) notNull())).thenReturn(storeDto.createSaveStoreBuilder(123L));
         Store store = storeRepository.save(storeDto.createSaveStoreBuilder(123L));
 
+        // then
         verify(storeRepository, times(1)).save((Store) notNull());
         assertEquals(store.getUserId(), 123L);
     }
