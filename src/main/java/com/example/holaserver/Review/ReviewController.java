@@ -1,6 +1,8 @@
 package com.example.holaserver.Review;
 
 import com.example.holaserver.Common.response.ResponseTemplate;
+import com.example.holaserver.Review.DTO.ReviewResponseDto;
+import com.example.holaserver.Review.DTO.ReviewSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

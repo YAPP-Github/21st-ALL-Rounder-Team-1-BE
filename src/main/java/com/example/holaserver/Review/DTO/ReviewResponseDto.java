@@ -1,5 +1,6 @@
-package com.example.holaserver.Review;
+package com.example.holaserver.Review.DTO;
 
+import com.example.holaserver.Review.Review;
 import lombok.Getter;
 
 @Getter
