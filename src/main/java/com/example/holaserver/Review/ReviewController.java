@@ -12,8 +12,8 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/review")
-    public ResponseTemplate<Long> saveReview(@RequestBody ReviewSaveParameter requestDto){
-        return new ResponseTemplate<>(reviewService.saveReview(requestDto), "리뷰 저장에 성공했습니다.");
+    public ResponseTemplate<Long> saveReview(@RequestBody ReviewSaveParameter reviewSaveParameter){
+        return new ResponseTemplate<>(reviewService.saveReview(reviewSaveParameter), "리뷰 저장에 성공했습니다.");
     }
 
     @GetMapping("/review/{reviewId}")

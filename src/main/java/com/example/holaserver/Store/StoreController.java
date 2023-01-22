@@ -15,7 +15,7 @@ public class StoreController {
     private final StoreService storeService;
 
     @PostMapping("/store")
-    public ResponseTemplate<Map<String, Object>> storeSave(@RequestBody StoreSaveParameter saveRequestDto) throws Exception {
-        return new ResponseTemplate<>(storeService.saveStoreAndRelationInfo(saveRequestDto), "가게 정보 저장 성공");
+    public ResponseTemplate<Map<String, Object>> storeSave(@RequestBody StoreSaveParameter storeSaveParameter) {
+        return new ResponseTemplate<>(storeService.saveStoreAndRelationInfo(storeSaveParameter), "가게 정보 저장 성공");
     }
 }
