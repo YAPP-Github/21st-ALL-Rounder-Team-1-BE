@@ -1,6 +1,5 @@
 package com.example.holaserver.Store;
 
-import com.example.holaserver.Item.DTO.ItemSaveDto;
 import com.example.holaserver.Item.ItemService;
 import com.example.holaserver.Store.DTO.StoreSaveParameter;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
@@ -17,7 +16,6 @@ import java.util.Map;
 public class StoreService {
     private final StoreRepository storeRepository;
     private final ImgStoreService imgStoreService;
-    private final ItemService itemService;
 
     @Transactional
     public Map<String, Object> saveStoreAndRelationInfo(StoreSaveParameter storeDto) {
