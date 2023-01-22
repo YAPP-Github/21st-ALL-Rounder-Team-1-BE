@@ -1,14 +1,12 @@
 package com.example.holaserver.Store;
 
-import com.example.holaserver.Store.DTO.StoreSaveParameter;
+import com.example.holaserver.Store.DTO.StoreSaveBody;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class StoreServiceTest {
@@ -23,7 +21,7 @@ public class StoreServiceTest {
     @Test
     public void saveStore_는_StoreSaveRequestDto_를_받아_storeId_를_반환한다() {
         // given
-        StoreSaveParameter storeDto = new StoreSaveParameter(
+        StoreSaveBody storeDto = new StoreSaveBody(
                 "name",
                 "1234",
                 "4321",

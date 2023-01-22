@@ -1,6 +1,6 @@
 package com.example.holaserver.Store;
 
-import com.example.holaserver.Store.DTO.StoreSaveParameter;
+import com.example.holaserver.Store.DTO.StoreSaveBody;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class StoreService {
     private final ImgStoreService imgStoreService;
 
     @Transactional
-    public Map<String, Object> saveStoreAndRelationInfo(StoreSaveParameter storeDto) {
+    public Map<String, Object> saveStoreAndRelationInfo(StoreSaveBody storeDto) {
         Long storeId = this.saveStore(storeDto);
         List<Long> imgPathIds = this.saveImgStores(storeId, storeDto.getImgPath());
         if (imgPathIds.size() == 0) throw new Error("이미지 저장 에러");
@@ -27,7 +27,7 @@ public class StoreService {
         return result.getModel();
     }
 
-    private Long saveStore(StoreSaveParameter storeDto) {
+    private Long saveStore(StoreSaveBody storeDto) {
         return storeRepository.save(storeDto.createSaveStoreBuilder(123L)).getId();
     }
     

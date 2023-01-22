@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ImgStoreParameter {
+public class ImgStoreBody {
     private Long storeId;
     private String path;
 

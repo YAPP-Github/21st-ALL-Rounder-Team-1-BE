@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StoreSaveParameter {
+public class StoreSaveBody {
     private String name;
     private String latitude;
     private String longitude;

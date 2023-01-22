@@ -5,7 +5,7 @@ import com.example.holaserver.Item.Item;
 import lombok.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class ItemSaveBody {
     private String title;

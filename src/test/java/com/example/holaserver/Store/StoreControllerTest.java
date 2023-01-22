@@ -1,11 +1,10 @@
 package com.example.holaserver.Store;
 
-import com.example.holaserver.Store.DTO.StoreSaveParameter;
+import com.example.holaserver.Store.DTO.StoreSaveBody;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.*;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
@@ -25,22 +24,22 @@ public class StoreControllerTest {
     }
 
     @Test
-    public void storeSave_는_StoreSaveParameter_를_받아_가게_ID_와_가게사진_ID_를_반환한다() {
+    public void storeSave_는_StoreSaveBody_를_받아_가게_ID_와_가게사진_ID_를_반환한다() {
         // given
-        StoreSaveParameter storeSaveParameter = new StoreSaveParameter();
+        StoreSaveBody storeSaveBody = new StoreSaveBody();
         Map<String, Object> mockResult = new HashMap<String, Object>();
         List<Long> mockImgStoreIds = new ArrayList<Long>();
         mockImgStoreIds.add(1L);
         mockImgStoreIds.add(2L);
         mockResult.put("storeId", 1);
         mockResult.put("imgStoreIds", mockImgStoreIds);
-        when(storeService.saveStoreAndRelationInfo(storeSaveParameter)).thenReturn(mockResult);
+        when(storeService.saveStoreAndRelationInfo(storeSaveBody)).thenReturn(mockResult);
 
         // when
-        Map<String, Object> result = storeService.saveStoreAndRelationInfo(storeSaveParameter);
+        Map<String, Object> result = storeService.saveStoreAndRelationInfo(storeSaveBody);
 
         // then
-        verify(storeService, times(1)).saveStoreAndRelationInfo(storeSaveParameter);
+        verify(storeService, times(1)).saveStoreAndRelationInfo(storeSaveBody);
         Assertions.assertEquals(result.get("storeId"), 1);
         Assertions.assertEquals(result.get("imgStoreIds"), mockImgStoreIds);
     }
