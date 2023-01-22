@@ -14,8 +14,7 @@ public class ImgStoreService {
 
     public List<Long> saveImgStores(Long storeId, String pathDatas) {
         List<Long> imgStoreIds = new ArrayList<Long>();
-        pathDatas = pathDatas.replace("[", "");
-        pathDatas = pathDatas.replace("]", "");
+        pathDatas = pathDatas.replaceAll("[\\[\\[\\]]","");
         if (pathDatas.equals("")) return imgStoreIds;
         for (String path : pathDatas.split(",")) {
             ImgStore imgStore = new ImgSaveStoreDto(storeId, path).createSaveImgStoreBuilder();
