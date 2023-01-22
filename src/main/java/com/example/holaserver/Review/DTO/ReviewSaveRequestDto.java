@@ -12,8 +12,7 @@ public class ReviewSaveRequestDto {
     private Long storeId;
     private String reviewText;
 
-    @Builder
-    public Review toEntity(){
+    public Review createSaveStoreBuilder(){
         return Review.builder()
                 .storeId(storeId)
                 .userId(userId)
