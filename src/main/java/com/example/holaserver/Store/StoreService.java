@@ -38,10 +38,10 @@ public class StoreService {
         return this.imgStoreService.saveImgStores(storeId, pathDatas);
     }
 
-    public void updateStoreStatusById(Long storeId) {
+    public void updateStoreStatusById(Long storeId, Boolean isReady) {
         StoreSaveBody storeSaveBody = new StoreSaveBody();
         Optional<Store> storeResult = Optional.ofNullable(this.storeRepository.findById(storeId)
                 .orElseThrow(NoSuchElementException::new));
-        storeResult.ifPresent(store -> this.storeRepository.save(storeSaveBody.updateStoreStatusBuilder(storeId, store)));
+        storeResult.ifPresent(store -> this.storeRepository.save(storeSaveBody.updateStoreStatusBuilder(storeId, store, isReady)));
     }
 }
