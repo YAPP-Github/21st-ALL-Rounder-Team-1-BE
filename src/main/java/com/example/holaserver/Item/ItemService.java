@@ -31,7 +31,7 @@ public class ItemService {
         List<Long> itemIds = itemRepository.saveAll(items).stream().map(Item::getId)
                 .collect(Collectors.toList());
         result.addObject("itemIds", itemIds);
-        storeService.updateStoreStatusById(storeId);
+        storeService.updateStoreStatusById(storeId, isReady);
         return result.getModel();
     }
 }

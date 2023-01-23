@@ -20,6 +20,7 @@ public class StoreSaveBody {
     private String instaAccount;
     private String callNumber;
     private String registrationNumber;
+    private Boolean isReady;
 
     public Store createSaveStoreBuilder(Long userId) {
         return Store.builder()
@@ -34,10 +35,11 @@ public class StoreSaveBody {
                 .instaAccount(instaAccount)
                 .callNumber(callNumber)
                 .registrationNumber(registrationNumber)
+                .isReady(false)
                 .build();
     }
 
-    public Store updateStoreStatusBuilder(Long id, Store storeData) {
+    public Store updateStoreStatusBuilder(Long id, Store storeData, Boolean isReady) {
         return Store.builder()
                 .id(id)
                 .userId(storeData.getUserId())
@@ -52,7 +54,7 @@ public class StoreSaveBody {
                 .callNumber(storeData.getCallNumber())
                 .registrationNumber(storeData.getRegistrationNumber())
                 .isDayOff(storeData.getIsDayOff())
-                .isReady(storeData.getIsReady())
+                .isReady(isReady)
                 .build();
     }
 }

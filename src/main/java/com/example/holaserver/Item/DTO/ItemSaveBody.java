@@ -33,6 +33,7 @@ public class ItemSaveBody {
     public Item updateSaveItemBuilder(Long storeId, Boolean isReady, Long itemId) {
         return Item.builder()
                 .id(itemId)
+                .storeId(storeId)
                 .title(title)
                 .price(price)
                 .unit(unit)
