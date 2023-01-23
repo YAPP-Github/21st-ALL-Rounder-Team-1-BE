@@ -45,7 +45,7 @@ public class UserController {
     }
 
 
-    @PatchMapping("/user/profile")
+    @PatchMapping("/user/edit-profile")
     public ResponseTemplate<UserInfoResponse> editProfile(@RequestBody ProfileEditBody profileEditBody) throws NotFoundException {
         UserInfoResponse response = userService.editProfile(profileEditBody);
         return new ResponseTemplate<>(response, "프로필 수정 성공");
