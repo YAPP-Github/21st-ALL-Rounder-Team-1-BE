@@ -17,7 +17,22 @@ public class ItemController {
             @RequestBody ItemSaveBody[] itemSaveBodies,
             @PathVariable Long storeId
         ) {
+            return new ResponseTemplate<>(itemService.saveItems(
+                storeId,
+                itemSaveBodies,
+                true
+        ), "상품 정보 저장 성공");
+    }
+
+    @PostMapping("/{storeId}/items/temporary-save")
+    public ResponseTemplate<Map<String, Object>> itemSaveByTemporarySave(
+            @RequestBody ItemSaveBody[] itemSaveBodies,
+            @PathVariable Long storeId
+    ) {
         return new ResponseTemplate<>(itemService.saveItems(
-                storeId, itemSaveBodies), "상품 정보 저장 성공");
+                storeId,
+                itemSaveBodies,
+                false
+        ), "상품 정보 임시저장 성공");
     }
 }

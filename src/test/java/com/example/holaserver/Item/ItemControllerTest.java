@@ -34,13 +34,13 @@ public class ItemControllerTest {
         Map<String, Object> mockResult = new HashMap<String, Object>();
         mockResult.put("itemIds", 1);
         mockResult.put("itemIds", 2);
-        when(itemService.saveItems(storeId, new ItemSaveBody[1])).thenReturn(mockResult);
+        when(itemService.saveItems(storeId, new ItemSaveBody[1], false)).thenReturn(mockResult);
         // when
         ResponseTemplate<Map<String, Object>> result = itemController.itemSave(new ItemSaveBody[1], storeId);
 
 
         // then
-        verify(itemService, times(1)).saveItems(storeId, new ItemSaveBody[1]);
+        verify(itemService, times(1)).saveItems(storeId, new ItemSaveBody[1], false);
         Assertions.assertEquals(result.getData(), mockResult);
     }
 
