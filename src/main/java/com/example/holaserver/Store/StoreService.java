@@ -3,16 +3,17 @@ package com.example.holaserver.Store;
 import com.example.holaserver.Auth.AuthService;
 import com.example.holaserver.Store.DTO.StoreSaveBody;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
-import javassist.tools.web.BadHttpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.transaction.NotSupportedException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.zip.DataFormatException;
 
 @Service
 @RequiredArgsConstructor
@@ -45,5 +46,9 @@ public class StoreService {
         Optional<Store> storeResult = Optional.ofNullable(this.storeRepository.findById(storeId)
                 .orElseThrow(NoSuchElementException::new));
         storeResult.ifPresent(store -> this.storeRepository.save(storeSaveBody.updateStoreStatusBuilder(storeId, store, isReady)));
+    }
+
+    public Store findStoreByUserId() throws DataFormatException {
+        return storeRepository.findByUserId(authService.getPayloadByToken()).orElseThrow(DataFormatException::new);
     }
 }
