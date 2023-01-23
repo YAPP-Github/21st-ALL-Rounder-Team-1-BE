@@ -4,11 +4,13 @@ import com.example.holaserver.Auth.Dto.KakaoLoginResponse;
 import com.example.holaserver.Auth.OauthService;
 import com.example.holaserver.Common.response.ResponseTemplate;
 import com.example.holaserver.User.Dto.BossSaveDto;
+import com.example.holaserver.User.Dto.ProfileEditBody;
 import com.example.holaserver.User.Dto.UserInfoResponse;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
 
 
 @RestController
@@ -42,4 +44,10 @@ public class UserController {
         return new ResponseTemplate<>(response, "사장님 정보 입력 성공");
     }
 
+
+    @PatchMapping("/user/edit-profile")
+    public ResponseTemplate<UserInfoResponse> editProfile(@RequestBody ProfileEditBody profileEditBody) throws NotFoundException {
+        UserInfoResponse response = userService.editProfile(profileEditBody);
+        return new ResponseTemplate<>(response, "프로필 수정 성공");
+    }
 }
