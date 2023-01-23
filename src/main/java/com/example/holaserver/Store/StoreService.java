@@ -48,6 +48,7 @@ public class StoreService {
         storeResult.ifPresent(store -> this.storeRepository.save(storeSaveBody.updateStoreStatusBuilder(storeId, store, isReady)));
     }
 
+    /* 해당 유저가 가지고 있는 가게 2개 이상일 시 Error */
     public Store findStoreByUserId() throws DataFormatException {
         return storeRepository.findByUserId(authService.getPayloadByToken()).orElseThrow(DataFormatException::new);
     }

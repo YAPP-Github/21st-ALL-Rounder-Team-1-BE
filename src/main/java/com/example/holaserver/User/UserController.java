@@ -22,9 +22,7 @@ public class UserController {
     private final OauthService oauthService;
     @GetMapping("/login/oauth/kakao")
     public ResponseTemplate<KakaoLoginResponse> kakaoLogin(@RequestParam String code){
-
         KakaoLoginResponse kaKaoLoginResponse = oauthService.kakaoLogin(code);
-
         return new ResponseTemplate<>(kaKaoLoginResponse, "로그인 성공");
     }
 
