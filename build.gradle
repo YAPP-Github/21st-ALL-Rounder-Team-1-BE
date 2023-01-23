@@ -29,6 +29,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework:spring-webflux'
+    testImplementation 'org.mockito:mockito-all:1.9.5'
     testCompileOnly 'org.projectlombok:lombok'
     implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
     implementation 'junit:junit:4.13.1'
@@ -39,9 +40,6 @@ dependencies {
     implementation group: 'commons-io', name: 'commons-io', version: '2.7'
     implementation 'ch.qos.logback:logback-classic:1.2.9'
     implementation 'ch.qos.logback:logback-core:1.2.9'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.0'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-aws-secrets-manager-config:2.2.6.RELEASE'
-//    implementation 'commons-io:commons-io:2.5'
 }
 
 //sourceSets {
@@ -57,7 +55,7 @@ jar {
 }
 
 bootRun {
-    String activeProfile = System.properties['spring.profiles.active']
+    String activeProfile = System.properties['--spring.profiles.active']
     println "PROFILE: $activeProfile"
     systemProperty "spring.profiles.active", activeProfile
 }
@@ -66,6 +64,10 @@ tasks {
     processResources {
         duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
     }
+}
+
+test {
+    useJUnitPlatform()
 }
 
 //tasks.named('test') {

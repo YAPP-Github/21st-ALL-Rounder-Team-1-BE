@@ -86,13 +86,13 @@ spring:
       on-profile: dev_RDS
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://hola-database-dev.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db
+    url: jdbc:mysql://pump-dev-rds.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/pump_db
     username: admin
-    password: ENC(3nZX/W12Sk1jB85jqPIotd2ayIw5yOCx)
+    password: ENC(/cJZD1ARyKTSw/XJjt+8/51BlUPKGlhgdYqztnXKEZU=)
   flyway:
     enabled: true
     baseline-on-migrate: true
-    url: jdbc:mysql://hola-database-dev.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/hola_db
+    url: jdbc:mysql://pump-dev-rds.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/pump_db
     user: admin
     password: ENC(Pcm8kY3Tqz5sNy4ECAzerxYvJaUrN/6Y)
   security:
