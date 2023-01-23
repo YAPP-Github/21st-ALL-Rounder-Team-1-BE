@@ -23,7 +23,7 @@ public class StoreTest {
             true,
             false);
     @Test
-    public void Store_모델에서_getName_을_실행하면_Store_name_이_반환된다() {
+    public void Store_모델에서_getName을_호출하면_가게이름이_반환된다() {
         assertEquals("yunmin", store.getName());
     }
 

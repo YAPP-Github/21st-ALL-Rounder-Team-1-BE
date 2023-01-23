@@ -1,31 +1,27 @@
 package com.example.holaserver.Store;
 
-import com.example.holaserver.Item.DTO.ItemSaveDto;
-import com.example.holaserver.Store.DTO.StoreSaveRequestDto;
+import com.example.holaserver.Store.DTO.StoreSaveBody;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@WebMvcTest
 public class StoreServiceTest {
     @Mock
     StoreRepository storeRepository;
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
     public void saveStore_는_StoreSaveRequestDto_를_받아_storeId_를_반환한다() {
         // given
-        MockitoAnnotations.initMocks(this);
-        StoreSaveRequestDto storeDto = new StoreSaveRequestDto(
+        StoreSaveBody storeDto = new StoreSaveBody(
                 "name",
                 "1234",
                 "4321",
@@ -43,6 +39,6 @@ public class StoreServiceTest {
 
         // then
         verify(storeRepository, times(1)).save((Store) notNull());
-        assertEquals(store.getUserId(), 123L);
+        Assertions.assertEquals(store.getUserId(), 123L);
     }
 }

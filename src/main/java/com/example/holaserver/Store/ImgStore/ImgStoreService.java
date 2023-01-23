@@ -1,6 +1,6 @@
 package com.example.holaserver.Store.ImgStore;
 
-import com.example.holaserver.Store.ImgStore.DTO.ImgSaveStoreDto;
+import com.example.holaserver.Store.ImgStore.DTO.ImgStoreBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class ImgStoreService {
         pathDatas = pathDatas.replaceAll("[\\[\\[\\]]","");
         if (pathDatas.equals("")) return imgStoreIds;
         for (String path : pathDatas.split(",")) {
-            ImgStore imgStore = new ImgSaveStoreDto(storeId, path).createSaveImgStoreBuilder();
+            ImgStore imgStore = new ImgStoreBody(storeId, path).createSaveImgStoreBuilder();
             imgStoreIds.add(this.imgStoreRepository.save(imgStore).getId());
         }
         return imgStoreIds;

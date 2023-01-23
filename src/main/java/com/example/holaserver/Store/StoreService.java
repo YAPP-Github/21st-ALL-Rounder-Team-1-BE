@@ -1,27 +1,26 @@
 package com.example.holaserver.Store;
 
-import com.example.holaserver.Item.DTO.ItemSaveDto;
-import com.example.holaserver.Item.ItemService;
-import com.example.holaserver.Store.DTO.StoreSaveRequestDto;
+import com.example.holaserver.Store.DTO.StoreSaveBody;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
+import javassist.tools.web.BadHttpRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class StoreService {
     private final StoreRepository storeRepository;
     private final ImgStoreService imgStoreService;
-    private final ItemService itemService;
 
     @Transactional
-    public Map<String, Object> saveStoreAndRelationInfo(StoreSaveRequestDto storeDto) {
+    public Map<String, Object> saveStoreAndRelationInfo(StoreSaveBody storeDto) {
         Long storeId = this.saveStore(storeDto);
         List<Long> imgPathIds = this.saveImgStores(storeId, storeDto.getImgPath());
         if (imgPathIds.size() == 0) throw new Error("이미지 저장 에러");
@@ -31,11 +30,18 @@ public class StoreService {
         return result.getModel();
     }
 
-    private Long saveStore(StoreSaveRequestDto storeDto) {
+    private Long saveStore(StoreSaveBody storeDto) {
         return storeRepository.save(storeDto.createSaveStoreBuilder(123L)).getId();
     }
     
     private List<Long> saveImgStores(Long storeId, String pathDatas) {
         return this.imgStoreService.saveImgStores(storeId, pathDatas);
+    }
+
+    public void updateStoreStatusById(Long storeId) {
+        StoreSaveBody storeSaveBody = new StoreSaveBody();
+        Optional<Store> storeResult = Optional.ofNullable(this.storeRepository.findById(storeId)
+                .orElseThrow(NoSuchElementException::new));
+        storeResult.ifPresent(store -> this.storeRepository.save(storeSaveBody.updateStoreStatusBuilder(storeId, store)));
     }
 }

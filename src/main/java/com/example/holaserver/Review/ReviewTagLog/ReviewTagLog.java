@@ -1,15 +1,18 @@
-package com.example.holaserver.Review;
+package com.example.holaserver.Review.ReviewTagLog;
 
 import com.example.holaserver.Common.BaseTimeEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class ReviewTagLog extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,6 +24,4 @@ public class ReviewTagLog extends BaseTimeEntity {
     private Long storeId;
 
     private Long reviewTagId;
-
-    private Timestamp removedAt;
 }

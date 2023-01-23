@@ -4,7 +4,7 @@ import com.example.holaserver.Store.Store;
 import lombok.Getter;
 
 @Getter
-public class StoreResponseDto {
+public class StoreResponse {
     private final Long id;
     private final Long userId;
     private final String name;
@@ -20,7 +20,7 @@ public class StoreResponseDto {
     private final Boolean isDayOff;
     private final Boolean isReady;
 
-    public StoreResponseDto(Store entity) {
+    public StoreResponse(Store entity) {
         this.id = entity.getId();
         this.userId = entity.getUserId();
         this.name = entity.getName();
