@@ -1,7 +1,7 @@
 server:
   port: 3000
   servlet:
-    context-path: /
+    context-path: /api
 
 spring:
   profiles:
@@ -15,6 +15,7 @@ spring:
       production:
         - prod_RDS
         - common
+    include: oauth
 ---
 spring:
   config:
@@ -31,6 +32,27 @@ spring:
     properties:
       hibernate.format_sql: true
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+#kakao
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ENC(7RDQutIREzg2KjhNKLL1Rs0t9hhKLb0NTtYmvNCQ0jnTz77At+QUAaevxa7fjTW4)
+            client-secret: ENC(hLdaCtaN7omaYTCH137YYqATd1zi8C3mU18GILWYAn+B4Wm2B1D8jbBpllGO2WIr)
+            scope:
+              - profile_nickname
+              - account_email
+            client-name: Kakao #꼭 있어야하는건지는 모르겠음
+            authorization-grant-type: authorization_code
+            #redirect-uri: http://localhost:3000/api/login/oauth/kakao
+            client-authentication-method: POST
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
@@ -51,6 +73,12 @@ spring:
     user: admin
 #    password: hola-db-pw
     password: ENC(DOsrC3KSq2v+kPkt+mNllsiojS7aOWCu)
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            redirect-uri: http://localhost:3000/api/login/oauth/kakao
 ---
 spring:
   config:
@@ -66,7 +94,13 @@ spring:
     baseline-on-migrate: true
     url: jdbc:mysql://pump-dev-rds.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/pump_db
     user: admin
-    password: ENC(/cJZD1ARyKTSw/XJjt+8/51BlUPKGlhgdYqztnXKEZU=)
+    password: ENC(Pcm8kY3Tqz5sNy4ECAzerxYvJaUrN/6Y)
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            redirect-uri: http://52.79.190.156:3000/api/login/oauth/kakao
 ---
 spring:
   config:

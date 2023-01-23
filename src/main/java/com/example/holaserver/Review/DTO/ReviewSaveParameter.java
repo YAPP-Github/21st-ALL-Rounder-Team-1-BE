@@ -1,18 +1,19 @@
-package com.example.holaserver.Review;
+package com.example.holaserver.Review.DTO;
 
-import lombok.Builder;
+import com.example.holaserver.Review.Review;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ReviewSaveRequestDto {
+@AllArgsConstructor
+public class ReviewSaveParameter {
     private Long userId;
     private Long storeId;
     private String reviewText;
 
-    @Builder
-    public Review toEntity(){
+    public Review createSaveStoreBuilder(){
         return Review.builder()
                 .storeId(storeId)
                 .userId(userId)
