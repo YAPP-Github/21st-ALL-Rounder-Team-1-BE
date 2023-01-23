@@ -53,4 +53,9 @@ public class User extends BaseTimeEntity {
         this.phoneNumber = phoneNumber;
         this.type = Type.BOSS;
     }
+
+    public void editProfile(String nickname, String imgPath){
+        this.nickname = nickname;
+        this.imgPath = imgPath;
+    }
 }
