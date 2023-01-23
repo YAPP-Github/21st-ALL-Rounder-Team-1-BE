@@ -3,7 +3,7 @@ package com.example.holaserver.User;
 import com.example.holaserver.Auth.Dto.KakaoLoginResponse;
 import com.example.holaserver.Auth.OauthService;
 import com.example.holaserver.Common.response.ResponseTemplate;
-import com.example.holaserver.User.Dto.BossSaveDto;
+import com.example.holaserver.User.Dto.BossSaveBody;
 import com.example.holaserver.User.Dto.ProfileEditBody;
 import com.example.holaserver.User.Dto.UserInfoResponse;
 import javassist.NotFoundException;
@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 
 
 @RestController
@@ -39,8 +40,8 @@ public class UserController {
     }
 
     @PatchMapping("/user/manager")
-    public ResponseTemplate<User> updateBossInfo(@RequestBody BossSaveDto bossSaveDto) throws NotFoundException {
-        User response = userService.updateBoss(bossSaveDto);
+    public ResponseTemplate<User> updateBossInfo(@RequestBody BossSaveBody bossSaveBody) throws NotFoundException {
+        User response = userService.updateBoss(bossSaveBody);
         return new ResponseTemplate<>(response, "사장님 정보 입력 성공");
     }
 
@@ -49,5 +50,10 @@ public class UserController {
     public ResponseTemplate<UserInfoResponse> editProfile(@RequestBody ProfileEditBody profileEditBody) throws NotFoundException {
         UserInfoResponse response = userService.editProfile(profileEditBody);
         return new ResponseTemplate<>(response, "프로필 수정 성공");
+    }
+
+    @GetMapping("/user")
+    public ResponseTemplate<Optional<User>> userDetails() {
+        return new ResponseTemplate<>(userService.findUser(), "유저 로딩 성공");
     }
 }

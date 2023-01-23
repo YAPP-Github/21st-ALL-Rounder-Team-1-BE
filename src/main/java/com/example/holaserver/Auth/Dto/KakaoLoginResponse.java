@@ -1,6 +1,6 @@
 package com.example.holaserver.Auth.Dto;
 
-import com.example.holaserver.User.Type;
+import com.example.holaserver.User.Enum.Type;
 import com.example.holaserver.User.User;
 import lombok.Builder;
 import lombok.Getter;

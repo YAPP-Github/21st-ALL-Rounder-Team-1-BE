@@ -1,5 +1,6 @@
 package com.example.holaserver.Store;
 
+import com.example.holaserver.Auth.AuthService;
 import com.example.holaserver.Store.DTO.StoreSaveBody;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
 import javassist.tools.web.BadHttpRequest;
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class StoreService {
     private final StoreRepository storeRepository;
     private final ImgStoreService imgStoreService;
+    private final AuthService authService;
 
     @Transactional
     public Map<String, Object> saveStoreAndRelationInfo(StoreSaveBody storeDto) {
@@ -31,7 +33,7 @@ public class StoreService {
     }
 
     private Long saveStore(StoreSaveBody storeDto) {
-        return storeRepository.save(storeDto.createSaveStoreBuilder(123L)).getId();
+        return storeRepository.save(storeDto.createSaveStoreBuilder(authService.getPayloadByToken())).getId();
     }
     
     private List<Long> saveImgStores(Long storeId, String pathDatas) {

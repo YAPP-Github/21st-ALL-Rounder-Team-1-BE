@@ -22,6 +22,7 @@ public class StoreServiceTest {
     public void saveStore_는_StoreSaveRequestDto_를_받아_storeId_를_반환한다() {
         // given
         StoreSaveBody storeDto = new StoreSaveBody(
+                123L,
                 "name",
                 "1234",
                 "4321",
@@ -31,7 +32,8 @@ public class StoreServiceTest {
                 "[\"path1\",\"path2\",\"path3\"]",
                 "@yunmin",
                 "010-1234-4321",
-                "110-4321"
+                "110-4321",
+                true
         );
         // when
         when(storeRepository.save((Store) notNull())).thenReturn(storeDto.createSaveStoreBuilder(123L));

@@ -1,6 +1,7 @@
 package com.example.holaserver.User;
 
 import com.example.holaserver.Common.BaseTimeEntity;
+import com.example.holaserver.User.Enum.Type;
 import lombok.*;
 
 import javax.persistence.*;
