@@ -63,10 +63,13 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String resolveToken(HttpServletRequest request) {
 
+    public String resolveToken(HttpServletRequest request) {
+        // TODO : oauth 로그인 시 필터 적용 안되게 바꾸기
         String token =  request.getHeader("Authorization");
-        return token.substring(7);
+        if(token != null)
+            return token.substring(7);
+        else return null;
     }
 
     public boolean validateToken(String token) {

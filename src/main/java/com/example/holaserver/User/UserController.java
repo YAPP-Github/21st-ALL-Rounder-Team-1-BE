@@ -6,6 +6,7 @@ import com.example.holaserver.Common.response.ResponseTemplate;
 import com.example.holaserver.User.Dto.BossSaveDto;
 import com.example.holaserver.User.Dto.ProfileEditBody;
 import com.example.holaserver.User.Dto.UserInfoResponse;
+import com.example.holaserver.User.Dto.UserSaveBody;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,12 @@ public class UserController {
         KakaoLoginResponse kaKaoLoginResponse = oauthService.kakaoLogin(code);
 
         return new ResponseTemplate<>(kaKaoLoginResponse, "로그인 성공");
+    }
+
+    @PostMapping("/user/kakao-login")
+    public ResponseTemplate<String> saveKakaoUser(@RequestBody UserSaveBody userSaveBody){
+        String token = userService.saveKakaoUser(userSaveBody);
+        return new ResponseTemplate<>(token, "회원가입 완료");
     }
 
     @GetMapping("/user/{nickname}")

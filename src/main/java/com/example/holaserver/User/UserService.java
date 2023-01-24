@@ -1,10 +1,12 @@
 package com.example.holaserver.User;
 
 import com.example.holaserver.Auth.AuthService;
+import com.example.holaserver.Auth.JwtTokenProvider;
 import com.example.holaserver.Auth.OauthService;
 import com.example.holaserver.User.Dto.BossSaveDto;
 import com.example.holaserver.User.Dto.ProfileEditBody;
 import com.example.holaserver.User.Dto.UserInfoResponse;
+import com.example.holaserver.User.Dto.UserSaveBody;
 import javassist.NotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,19 @@ public class UserService {
 
     private final OauthService oauthService;
     private final AuthService authService;
+    private final JwtTokenProvider jwtTokenProvider;
+
+    public String saveKakaoUser(UserSaveBody userSaveBody) {
+        User user = User.builder()
+                .name(userSaveBody.getName())
+                .email(userSaveBody.getEmail())
+                .rating((byte) 1)
+                .imgPath(userSaveBody.getImgPath())
+                .oauthIdentity(userSaveBody.getOauthIdentity())
+                .oauthType("Kakao")
+                .build();
+        return jwtTokenProvider.createToken(userRepository.save(user).getId());
+    }
 
     public UserInfoResponse loadMyInfo() throws NotFoundException{
         Long userId = authService.getPayloadByToken();
