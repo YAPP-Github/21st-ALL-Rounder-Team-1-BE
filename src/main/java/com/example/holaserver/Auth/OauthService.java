@@ -39,23 +39,12 @@ public class OauthService {
         SocialUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
         String oauthIdentity = Long.toString(kakaoUserInfo.getId());
         User kakaoUser;
-        Long savedUserIdx;
+        String token = null;
         if(findUser(oauthIdentity, "Kakao")){
             kakaoUser = userRepository.findByOauthIdentity(oauthIdentity);
-            savedUserIdx = kakaoUser.getId();
-        } else {
-            kakaoUser = User.builder()
-                    .name(kakaoUserInfo.getKakao_account().getProfile().getNickname())
-                    .email(kakaoUserInfo.getKakao_account().getEmail())
-                    .rating((byte) 1)
-                    .imgPath(kakaoUserInfo.getKakao_account().getProfile().getProfile_image_url())
-                    .oauthIdentity(oauthIdentity)
-                    .oauthType("Kakao")
-                    .build();
-            savedUserIdx = userRepository.save(kakaoUser).getId();
+            token = jwtTokenProvider.createToken(kakaoUser.getId());
         }
-        String token = jwtTokenProvider.createToken(savedUserIdx);
-        KakaoLoginResponse response = new KakaoLoginResponse(kakaoUserInfo.getId(), kakaoUser, token);
+        KakaoLoginResponse response = new KakaoLoginResponse(kakaoUserInfo, oauthIdentity, token);
         return response;
     }
 
