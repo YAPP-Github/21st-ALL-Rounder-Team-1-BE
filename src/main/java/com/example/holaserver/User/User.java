@@ -1,6 +1,7 @@
 package com.example.holaserver.User;
 
 import com.example.holaserver.Common.BaseTimeEntity;
+import com.example.holaserver.User.Enum.Type;
 import lombok.*;
 
 import javax.persistence.*;
@@ -52,5 +53,10 @@ public class User extends BaseTimeEntity {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.type = Type.BOSS;
+    }
+
+    public void editProfile(String nickname, String imgPath){
+        this.nickname = nickname;
+        this.imgPath = imgPath;
     }
 }
