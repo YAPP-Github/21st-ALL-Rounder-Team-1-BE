@@ -4,7 +4,6 @@ import com.example.holaserver.Auth.Dto.KakaoLoginResponse;
 import com.example.holaserver.Auth.OauthService;
 import com.example.holaserver.Common.response.ResponseTemplate;
 import com.example.holaserver.User.Dto.BossSaveBody;
-import com.example.holaserver.User.Dto.ProfileEditBody;
 import com.example.holaserver.User.Dto.UserInfoResponse;
 import com.example.holaserver.User.Dto.UserSaveBody;
 import javassist.NotFoundException;
@@ -51,10 +50,10 @@ public class UserController {
     }
 
 
-    @PatchMapping("/user/edit-profile")
-    public ResponseTemplate<UserInfoResponse> editProfile(@RequestBody ProfileEditBody profileEditBody) throws NotFoundException {
-        UserInfoResponse response = userService.editProfile(profileEditBody);
-        return new ResponseTemplate<>(response, "프로필 수정 성공");
+    @PatchMapping("/user")
+    public ResponseTemplate<User> editProfile(@RequestBody User userModifyBody) throws NotFoundException {
+        User response = userService.ModifyUser(userModifyBody);
+        return new ResponseTemplate<>(response, "유저 수정 성공");
     }
 
     @GetMapping("/user")
