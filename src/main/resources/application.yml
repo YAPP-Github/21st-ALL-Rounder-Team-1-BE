@@ -88,13 +88,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://pump-dev-rds.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/pump_db
     username: admin
-    password: ENC(/cJZD1ARyKTSw/XJjt+8/51BlUPKGlhgdYqztnXKEZU=)
+    password: pump-rds-password
   flyway:
     enabled: true
     baseline-on-migrate: true
     url: jdbc:mysql://pump-dev-rds.c8f0ftyenjhu.ap-northeast-2.rds.amazonaws.com:3306/pump_db
     user: admin
-    password: ENC(Pcm8kY3Tqz5sNy4ECAzerxYvJaUrN/6Y)
+    password: pump-rds-password
   security:
     oauth2:
       client:
