@@ -3,13 +3,11 @@ package com.example.holaserver.Store.DTO;
 import com.example.holaserver.Store.Store;
 import lombok.*;
 
-import java.util.Optional;
-
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-public class StoreSaveBody {
+public class StoreBody {
     private Long id;
+    private Long userId;
     private String name;
     private String latitude;
     private String longitude;
@@ -22,6 +20,7 @@ public class StoreSaveBody {
     private String registrationNumber;
     private Boolean isReady;
 
+    @Builder
     public Store createSaveStoreBuilder(Long userId) {
         return Store.builder()
                 .userId(userId)
@@ -39,6 +38,7 @@ public class StoreSaveBody {
                 .build();
     }
 
+    @Builder
     public Store updateStoreStatusBuilder(Long id, Store storeData, Boolean isReady) {
         return Store.builder()
                 .id(id)
@@ -56,5 +56,25 @@ public class StoreSaveBody {
                 .isDayOff(storeData.getIsDayOff())
                 .isReady(isReady)
                 .build();
+    }
+
+    @Builder
+    public Store updateStoreBuilder(StoreBody storeBody, Long userId) {
+        return Store.builder()
+                .id(storeBody.getId())
+                .userId(userId)
+                .name(storeBody.getName())
+                .status("VIEW")
+                .latitude(storeBody.getLatitude())
+                .longitude(storeBody.getLongitude())
+                .businessHour(storeBody.getBusinessHour())
+                .notice(storeBody.getNotice())
+                .address(storeBody.getAddress())
+                .instaAccount(storeBody.getInstaAccount())
+                .callNumber(storeBody.getCallNumber())
+                .registrationNumber(storeBody.getRegistrationNumber())
+                .isReady(true)
+                .build();
+
     }
 }
