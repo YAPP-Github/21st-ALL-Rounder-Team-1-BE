@@ -1,0 +1,2 @@
+ALTER TABLE store MODIFY latitude DECIMAL(18, 10);
+ALTER TABLE store MODIFY longitude DECIMAL(18, 10);

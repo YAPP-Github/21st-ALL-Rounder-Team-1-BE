@@ -2,12 +2,15 @@ package com.example.holaserver.Store;
 
 import com.example.holaserver.Auth.AuthService;
 import com.example.holaserver.Store.DTO.StoreBody;
+import com.example.holaserver.Store.DTO.StoreByAddressResponse;
+import com.example.holaserver.Store.DTO.StoreByLatitudeAndLongitudeResponse;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -22,11 +25,16 @@ public class StoreService {
     private final AuthService authService;
 
     @Transactional
-    public Map<String, Object> saveStoreAndRelationInfo(StoreBody storeDto) {
-        Long storeId = this.saveStore(storeDto);
-        List<Long> imgPathIds = this.saveImgStores(storeId, storeDto.getImgPath());
-        if (imgPathIds.size() == 0) throw new Error("이미지 저장 에러");
+    public Map<String, Object> saveStoreAndRelationInfo(StoreBody storeDto, Boolean isUpdate) {
         ModelAndView result = new ModelAndView();
+        Long storeId; List<Long> imgPathIds;
+
+        if (isUpdate) storeId = this.updateStore(storeDto);
+        else storeId = this.saveStore(storeDto);
+
+        imgPathIds = this.saveImgStores(storeId, storeDto.getImgPath());
+        if (imgPathIds.size() == 0) throw new Error("이미지 저장 에러");
+
         result.addObject("storeId", storeId);
         result.addObject("imgStoreIds", imgPathIds);
         return result.getModel();
@@ -34,6 +42,10 @@ public class StoreService {
 
     private Long saveStore(StoreBody storeDto) {
         return storeRepository.save(storeDto.createSaveStoreBuilder(authService.getPayloadByToken())).getId();
+    }
+
+    private Long updateStore(StoreBody storeDto) {
+        return storeRepository.save(storeDto.updateStoreBuilder(storeDto, authService.getPayloadByToken())).getId();
     }
     
     private List<Long> saveImgStores(Long storeId, String pathDatas) {
@@ -52,8 +64,8 @@ public class StoreService {
         return storeRepository.findByUserId(authService.getPayloadByToken()).orElseThrow(DataFormatException::new);
     }
 
-    public Long updateStore(StoreBody storeDto) {
-
-        return storeRepository.save(storeDto.updateStoreBuilder(storeDto, authService.getPayloadByToken())).getId();
+    public List<StoreByLatitudeAndLongitudeResponse> findStoresByLongitudeAndLatitude(String longitude, String latitude) {
+        return this.storeRepository.findStoreByLatitudeAndLongitude(longitude, latitude);
     }
+
 }

@@ -35,4 +35,12 @@ public class ItemController {
                 false
         ), "상품 정보 임시저장 성공");
     }
+
+//    @PutMapping("/{storeId}/items")
+//    public ResponseTemplate<Map<String, Object>> itemUpdate(
+//        @RequestBody ItemSaveBody[] itemSaveBodies,
+//        @PathVariable Long storeId
+//    ) {
+//
+//    }
 }
