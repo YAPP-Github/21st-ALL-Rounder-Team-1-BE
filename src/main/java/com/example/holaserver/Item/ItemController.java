@@ -1,8 +1,10 @@
 package com.example.holaserver.Item;
 
 import com.example.holaserver.Common.response.ResponseTemplate;
+import com.example.holaserver.Item.DTO.ItemListByStoreIdBody;
 import com.example.holaserver.Item.DTO.ItemSaveBody;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,5 +40,7 @@ public class ItemController {
     }
 
     @GetMapping("/{storeId}/items")
-    public ResponseTemplate<List<Item>> itemListByStoreId()
+    public ResponseTemplate<List<Item>> itemListByStoreId(@PathVariable Long storeId) {
+        return new ResponseTemplate<>(itemService.findByStoreId(storeId), "상품 정보 가져오기 성공");
+    }
 }
