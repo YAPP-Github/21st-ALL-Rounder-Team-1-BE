@@ -35,6 +35,7 @@ public class User extends BaseTimeEntity {
 
     private String imgPath;
 
+    @Setter
     private Timestamp removedAt;
 
     @Builder

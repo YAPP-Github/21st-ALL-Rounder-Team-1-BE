@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -69,5 +70,15 @@ public class UserService {
 
     public Optional<User> findUser() {
         return userRepository.findById(authService.getPayloadByToken());
+    }
+
+    public Timestamp removeUser() throws NotFoundException{
+        Long userId = authService.getPayloadByToken();
+        if(userId == null) throw new NotFoundException("올바르지 않은 토큰입니다.");
+        User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        user.setRemovedAt(timestamp);
+        return timestamp;
+
     }
 }

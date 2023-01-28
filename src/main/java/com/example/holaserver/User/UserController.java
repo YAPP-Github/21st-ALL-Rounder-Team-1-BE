@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.Optional;
 
 
@@ -51,7 +52,7 @@ public class UserController {
 
 
     @PatchMapping("/user")
-    public ResponseTemplate<User> editProfile(@RequestBody User userModifyBody) throws NotFoundException {
+    public ResponseTemplate<User> userModify(@RequestBody User userModifyBody) throws NotFoundException {
         User response = userService.ModifyUser(userModifyBody);
         return new ResponseTemplate<>(response, "유저 수정 성공");
     }
@@ -59,5 +60,11 @@ public class UserController {
     @GetMapping("/user")
     public ResponseTemplate<Optional<User>> userDetails() {
         return new ResponseTemplate<>(userService.findUser(), "유저 로딩 성공");
+    }
+
+    @DeleteMapping("/user")
+    public ResponseTemplate<Timestamp> userRemove() throws NotFoundException{
+        Timestamp response = userService.removeUser();
+        return new ResponseTemplate<>(response, "유저 탈퇴 성공");
     }
 }
