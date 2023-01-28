@@ -28,9 +28,14 @@ public class StoreController {
         return new ResponseTemplate<>(storeService.findStoreByUserId(), "가게 정보 불러오기 성공");
     }
 
-    @PutMapping("/store")
+    @PatchMapping ("/store")
     public ResponseTemplate<Map<String, Object>> storeUpdate(@RequestBody StoreBody storeBody) {
         return new ResponseTemplate<>(storeService.saveStoreAndRelationInfo(storeBody, true), "가게 정보 업데이트 성공");
+    }
+
+    @DeleteMapping("/store")
+    public ResponseTemplate<Map<String, Object>> storeDelete(@RequestBody StoreDeleteBody storeDeleteBody) {
+        return new ResponseTemplate<>(storeService.deleteStoreById(storeDeleteBody), "가게 정보 삭제 완료");
     }
 
     @GetMapping("/user/{longitude}/{latitude}/stores")
@@ -41,9 +46,6 @@ public class StoreController {
         return new ResponseTemplate<>(storeService.findStoresByLongitudeAndLatitude(longitude, latitude), "유저 위치 가게 정보 불러오기 성공");
     }
 
-    @DeleteMapping("/store")
-    public ResponseTemplate<Map<String, Object>> storeDelete(@RequestBody StoreDeleteBody storeDeleteBody) {
-        return new ResponseTemplate<>(storeService.deleteStoreById(storeDeleteBody), "가게 정보 삭제 완료");
-    }
+
 
 }

@@ -26,7 +26,7 @@ public class StoreService {
 
     @Transactional
     public Map<String, Object> saveStoreAndRelationInfo(StoreBody storeDto, Boolean isUpdate) {
-        ModelAndView result = new ModelAndView();
+        ModelMap result = new ModelMap();
         Long storeId; List<Long> imgPathIds;
 
         if (isUpdate) storeId = this.updateStore(storeDto);
@@ -35,11 +35,12 @@ public class StoreService {
         imgPathIds = this.saveImgStores(storeId, storeDto.getImgPath());
         if (imgPathIds.size() == 0) throw new Error("이미지 저장 에러");
 
-        result.addObject("storeId", storeId);
-        result.addObject("imgStoreIds", imgPathIds);
-        return result.getModel();
+        result.addAttribute("storeId", storeId);
+        result.addAttribute("imgStoreIds", imgPathIds);
+        return result;
     }
 
+    @Transactional
     public Map<String, Object> deleteStoreById(StoreDeleteBody storeDeleteBody) {
         ModelMap result = new ModelMap();
         this.deleteStore(storeDeleteBody.getStoreId());
@@ -78,5 +79,4 @@ public class StoreService {
     public List<StoreByLatitudeAndLongitudeResponse> findStoresByLongitudeAndLatitude(String longitude, String latitude) {
         return this.storeRepository.findStoreByLatitudeAndLongitude(longitude, latitude);
     }
-
 }
