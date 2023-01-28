@@ -2,15 +2,15 @@ package com.example.holaserver.Store;
 
 import com.example.holaserver.Auth.AuthService;
 import com.example.holaserver.Store.DTO.StoreBody;
-import com.example.holaserver.Store.DTO.StoreByAddressResponse;
 import com.example.holaserver.Store.DTO.StoreByLatitudeAndLongitudeResponse;
+import com.example.holaserver.Store.DTO.StoreDeleteBody;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -40,12 +40,23 @@ public class StoreService {
         return result.getModel();
     }
 
+    public Map<String, Object> deleteStoreById(StoreDeleteBody storeDeleteBody) {
+        ModelMap result = new ModelMap();
+        this.deleteStore(storeDeleteBody.getStoreId());
+        result.addAttribute("storeId", storeDeleteBody.getStoreId());
+        return result;
+    }
+
     private Long saveStore(StoreBody storeDto) {
         return storeRepository.save(storeDto.createSaveStoreBuilder(authService.getPayloadByToken())).getId();
     }
 
     private Long updateStore(StoreBody storeDto) {
         return storeRepository.save(storeDto.updateStoreBuilder(storeDto, authService.getPayloadByToken())).getId();
+    }
+
+    public void deleteStore(Long storeId) {
+        storeRepository.deleteById(storeId);
     }
     
     private List<Long> saveImgStores(Long storeId, String pathDatas) {

@@ -2,9 +2,10 @@ package com.example.holaserver.Store;
 
 import com.example.holaserver.Common.response.ResponseTemplate;
 import com.example.holaserver.Store.DTO.StoreBody;
-import com.example.holaserver.Store.DTO.StoreByAddressResponse;
 import com.example.holaserver.Store.DTO.StoreByLatitudeAndLongitudeResponse;
+import com.example.holaserver.Store.DTO.StoreDeleteBody;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -38,6 +39,11 @@ public class StoreController {
             @PathVariable String latitude
             ) {
         return new ResponseTemplate<>(storeService.findStoresByLongitudeAndLatitude(longitude, latitude), "유저 위치 가게 정보 불러오기 성공");
+    }
+
+    @DeleteMapping("/store")
+    public ResponseTemplate<Map<String, Object>> storeDelete(@RequestBody StoreDeleteBody storeDeleteBody) {
+        return new ResponseTemplate<>(storeService.deleteStoreById(storeDeleteBody), "가게 정보 삭제 완료");
     }
 
 }

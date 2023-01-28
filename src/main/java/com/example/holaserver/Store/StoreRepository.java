@@ -1,6 +1,5 @@
 package com.example.holaserver.Store;
 
-import com.example.holaserver.Store.DTO.StoreByAddressResponse;
 import com.example.holaserver.Store.DTO.StoreByLatitudeAndLongitudeResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
