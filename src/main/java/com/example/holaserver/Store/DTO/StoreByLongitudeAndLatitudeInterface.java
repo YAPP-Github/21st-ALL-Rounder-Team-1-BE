@@ -1,12 +1,12 @@
 package com.example.holaserver.Store.DTO;
 
-public interface StoreByLatitudeAndLongitudeResponse {
+public interface StoreByLongitudeAndLatitudeInterface {
     Long getId();
     Long getUserId();
     String getName();
     String getStatus();
-    String getLatitude();
     String getLongitude();
+    String getLatitude();
     String getBusinessHour();
     String getNotice();
     String getAddress();

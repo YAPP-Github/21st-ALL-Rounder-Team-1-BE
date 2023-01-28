@@ -2,13 +2,12 @@ package com.example.holaserver.Store;
 
 import com.example.holaserver.Common.response.ResponseTemplate;
 import com.example.holaserver.Store.DTO.StoreBody;
-import com.example.holaserver.Store.DTO.StoreByLatitudeAndLongitudeResponse;
+import com.example.holaserver.Store.DTO.StoreByLongitudeAndLatitudeInterface;
+import com.example.holaserver.Store.DTO.StoreByLongitudeAndLatitudeResponse;
 import com.example.holaserver.Store.DTO.StoreDeleteBody;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.DataFormatException;
@@ -39,7 +38,7 @@ public class StoreController {
     }
 
     @GetMapping("/user/{longitude}/{latitude}/stores")
-    public ResponseTemplate<List<StoreByLatitudeAndLongitudeResponse>> storeListByAddress(
+    public ResponseTemplate<List<StoreByLongitudeAndLatitudeResponse>> storeListByAddress(
             @PathVariable String longitude,
             @PathVariable String latitude
             ) {

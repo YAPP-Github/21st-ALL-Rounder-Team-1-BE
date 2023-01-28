@@ -19,12 +19,8 @@ public class ImgStore extends BaseTimeEntity {
     private Long storeId;
     private String path;
 
-    public ImgStore(
-            Long storeId,
-            String path
-    ) {
+    public ImgStore(Long storeId, String path) {
         this.storeId = storeId;
         this.path = path;
     }
-
 }
