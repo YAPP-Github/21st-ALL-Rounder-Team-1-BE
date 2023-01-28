@@ -5,6 +5,7 @@ import com.example.holaserver.Item.DTO.ItemSaveBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -35,4 +36,7 @@ public class ItemController {
                 false
         ), "상품 정보 임시저장 성공");
     }
+
+    @GetMapping("/{storeId}/items")
+    public ResponseTemplate<List<Item>> itemListByStoreId()
 }
