@@ -21,8 +21,9 @@ public class ImgReview extends BaseTimeEntity {
     private Long reviewId;
     private String path;
 
-    public ImgReview(Long storeId, String path) {
-        this.reviewId = storeId;
+    @Builder
+    public ImgReview(Long reviewId, String path) {
+        this.reviewId = reviewId;
         this.path = path;
     }
 }
