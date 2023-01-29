@@ -1,12 +1,10 @@
 package com.example.holaserver.Store.ImgStore;
 
 import com.example.holaserver.Common.BaseTimeEntity;
+import com.example.holaserver.Store.Store;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Entity
@@ -19,15 +17,10 @@ public class ImgStore extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long storeId;
-
     private String path;
 
-    public ImgStore(
-            Long storeId,
-            String path
-    ) {
+    public ImgStore(Long storeId, String path) {
         this.storeId = storeId;
         this.path = path;
     }
-
 }

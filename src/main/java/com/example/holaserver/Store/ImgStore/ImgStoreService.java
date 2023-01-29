@@ -22,4 +22,8 @@ public class ImgStoreService {
         }
         return imgStoreIds;
     }
+
+    public List<ImgStore> findImgStoreByStoreId(Long storeId) {
+        return imgStoreRepository.findImgStoreByStoreId(storeId);
+    }
 }

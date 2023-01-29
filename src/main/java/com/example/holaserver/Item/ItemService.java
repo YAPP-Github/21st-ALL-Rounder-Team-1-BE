@@ -1,5 +1,6 @@
 package com.example.holaserver.Item;
 
+import com.example.holaserver.Item.DTO.ItemListByStoreIdBody;
 import com.example.holaserver.Item.DTO.ItemSaveBody;
 import com.example.holaserver.Store.Store;
 import com.example.holaserver.Store.StoreService;
@@ -33,5 +34,9 @@ public class ItemService {
         result.addObject("itemIds", itemIds);
         storeService.updateStoreStatusById(storeId, isReady);
         return result.getModel();
+    }
+
+    public List<Item> findByStoreId(Long storeId) {
+        return itemRepository.findItemsByStoreId(storeId);
     }
 }

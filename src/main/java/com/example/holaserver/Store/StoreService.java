@@ -2,16 +2,21 @@ package com.example.holaserver.Store;
 
 import com.example.holaserver.Auth.AuthService;
 import com.example.holaserver.Store.DTO.StoreBody;
+import com.example.holaserver.Store.DTO.StoreByLongitudeAndLatitudeInterface;
+import com.example.holaserver.Store.DTO.StoreByLongitudeAndLatitudeResponse;
+import com.example.holaserver.Store.DTO.StoreDeleteBody;
+import com.example.holaserver.Store.ImgStore.ImgStore;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.ModelMap;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.zip.DataFormatException;
 
 @Service
@@ -22,18 +27,39 @@ public class StoreService {
     private final AuthService authService;
 
     @Transactional
-    public Map<String, Object> saveStoreAndRelationInfo(StoreBody storeDto) {
-        Long storeId = this.saveStore(storeDto);
-        List<Long> imgPathIds = this.saveImgStores(storeId, storeDto.getImgPath());
+    public Map<String, Object> saveStoreAndRelationInfo(StoreBody storeDto, Boolean isUpdate) {
+        ModelMap result = new ModelMap();
+        Long storeId; List<Long> imgPathIds;
+
+        if (isUpdate) storeId = this.updateStore(storeDto);
+        else storeId = this.saveStore(storeDto);
+
+        imgPathIds = this.saveImgStores(storeId, storeDto.getImgPath());
         if (imgPathIds.size() == 0) throw new Error("이미지 저장 에러");
-        ModelAndView result = new ModelAndView();
-        result.addObject("storeId", storeId);
-        result.addObject("imgStoreIds", imgPathIds);
-        return result.getModel();
+
+        result.addAttribute("storeId", storeId);
+        result.addAttribute("imgStoreIds", imgPathIds);
+        return result;
+    }
+
+    @Transactional
+    public Map<String, Object> deleteStoreById(StoreDeleteBody storeDeleteBody) {
+        ModelMap result = new ModelMap();
+        this.deleteStore(storeDeleteBody.getStoreId());
+        result.addAttribute("storeId", storeDeleteBody.getStoreId());
+        return result;
     }
 
     private Long saveStore(StoreBody storeDto) {
         return storeRepository.save(storeDto.createSaveStoreBuilder(authService.getPayloadByToken())).getId();
+    }
+
+    private Long updateStore(StoreBody storeDto) {
+        return storeRepository.save(storeDto.updateStoreBuilder(storeDto, authService.getPayloadByToken())).getId();
+    }
+
+    public void deleteStore(Long storeId) {
+        storeRepository.deleteById(storeId);
     }
     
     private List<Long> saveImgStores(Long storeId, String pathDatas) {
@@ -52,8 +78,11 @@ public class StoreService {
         return storeRepository.findByUserId(authService.getPayloadByToken()).orElseThrow(DataFormatException::new);
     }
 
-    public Long updateStore(StoreBody storeDto) {
-
-        return storeRepository.save(storeDto.updateStoreBuilder(storeDto, authService.getPayloadByToken())).getId();
+    public List<StoreByLongitudeAndLatitudeResponse> findStoresByLongitudeAndLatitude(String longitude, String latitude) {
+        List<StoreByLongitudeAndLatitudeInterface> stores = this.storeRepository.findStoreByLatitudeAndLongitude(longitude, latitude);
+        return stores.stream().map(store -> {
+            List<ImgStore> imgStores = imgStoreService.findImgStoreByStoreId(store.getId());
+            return new StoreByLongitudeAndLatitudeResponse(store, imgStores);
+        }).collect(Collectors.toList());
     }
 }
