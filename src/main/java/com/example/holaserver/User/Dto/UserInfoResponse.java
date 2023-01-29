@@ -6,9 +6,9 @@ import lombok.Getter;
 
 @Getter
 public class UserInfoResponse {
-    private String nickname;
-    private String imgPath;
-    private Byte rating;
+    private final String nickname;
+    private final String imgPath;
+    private final Byte rating;
 
     @Builder
     public UserInfoResponse(User entity){

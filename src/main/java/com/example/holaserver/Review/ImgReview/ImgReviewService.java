@@ -19,4 +19,8 @@ public class ImgReviewService {
             return this.imgReviewRepository.save(imgReview).getId();
         }).collect(Collectors.toList());
     }
+
+    public List<ImgReview> findByReviewId(Long reviewId) {
+        return imgReviewRepository.findImgReviewsByReviewId(reviewId);
+    }
 }

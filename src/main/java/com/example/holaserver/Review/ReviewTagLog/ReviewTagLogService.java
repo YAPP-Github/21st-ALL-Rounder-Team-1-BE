@@ -20,4 +20,8 @@ public class ReviewTagLogService {
             return this.reviewTagLogRepository.save(reviewTagLog).getId();
         }).collect(Collectors.toList());
     }
+
+    public List<ReviewTagLog> findByReviewId(Long reviewId) {
+        return reviewTagLogRepository.findReviewTagLogByReviewId(reviewId);
+    }
 }
