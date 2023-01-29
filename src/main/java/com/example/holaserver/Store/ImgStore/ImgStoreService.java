@@ -15,7 +15,7 @@ public class ImgStoreService {
 
     public List<Long> saveImgStores(Long storeId, String[] pathDatas) {
         return Arrays.stream(pathDatas).map(pathData -> {
-            ImgStore imgStore = new ImgStoreBody(storeId, pathData).createSaveImgStoreBuilder();
+            ImgStore imgStore = new ImgStoreBody().createSaveImgStoreBuilder(storeId, pathData);
             return this.imgStoreRepository.save(imgStore).getId();
         }).collect(Collectors.toList());
     }
