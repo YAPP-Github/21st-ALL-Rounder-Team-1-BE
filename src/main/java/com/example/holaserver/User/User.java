@@ -35,7 +35,6 @@ public class User extends BaseTimeEntity {
 
     private String imgPath;
 
-    @Setter
     private Timestamp removedAt;
 
     @Builder
@@ -66,5 +65,9 @@ public class User extends BaseTimeEntity {
         this.oauthIdentity = user.getOauthIdentity();
         this.rating = user.getRating();
         this.imgPath = user.getImgPath();
+    }
+
+    public void removeUser(){
+        this.removedAt = new Timestamp(System.currentTimeMillis());
     }
 }

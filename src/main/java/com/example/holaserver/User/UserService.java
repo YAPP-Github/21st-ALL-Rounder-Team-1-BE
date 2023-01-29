@@ -76,9 +76,7 @@ public class UserService {
         Long userId = authService.getPayloadByToken();
         if(userId == null) throw new NotFoundException("올바르지 않은 토큰입니다.");
         User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        user.setRemovedAt(timestamp);
+        user.removeUser();
         return userId;
-
     }
 }
