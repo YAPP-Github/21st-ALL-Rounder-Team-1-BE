@@ -30,7 +30,7 @@ public class ReviewService {
 
     public ReviewResponse loadReview(Long reviewId){
         Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new NoSuchElementException());
+                .orElseThrow(NoSuchElementException::new);
         return new ReviewResponse(review);
     }
 }
