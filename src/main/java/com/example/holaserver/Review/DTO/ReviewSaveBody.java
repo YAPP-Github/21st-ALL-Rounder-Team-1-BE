@@ -13,7 +13,7 @@ public class ReviewSaveBody {
     private Long storeId;
     private String reviewText;
     private String[] imgPath;
-    private Long[] reviewTagId;
+    private Long[] reviewTagIds;
 
     public Review createReviewBuilder(){
         return Review.builder()

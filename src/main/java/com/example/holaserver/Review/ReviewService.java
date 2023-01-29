@@ -3,6 +3,7 @@ package com.example.holaserver.Review;
 import com.example.holaserver.Review.DTO.ReviewResponse;
 import com.example.holaserver.Review.DTO.ReviewSaveBody;
 import com.example.holaserver.Review.ImgReview.ImgReviewService;
+import com.example.holaserver.Review.ReviewTagLog.ReviewTagLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -17,14 +18,22 @@ import java.util.NoSuchElementException;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ImgReviewService imgReviewService;
+    private final ReviewTagLogService reviewTagLogService;
 
     @Transactional
     public Map<String, Object> saveReviewAndRelationInfo(ReviewSaveBody reviewSaveBody) {
         ModelMap result = new ModelMap();
         Long reviewId = this.saveReview(reviewSaveBody);
         List<Long> imgReviewIds = imgReviewService.saveImgReview(reviewId, reviewSaveBody.getImgPath());
-
-
+        List<Long> reviewTagLogIds = reviewTagLogService.saveReviewTagLog(
+                reviewSaveBody.getUserId(),
+                reviewSaveBody.getStoreId(),
+                reviewId,
+                reviewSaveBody.getReviewTagIds()
+        );
+        result.addAttribute("reviewId", reviewId);
+        result.addAttribute("imgReviewIds", imgReviewIds);
+        result.addAttribute("reviewTagLogIds", reviewTagLogIds);
         return result;
     }
 

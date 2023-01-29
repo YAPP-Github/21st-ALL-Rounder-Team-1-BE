@@ -2,7 +2,6 @@ package com.example.holaserver.Review.ImgReview;
 
 import com.example.holaserver.Review.ImgReview.DTO.ImgReviewBody;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
