@@ -1,7 +1,6 @@
 package com.example.holaserver.Store.ImgStore;
 
 import com.example.holaserver.Common.BaseTimeEntity;
-import com.example.holaserver.Store.Store;
 import lombok.*;
 
 import javax.persistence.*;

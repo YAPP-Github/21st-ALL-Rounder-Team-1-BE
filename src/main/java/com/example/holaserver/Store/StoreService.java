@@ -62,7 +62,7 @@ public class StoreService {
         storeRepository.deleteById(storeId);
     }
     
-    private List<Long> saveImgStores(Long storeId, String pathDatas) {
+    private List<Long> saveImgStores(Long storeId, String[] pathDatas) {
         return this.imgStoreService.saveImgStores(storeId, pathDatas);
     }
 

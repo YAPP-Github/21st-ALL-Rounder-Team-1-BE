@@ -17,14 +17,14 @@ import java.util.zip.DataFormatException;
 public class StoreController {
     private final StoreService storeService;
 
-    @PostMapping("/store")
-    public ResponseTemplate<Map<String, Object>> storeSave(@RequestBody StoreBody storeBody) {
-        return new ResponseTemplate<>(storeService.saveStoreAndRelationInfo(storeBody, false), "가게 정보 저장 성공");
-    }
-
     @GetMapping("/user/store")
     public ResponseTemplate<Store> storeDetailsByUserId() throws DataFormatException {
         return new ResponseTemplate<>(storeService.findStoreByUserId(), "가게 정보 불러오기 성공");
+    }
+
+    @PostMapping("/store")
+    public ResponseTemplate<Map<String, Object>> storeSave(@RequestBody StoreBody storeBody) {
+        return new ResponseTemplate<>(storeService.saveStoreAndRelationInfo(storeBody, false), "가게 정보 저장 성공");
     }
 
     @PatchMapping ("/store")
