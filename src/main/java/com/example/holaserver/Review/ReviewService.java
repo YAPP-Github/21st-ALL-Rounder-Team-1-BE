@@ -40,6 +40,7 @@ public class ReviewService {
     }
 
     public List<ReviewByStoreResponse> findReviewAndRelationInfo(Long storeId) {
+        List<Review> reviews = reviewRepository.findReviewsByStoreId(storeId);
 
     }
 
