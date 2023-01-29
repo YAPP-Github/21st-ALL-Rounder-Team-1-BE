@@ -14,7 +14,7 @@ public class StoreBody {
     private String businessHour;
     private String notice;
     private String address;
-    private String imgPath;
+    private String[] imgPath;
     private String instaAccount;
     private String callNumber;
     private String registrationNumber;
