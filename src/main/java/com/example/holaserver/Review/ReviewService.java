@@ -4,7 +4,9 @@ import com.example.holaserver.Auth.AuthService;
 import com.example.holaserver.Review.DTO.ReviewByStoreResponse;
 import com.example.holaserver.Review.DTO.ReviewResponse;
 import com.example.holaserver.Review.DTO.ReviewSaveBody;
+import com.example.holaserver.Review.ImgReview.ImgReview;
 import com.example.holaserver.Review.ImgReview.ImgReviewService;
+import com.example.holaserver.Review.ReviewTagLog.ReviewTagLog;
 import com.example.holaserver.Review.ReviewTagLog.ReviewTagLogService;
 import com.example.holaserver.User.User;
 import com.example.holaserver.User.UserService;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,8 +49,14 @@ public class ReviewService {
     }
 
     public List<ReviewByStoreResponse> findReviewAndRelationInfo(Long storeId) throws Exception {
-        Optional<User> user = Optional.ofNullable(userService.findUser().orElseThrow(() -> new NotFoundException("유저 정보가 없습니다.")));
+//        Optional<User> user = Optional.ofNullable(userService.findUser().orElseThrow(() -> new NotFoundException("유저 정보가 없습니다.")));
         List<Review> reviews = reviewRepository.findReviewsByStoreId(storeId);
+        return reviews.stream().map(review -> new ReviewByStoreResponse(
+                review,
+                userService.findUserById(review.getUserId()),
+                imgReviewService.findByReviewId(review.getId()),
+                reviewTagLogService.findByReviewId(review.getId())
+        )).collect(Collectors.toList());
 
 
     }

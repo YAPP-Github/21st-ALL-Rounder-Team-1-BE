@@ -28,9 +28,7 @@ public class ReviewController {
     }
 
     @GetMapping("/{storeId}/reviews")
-    public ResponseTemplate<List<ReviewByStoreResponse>> reviewListByStoreId(@PathVariable Long storeId) {
+    public ResponseTemplate<List<ReviewByStoreResponse>> reviewListByStoreId(@PathVariable Long storeId) throws Exception {
         return new ResponseTemplate<>(reviewService.findReviewAndRelationInfo(storeId), "가게 정보 리뷰 불러오기 성공.");
     }
-
-
 }

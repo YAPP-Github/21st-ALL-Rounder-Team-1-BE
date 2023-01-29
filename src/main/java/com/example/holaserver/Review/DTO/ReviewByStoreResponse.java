@@ -7,6 +7,7 @@ import com.example.holaserver.User.User;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 public class ReviewByStoreResponse {
@@ -17,10 +18,10 @@ public class ReviewByStoreResponse {
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
     private final User user;
-    private final ImgReview[] imgReviews;
-    private final ReviewTagLog[] reviewTagLogs;
+    private final List<ImgReview> imgReviews;
+    private final List<ReviewTagLog> reviewTagLogs;
 
-    public ReviewByStoreResponse(Review review, User user, ImgReview[] imgReviews, ReviewTagLog[] reviewTagLogs) {
+    public ReviewByStoreResponse(Review review, User user, List<ImgReview> imgReviews, List<ReviewTagLog> reviewTagLogs) {
         this.id = review.getId();
         this.storeId = review.getStoreId();
         this.userId = review.getUserId();
