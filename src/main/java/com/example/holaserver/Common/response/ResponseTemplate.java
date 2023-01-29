@@ -1,9 +1,12 @@
 package com.example.holaserver.Common.response;
 
+import com.example.holaserver.Store.DTO.StoreByAddressResponse;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
+
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
