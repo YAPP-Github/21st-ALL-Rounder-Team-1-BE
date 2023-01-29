@@ -1,5 +1,6 @@
 package com.example.holaserver.Review;
 
+import com.example.holaserver.Review.DTO.ReviewByStoreResponse;
 import com.example.holaserver.Review.DTO.ReviewResponse;
 import com.example.holaserver.Review.DTO.ReviewSaveBody;
 import com.example.holaserver.Review.ImgReview.ImgReviewService;
@@ -24,6 +25,7 @@ public class ReviewService {
     public Map<String, Object> saveReviewAndRelationInfo(ReviewSaveBody reviewSaveBody) {
         ModelMap result = new ModelMap();
         Long reviewId = this.saveReview(reviewSaveBody);
+        /* 이미지나 리뷰 태그를 달지 않을 수도 있어서 null 예외처리 X */
         List<Long> imgReviewIds = imgReviewService.saveImgReview(reviewId, reviewSaveBody.getImgPath());
         List<Long> reviewTagLogIds = reviewTagLogService.saveReviewTagLog(
                 reviewSaveBody.getUserId(),
@@ -37,8 +39,17 @@ public class ReviewService {
         return result;
     }
 
+    public List<ReviewByStoreResponse> findReviewAndRelationInfo(Long storeId) {
+
+    }
+
+
     private Long saveReview(ReviewSaveBody reviewSaveBody){
         return reviewRepository.save(reviewSaveBody.createReviewBuilder()).getId();
+    }
+
+    private List<Review> findReviewByStoreId(Long storeId) {
+        return reviewRepository.findReviewsByStoreId(storeId);
     }
 
     public ReviewResponse loadReview(Long reviewId){

@@ -25,4 +25,7 @@ public class ReviewController {
         return new ResponseTemplate<>(reviewService.loadReview(reviewId), "리뷰 불러오기에 성공했습니다.");
     }
 
+//    @GetMapping("/{storeId}/reviews")
+//    public ResponseTemplate
+
 }
