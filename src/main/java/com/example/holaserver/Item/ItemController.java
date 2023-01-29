@@ -1,7 +1,6 @@
 package com.example.holaserver.Item;
 
 import com.example.holaserver.Common.response.ResponseTemplate;
-import com.example.holaserver.Item.DTO.ItemListByStoreIdBody;
 import com.example.holaserver.Item.DTO.ItemSaveBody;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
