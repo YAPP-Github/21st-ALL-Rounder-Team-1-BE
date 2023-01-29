@@ -49,7 +49,6 @@ public class ReviewService {
     }
 
     public List<ReviewByStoreResponse> findReviewAndRelationInfo(Long storeId) throws Exception {
-//        Optional<User> user = Optional.ofNullable(userService.findUser().orElseThrow(() -> new NotFoundException("유저 정보가 없습니다.")));
         List<Review> reviews = reviewRepository.findReviewsByStoreId(storeId);
         return reviews.stream().map(review -> new ReviewByStoreResponse(
                 review,
