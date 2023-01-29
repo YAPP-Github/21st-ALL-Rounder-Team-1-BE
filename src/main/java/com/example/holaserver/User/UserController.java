@@ -63,8 +63,8 @@ public class UserController {
     }
 
     @DeleteMapping("/user")
-    public ResponseTemplate<Timestamp> userRemove() throws NotFoundException{
-        Timestamp response = userService.removeUser();
+    public ResponseTemplate<Long> userRemove() throws NotFoundException{
+        Long response = userService.removeUser();
         return new ResponseTemplate<>(response, "유저 탈퇴 성공");
     }
 }
