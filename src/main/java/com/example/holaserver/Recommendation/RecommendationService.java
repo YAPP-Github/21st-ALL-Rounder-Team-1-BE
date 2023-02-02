@@ -26,10 +26,11 @@ public class RecommendationService {
     public Map<String, Object> findRecommendation(RecommendationBody recommendationBody) {
         ModelMap result = new ModelMap();
 
+        Boolean isRecommendation = recommendationRepository.existsByUserIdAndStoreId(authService.getPayloadByToken(), recommendationBody.getStoreId());
+        Long storeRecommendationsCount = (long) findRecommendationByStoreId(recommendationBody.getStoreId()).size();
 
-
-//        result.addAttribute("recommendation", isRecommendation);
-//        result.addAttribute("count", storeRecommendationsCount);
+        result.addAttribute("recommendation", isRecommendation);
+        result.addAttribute("count", storeRecommendationsCount);
         return result;
     }
 
