@@ -29,6 +29,7 @@ public class ReviewService {
     private final ImgReviewService imgReviewService;
     private final ReviewTagLogService reviewTagLogService;
     private final UserService userService;
+    private final AuthService authService;
 
     @Transactional
     public Map<String, Object> saveReviewAndRelationInfo(ReviewSaveBody reviewSaveBody) {
@@ -56,8 +57,6 @@ public class ReviewService {
                 imgReviewService.findByReviewId(review.getId()),
                 reviewTagLogService.findByReviewId(review.getId())
         )).collect(Collectors.toList());
-
-
     }
 
 
@@ -73,5 +72,9 @@ public class ReviewService {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(NoSuchElementException::new);
         return new ReviewResponse(review);
+    }
+
+    public List<Review> loadReviewByUserId() {
+        return reviewRepository.findReviewsByUserId(authService.getPayloadByToken());
     }
 }
