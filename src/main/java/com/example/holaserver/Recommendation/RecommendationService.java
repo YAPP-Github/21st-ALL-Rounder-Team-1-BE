@@ -27,6 +27,9 @@ public class RecommendationService {
         ModelMap result = new ModelMap();
 
 
+
+//        result.addAttribute("recommendation", isRecommendation);
+//        result.addAttribute("count", storeRecommendationsCount);
         return result;
     }
 
@@ -41,7 +44,7 @@ public class RecommendationService {
         Long storeRecommendationsCount = (long) findRecommendationByStoreId(recommendationBody.getStoreId()).size();
 
         result.addAttribute("recommendationId", recommendationId);
-        result.addAttribute("recommendation", isRecommendation);
+        result.addAttribute("isRecommendation", isRecommendation);
         result.addAttribute("count", storeRecommendationsCount);
         return result;
     }
@@ -52,6 +55,10 @@ public class RecommendationService {
         Recommendation recommendation = findRecommendationByUserIdAndStoreId(
                 authService.getPayloadByToken(), recommendationBody.getStoreId());
         recommendation.removeRecommendation();
+        Long storeRecommendationsCount = (long) findRecommendationByStoreId(recommendationBody.getStoreId()).size();
+        Boolean isRecommendation = recommendationRepository.existsByUserIdAndStoreId(authService.getPayloadByToken(), recommendationBody.getStoreId());
+        result.addAttribute("isRecommendation", isRecommendation);
+        result.addAttribute("count", storeRecommendationsCount);
         return result;
     }
 
