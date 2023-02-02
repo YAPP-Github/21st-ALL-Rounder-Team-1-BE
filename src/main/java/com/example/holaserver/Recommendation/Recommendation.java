@@ -1,11 +1,7 @@
 package com.example.holaserver.Recommendation;
 
 import com.example.holaserver.Common.BaseTimeEntity;
-import com.example.holaserver.Review.ImgReview.ImgReview;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -16,6 +12,7 @@ import java.sql.Timestamp;
 @Where(clause = "removed_at IS NULL")
 @Table(name = "recommendation")
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor
 public class Recommendation extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +27,7 @@ public class Recommendation extends BaseTimeEntity {
         this.storeId = storeId;
     }
 
-    public void removedRecommendation() {
+    public void removeRecommendation() {
         this.removedAt = new Timestamp(System.currentTimeMillis());
     }
 }
