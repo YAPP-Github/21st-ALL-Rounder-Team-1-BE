@@ -11,16 +11,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.Arrays;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     @Bean
-    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        //httpSecurity.httpBasic().disable();
+    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
        http
                .csrf().disable()
                .httpBasic().disable()
@@ -29,8 +26,9 @@ public class SecurityConfig {
                .authorizeRequests()
                .anyRequest().permitAll()
                .and()
+               .cors()
+               .and()
                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
 }
