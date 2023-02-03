@@ -70,4 +70,8 @@ public class UserService {
     public Optional<User> findUser() {
         return userRepository.findById(authService.getPayloadByToken());
     }
+
+    public User findUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
+    }
 }

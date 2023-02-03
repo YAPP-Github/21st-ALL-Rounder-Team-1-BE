@@ -6,7 +6,6 @@ import lombok.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-@AllArgsConstructor
 public class ItemSaveBody {
     private Long id;
     private String title;
