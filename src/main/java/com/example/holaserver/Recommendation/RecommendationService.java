@@ -6,6 +6,7 @@ import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,6 +32,7 @@ public class RecommendationService {
         return result;
     }
 
+    // TODO: Transaction Isolation Level 추가필요
     @Transactional
     public Map<String, Object> saveRecommendation(RecommendationBody recommendationBody) throws Exception {
         ModelMap result = new ModelMap();
