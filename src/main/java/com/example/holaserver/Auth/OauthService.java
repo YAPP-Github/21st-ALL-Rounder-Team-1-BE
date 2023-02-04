@@ -19,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+
 @Service
 @Getter
 @RequiredArgsConstructor
@@ -33,9 +34,7 @@ public class OauthService {
     @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     String REDIRECT_URI;
 
-    public KakaoLoginResponse kakaoLogin(String code) {
-        String accessToken = getAccessToken(code);
-
+    public KakaoLoginResponse kakaoLogin(String accessToken) {
         SocialUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
         String oauthIdentity = Long.toString(kakaoUserInfo.getId());
         User kakaoUser;
@@ -89,5 +88,4 @@ public class OauthService {
     Boolean findUser (String oauthIdentity, String oauthType) {
         return userRepository.existsByOauthIdentityAndOauthType(oauthIdentity, oauthType);
     }
-
 }
