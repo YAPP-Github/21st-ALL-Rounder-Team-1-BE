@@ -64,7 +64,8 @@ public class StoreService {
     }
 
     public void deleteStore(Long storeId) {
-        storeRepository.deleteById(storeId);
+        Store store = storeRepository.findById(storeId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "이 아이디에 해당하는 가게가 없습니다."));
+        store.removeStore();
     }
     
     private List<Long> saveImgStores(Long storeId, String[] pathDatas) {
@@ -84,8 +85,9 @@ public class StoreService {
     }
 
     /* 해당 유저가 가지고 있는 가게 2개 이상일 시 Error */
-    public Store findStoreByUserId() throws DataFormatException {
-        return storeRepository.findByUserId(authService.getPayloadByToken()).orElseThrow(DataFormatException::new);
+    public Store findStoreByUserId() {
+        return storeRepository.findByUserId(authService.getPayloadByToken())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "이 유저가 속해있는 가게가 없습니다"));
     }
 
     public List<StoreByLongitudeAndLatitudeResponse> findStoresByLongitudeAndLatitude(String longitude, String latitude) {
