@@ -9,8 +9,10 @@ import com.example.holaserver.User.Dto.UserSaveBody;
 import javassist.NotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -51,9 +53,9 @@ public class UserService {
         return userRepository.existsByNickname(nickname);
     }
 
-    public User updateBoss(BossSaveBody bossSaveBody) throws NotFoundException {
+    public User updateBoss(BossSaveBody bossSaveBody) {
         Long userId = authService.getPayloadByToken();
-        if(userId == null) throw new NotFoundException("올바르지 않은 토큰입니다.");
+        if(userId == null) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "올바르지 않은 토큰입니다.");
         User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
         user.saveBoss(bossSaveBody.getName(), bossSaveBody.getEmail(), bossSaveBody.getPhoneNumber());
         return user;
