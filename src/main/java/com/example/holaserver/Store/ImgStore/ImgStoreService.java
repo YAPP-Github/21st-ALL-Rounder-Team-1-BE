@@ -23,4 +23,9 @@ public class ImgStoreService {
     public List<ImgStore> findImgStoreByStoreId(Long storeId) {
         return imgStoreRepository.findImgStoreByStoreId(storeId);
     }
+
+    public void deleteByStoreId(Long storeId) {
+        imgStoreRepository.deleteImgStoresByStoreId(storeId);
+    }
+
 }

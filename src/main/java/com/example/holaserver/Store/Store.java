@@ -2,12 +2,15 @@ package com.example.holaserver.Store;
 
 import com.example.holaserver.Common.BaseTimeEntity;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Getter
 @Builder
+@Where(clause = "removed_at IS NULL")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "store")
@@ -41,6 +44,9 @@ public class Store extends BaseTimeEntity {
     private Boolean isDayOff;
     @Column(name = "is_ready")
     private Boolean isReady;
+    private Timestamp removedAt;
 
-
+    public void removeStore() {
+        this.removedAt = new Timestamp(System.currentTimeMillis());
+    }
 }
