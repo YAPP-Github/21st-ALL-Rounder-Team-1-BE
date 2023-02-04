@@ -34,6 +34,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
 
+
 @Service
 @Getter
 @RequiredArgsConstructor
@@ -48,10 +49,9 @@ public class OauthService {
     @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     String REDIRECT_URI;
 
-    public SocialLoginResponse kakaoLogin(String code) {
-        String accessToken = getAccessToken(code);
 
-        KakaoUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
+    public KakaoLoginResponse kakaoLogin(String accessToken) {
+        SocialUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
         String oauthIdentity = Long.toString(kakaoUserInfo.getId());
         User kakaoUser;
         String token = null;

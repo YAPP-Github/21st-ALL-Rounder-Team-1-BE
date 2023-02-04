@@ -25,9 +25,10 @@ public class UserController {
     private final UserService userService;
     private final OauthService oauthService;
     @GetMapping("/login/oauth/kakao")
-    public ResponseTemplate<SocialLoginResponse> kakaoLogin(@RequestParam String code){
-        SocialLoginResponse socialLoginResponse = oauthService.kakaoLogin(code);
-        return new ResponseTemplate<>(socialLoginResponse, "로그인 성공");
+
+    public ResponseTemplate<KakaoLoginResponse> kakaoLogin(@RequestParam String accessToken){
+        KakaoLoginResponse kaKaoLoginResponse = oauthService.kakaoLogin(accessToken);
+        return new ResponseTemplate<>(kaKaoLoginResponse, "로그인 성공");
     }
 
     @GetMapping("/login/oauth/apple")
