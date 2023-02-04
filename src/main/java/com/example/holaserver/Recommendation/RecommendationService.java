@@ -3,10 +3,10 @@ package com.example.holaserver.Recommendation;
 import com.example.holaserver.Auth.AuthService;
 import com.example.holaserver.Recommendation.DTO.RecommendationBody;
 import javassist.NotFoundException;
-import javassist.tools.web.BadHttpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -32,12 +32,14 @@ public class RecommendationService {
         return result;
     }
 
+    // TODO: Transaction Isolation Level 추가필요
     @Transactional
-    public Map<String, Object> saveRecommendation(RecommendationBody recommendationBody) {
+    public Map<String, Object> saveRecommendation(RecommendationBody recommendationBody) throws Exception {
         ModelMap result = new ModelMap();
         // pre-check 필요
-        if (recommendationRepository.existsByUserIdAndStoreId(authService.getPayloadByToken(), recommendationBody.getStoreId()))
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "유저가 이미 추천한 가게", new BadHttpRequest());
+        if (recommendationRepository.existsByUserIdAndStoreId(authService.getPayloadByToken(), recommendationBody.getStoreId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "유저가 이미 추천한 가게입니다.");
+        }
         Long recommendationId = saveRecommendationByStoreId(authService.getPayloadByToken(), recommendationBody.getStoreId());
         Boolean isRecommendation = recommendationRepository.existsByUserIdAndStoreId(authService.getPayloadByToken(), recommendationBody.getStoreId());
         Long storeRecommendationsCount = (long) findRecommendationByStoreId(recommendationBody.getStoreId()).size();

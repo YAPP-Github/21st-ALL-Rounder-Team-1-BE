@@ -19,7 +19,7 @@ public class RecommendationController {
     }
 
     @PostMapping("/recommendation")
-    public ResponseTemplate<Map<String, Object>> recommendationSave(@RequestBody RecommendationBody recommendationBody) {
+    public ResponseTemplate<Map<String, Object>> recommendationSave(@RequestBody RecommendationBody recommendationBody) throws Exception {
         return new ResponseTemplate<>(recommendationService.saveRecommendation(recommendationBody), "추천하기 성공");
     }
 

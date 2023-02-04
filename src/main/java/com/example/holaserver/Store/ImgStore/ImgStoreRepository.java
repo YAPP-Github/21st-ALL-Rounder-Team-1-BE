@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface ImgStoreRepository extends JpaRepository<ImgStore, Long> {
     List<ImgStore> findImgStoreByStoreId(Long storeId);
+    void deleteImgStoresByStoreId(Long storeId);
 }
