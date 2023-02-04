@@ -19,6 +19,10 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    set('springCloudVersion', "2020.0.2")
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -28,7 +32,6 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework:spring-webflux'
     testCompileOnly 'org.projectlombok:lombok'
     implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
     implementation 'junit:junit:4.13.1'
@@ -39,6 +42,7 @@ dependencies {
     implementation group: 'commons-io', name: 'commons-io', version: '2.7'
     implementation 'ch.qos.logback:logback-classic:1.2.9'
     implementation 'ch.qos.logback:logback-core:1.2.9'
+    implementation 'org.json:json:20220924'
 }
 
 //sourceSets {
