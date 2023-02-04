@@ -8,14 +8,13 @@ import com.example.holaserver.Store.DTO.StoreDeleteBody;
 import com.example.holaserver.Store.ImgStore.ImgStore;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.zip.DataFormatException;
 
@@ -31,11 +30,17 @@ public class StoreService {
         ModelMap result = new ModelMap();
         Long storeId; List<Long> imgPathIds;
 
-        if (isUpdate) storeId = this.updateStore(storeDto);
-        else storeId = this.saveStore(storeDto);
-
+        if (isUpdate) {
+            boolean isExist = storeRepository.existsById(storeDto.getId());
+            if (!isExist) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "업데이트 대상 가게가 없습니다.");
+            storeId = this.updateStore(storeDto);
+        }
+        else {
+            if (storeDto.getId() != null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "가게 신규 생성때는 ID를 넣으면 안됩니다.");
+            storeId = this.saveStoreByUserId(storeDto);
+        }
+        this.removedImgStoresByStoreId(storeId);
         imgPathIds = this.saveImgStores(storeId, storeDto.getImgPath());
-        if (imgPathIds.size() == 0) throw new Error("이미지 저장 에러");
 
         result.addAttribute("storeId", storeId);
         result.addAttribute("imgStoreIds", imgPathIds);
@@ -50,7 +55,7 @@ public class StoreService {
         return result;
     }
 
-    private Long saveStore(StoreBody storeDto) {
+    private Long saveStoreByUserId(StoreBody storeDto) {
         return storeRepository.save(storeDto.createSaveStoreBuilder(authService.getPayloadByToken())).getId();
     }
 
@@ -63,7 +68,12 @@ public class StoreService {
     }
     
     private List<Long> saveImgStores(Long storeId, String[] pathDatas) {
+        if (pathDatas == null) return new ArrayList<Long>();
         return this.imgStoreService.saveImgStores(storeId, pathDatas);
+    }
+
+    private void removedImgStoresByStoreId(Long storeId) {
+        imgStoreService.deleteByStoreId(storeId);
     }
 
     public void updateStoreStatusById(Long storeId, Boolean isReady) {

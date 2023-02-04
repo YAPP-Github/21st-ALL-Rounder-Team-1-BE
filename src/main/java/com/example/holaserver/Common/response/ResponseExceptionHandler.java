@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ResponseExceptionHandler {
     @ExceptionHandler(value = {Exception.class})
-    public ResponseTemplate<Object> handleAdminErrorException(ResponseException exception) {
+    public ResponseTemplate<Object> handleAdminErrorException(ResponseException exception) throws Exception {
         log.error("throw customException : {}", exception.getCause());
         return new ResponseTemplate<>(exception.getStatus(), exception.getMessage());
     }
