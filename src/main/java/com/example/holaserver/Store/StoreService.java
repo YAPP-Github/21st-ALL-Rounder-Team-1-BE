@@ -91,6 +91,7 @@ public class StoreService {
     }
 
     public List<StoreByLongitudeAndLatitudeResponse> findStoresByLongitudeAndLatitude(String longitude, String latitude) {
+        authService.getPayloadByToken();
         List<StoreByLongitudeAndLatitudeInterface> stores = this.storeRepository.findStoreByLatitudeAndLongitude(longitude, latitude);
         return stores.stream().map(store -> {
             List<ImgStore> imgStores = imgStoreService.findImgStoreByStoreId(store.getId());
