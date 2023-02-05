@@ -21,7 +21,7 @@ public class SocialLoginResponse {
     public SocialLoginResponse(KakaoUserInfoDto user, String oauthIdentity, String token){
         this.name = user.getKakao_account().getProfile().getNickname();
         this.email = user.getKakao_account().getEmail();
-        this.oauthType = "Kakao";
+        this.oauthType = "KAKAO";
         this.imgPath = user.getKakao_account().getProfile().getProfile_image_url();
         this.oauthIdentity = oauthIdentity;
         this.jwt = token;
@@ -29,7 +29,7 @@ public class SocialLoginResponse {
 
     @Builder
     public SocialLoginResponse(String oauthIdentity, String token){
-        this.oauthType = "Apple";
+        this.oauthType = "APPLE";
         this.oauthIdentity = oauthIdentity;
         this.jwt = token;
     }
