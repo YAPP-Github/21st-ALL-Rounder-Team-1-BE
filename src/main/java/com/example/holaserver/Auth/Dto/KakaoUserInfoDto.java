@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SocialUserInfoDto {
+public class KakaoUserInfoDto {
 
     private Long id;
     private kakao_account kakao_account;

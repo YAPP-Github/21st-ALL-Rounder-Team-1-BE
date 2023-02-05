@@ -9,5 +9,6 @@ public class UserSaveBody {
     private String name;
     private String email;
     private String imgPath;
+    private String oauthType;
     private String oauthIdentity;
 }

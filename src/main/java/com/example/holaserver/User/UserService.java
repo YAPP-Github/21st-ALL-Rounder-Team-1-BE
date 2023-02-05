@@ -26,14 +26,14 @@ public class UserService {
     private final AuthService authService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public String saveKakaoUser(UserSaveBody userSaveBody) {
+    public String saveUser(UserSaveBody userSaveBody) {
         User user = User.builder()
                 .name(userSaveBody.getName())
                 .email(userSaveBody.getEmail())
                 .rating((byte) 1)
                 .imgPath(userSaveBody.getImgPath())
                 .oauthIdentity(userSaveBody.getOauthIdentity())
-                .oauthType("Kakao")
+                .oauthType(userSaveBody.getOauthType())
                 .build();
         return jwtTokenProvider.createToken(userRepository.save(user).getId());
     }

@@ -1,27 +1,35 @@
 package com.example.holaserver.Auth.Dto;
 
-import com.example.holaserver.User.Enum.Type;
-import com.example.holaserver.User.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class KakaoLoginResponse {
+public class SocialLoginResponse {
     private String name;
     private String email;
     private String imgPath;
+
+    private String oauthType;
     private String oauthIdentity;
     private String jwt;
     private String refreshToken;
 
 
     @Builder
-    public KakaoLoginResponse(SocialUserInfoDto user,String oauthIdentity, String token){
+    public SocialLoginResponse(KakaoUserInfoDto user, String oauthIdentity, String token){
         this.name = user.getKakao_account().getProfile().getNickname();
         this.email = user.getKakao_account().getEmail();
+        this.oauthType = "KAKAO";
         this.imgPath = user.getKakao_account().getProfile().getProfile_image_url();
+        this.oauthIdentity = oauthIdentity;
+        this.jwt = token;
+    }
+
+    @Builder
+    public SocialLoginResponse(String oauthIdentity, String token){
+        this.oauthType = "APPLE";
         this.oauthIdentity = oauthIdentity;
         this.jwt = token;
     }
