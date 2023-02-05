@@ -13,6 +13,8 @@ import java.util.Optional;
 public interface StoreRepository extends JpaRepository<Store, Long> {
     Optional<Store> findByUserId(Long userId);
 
+    Boolean existsStoreById(Long storeId);
+
     @Query(value = "SELECT\n" +
             "    id, user_id, name, status, latitude, longitude, business_hour, notice, address," +
             "   insta_account, call_number, registration_number, is_ready,\n" +

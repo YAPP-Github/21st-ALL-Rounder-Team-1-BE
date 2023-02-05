@@ -16,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.zip.DataFormatException;
 
 @Service
 @RequiredArgsConstructor
@@ -97,5 +96,9 @@ public class StoreService {
             List<ImgStore> imgStores = imgStoreService.findImgStoreByStoreId(store.getId());
             return new StoreByLongitudeAndLatitudeResponse(store, imgStores);
         }).collect(Collectors.toList());
+    }
+
+    public Boolean existStoreById(Long storeId) {
+        return storeRepository.existsStoreById(storeId);
     }
 }

@@ -1,11 +1,12 @@
 package com.example.holaserver.Item;
 
 import com.example.holaserver.Item.DTO.ItemSaveBody;
-import com.example.holaserver.Store.Store;
 import com.example.holaserver.Store.StoreService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
@@ -36,9 +37,8 @@ public class ItemService {
     }
 
     public List<Item> findByStoreId(Long storeId) {
-        // TODO: 가게가 현재 존재하는지 체크 필요
-        // 존재하지 않는 가게입니다 😭  \n 다른 가게를 이용해 주세요.
-
+        if (storeService.existStoreById(storeId))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 가게입니다 \uD83D\uDE2D  \\n 다른 가게를 이용해 주세요.");
         return itemRepository.findItemsByStoreId(storeId);
     }
 }

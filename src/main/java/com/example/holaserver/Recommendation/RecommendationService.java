@@ -2,6 +2,7 @@ package com.example.holaserver.Recommendation;
 
 import com.example.holaserver.Auth.AuthService;
 import com.example.holaserver.Recommendation.DTO.RecommendationBody;
+import com.example.holaserver.Store.StoreService;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class RecommendationService {
     private final RecommendationRepository recommendationRepository;
+    private final StoreService storeService;
     private final AuthService authService;
 
     public Map<String, Object> findRecommendation(RecommendationBody recommendationBody) {
@@ -37,10 +39,10 @@ public class RecommendationService {
     public Map<String, Object> saveRecommendation(RecommendationBody recommendationBody) throws Exception {
         ModelMap result = new ModelMap();
         // pre-check 필요
-        // TODO: 가게가 현재 존재하는지 체크 필요
-        // 존재하지 않는 가게입니다 😭  \n 다른 가게를 이용해 주세요.
+        if (!storeService.existStoreById(recommendationBody.getStoreId()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 가게입니다 \uD83D\uDE2D  \\n 다른 가게를 이용해 주세요.");
         if (recommendationRepository.existsByUserIdAndStoreId(authService.getPayloadByToken(), recommendationBody.getStoreId())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 추천한 가게입니다.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 추천한 가게입니다 \uD83D\uDE1C");
         }
         Long recommendationId = saveRecommendationByStoreId(authService.getPayloadByToken(), recommendationBody.getStoreId());
         Boolean isRecommendation = recommendationRepository.existsByUserIdAndStoreId(authService.getPayloadByToken(), recommendationBody.getStoreId());
@@ -53,11 +55,14 @@ public class RecommendationService {
     }
 
     @Transactional
-    public Map<String, Object> removeRecommendation(RecommendationBody recommendationBody) throws NotFoundException {
+    public Map<String, Object> removeRecommendation(RecommendationBody recommendationBody) {
         ModelMap result = new ModelMap();
-        // TODO: 가게가 현재 존재하는지 체크 필요
-        // 존재하지 않는 가게입니다 😭  \n 다른 가게를 이용해 주세요.
+        if (!storeService.existStoreById(recommendationBody.getStoreId()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 가게입니다 \uD83D\uDE2D  \\n 다른 가게를 이용해 주세요.");
         // TODO: 추천이 취소 되었을 때 케이스 필요
+        if (!recommendationRepository.existsByUserIdAndStoreId(authService.getPayloadByToken(), recommendationBody.getStoreId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 완료된 요청입니다 \uD83D\uDE09 ");
+        }
         Recommendation recommendation = findRecommendationByUserIdAndStoreId(
                 authService.getPayloadByToken(), recommendationBody.getStoreId());
         recommendation.removeRecommendation();
