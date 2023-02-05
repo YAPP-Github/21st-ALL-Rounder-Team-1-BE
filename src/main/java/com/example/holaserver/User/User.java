@@ -66,4 +66,8 @@ public class User extends BaseTimeEntity {
         this.rating = user.getRating();
         this.imgPath = user.getImgPath();
     }
+
+    public void removeUser(){
+        this.removedAt = new Timestamp(System.currentTimeMillis());
+    }
 }
