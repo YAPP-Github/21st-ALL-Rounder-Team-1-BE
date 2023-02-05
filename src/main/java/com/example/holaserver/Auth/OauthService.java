@@ -55,7 +55,7 @@ public class OauthService {
         String oauthIdentity = Long.toString(kakaoUserInfo.getId());
         User kakaoUser;
         String token = null;
-        if(findUser(oauthIdentity, "Kakao")){
+        if(findUser(oauthIdentity, "KAKAO")){
             kakaoUser = userRepository.findByOauthIdentity(oauthIdentity);
             token = jwtTokenProvider.createToken(kakaoUser.getId());
         }
@@ -112,7 +112,7 @@ public class OauthService {
         User appleUser;
         String token = null;
 
-        if(findUser(oauthIdentity, "Apple")){
+        if(findUser(oauthIdentity, "APPLE")){
             appleUser = userRepository.findByOauthIdentity(oauthIdentity);
             token = jwtTokenProvider.createToken(appleUser.getId());
         }
