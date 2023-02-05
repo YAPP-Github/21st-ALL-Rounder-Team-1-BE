@@ -56,7 +56,8 @@ public class UserService {
     public User updateBoss(BossSaveBody bossSaveBody) {
         Long userId = authService.getPayloadByToken();
         if(userId == null) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "올바르지 않은 토큰입니다.");
-        User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "해당 유저의 가게가 없습니다."));
         user.saveBoss(bossSaveBody.getName(), bossSaveBody.getEmail(), bossSaveBody.getPhoneNumber());
         return user;
     }
