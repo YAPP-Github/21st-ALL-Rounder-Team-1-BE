@@ -13,9 +13,9 @@ import java.util.Map;
 public class RecommendationController {
     private final RecommendationService recommendationService;
 
-    @GetMapping("/recommendation")
-    public ResponseTemplate<Map<String, Object>> recommendationList(@RequestBody RecommendationBody recommendationBody) {
-        return new ResponseTemplate<>(recommendationService.findRecommendation(recommendationBody), "추천 불러오기 성공");
+    @GetMapping("/{storeId}/recommendation")
+    public ResponseTemplate<Map<String, Object>> recommendationList(@PathVariable Long storeId) {
+        return new ResponseTemplate<>(recommendationService.findRecommendation(storeId), "추천 불러오기 성공");
     }
 
     @PostMapping("/recommendation")
