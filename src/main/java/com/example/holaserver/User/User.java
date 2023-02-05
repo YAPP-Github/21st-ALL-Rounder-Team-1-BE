@@ -3,6 +3,7 @@ package com.example.holaserver.User;
 import com.example.holaserver.Common.BaseTimeEntity;
 import com.example.holaserver.User.Enum.Type;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -10,6 +11,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="User")
 @Getter
+@Where(clause = "removed_at IS NULL")
 @AllArgsConstructor
 @NoArgsConstructor
 public class User extends BaseTimeEntity {
