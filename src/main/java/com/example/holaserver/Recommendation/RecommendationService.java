@@ -59,7 +59,6 @@ public class RecommendationService {
         ModelMap result = new ModelMap();
         if (!storeService.existStoreById(recommendationBody.getStoreId()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 가게입니다 \uD83D\uDE2D  \\n 다른 가게를 이용해 주세요.");
-        // TODO: 추천이 취소 되었을 때 케이스 필요
         if (!recommendationRepository.existsByUserIdAndStoreId(authService.getPayloadByToken(), recommendationBody.getStoreId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 완료된 요청입니다 \uD83D\uDE09 ");
         }
