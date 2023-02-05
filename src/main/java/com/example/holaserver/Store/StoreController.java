@@ -37,10 +37,10 @@ public class StoreController {
         return new ResponseTemplate<>(storeService.deleteStoreById(storeDeleteBody), "가게 정보 삭제 완료");
     }
 
-    @GetMapping("/user/{longitude}/{latitude}/stores")
+    @GetMapping("/user/stores")
     public ResponseTemplate<List<StoreByLongitudeAndLatitudeResponse>> storeListByAddress(
-            @PathVariable String longitude,
-            @PathVariable String latitude
+            @RequestParam String longitude,
+            @RequestParam String latitude
             ) {
         return new ResponseTemplate<>(storeService.findStoresByLongitudeAndLatitude(longitude, latitude), "유저 위치 가게 정보 불러오기 성공");
     }
