@@ -52,7 +52,7 @@ public class UserController {
 
     @PatchMapping("/user")
     public ResponseTemplate<User> editProfile(@RequestBody User userModifyBody) throws NotFoundException {
-        User response = userService.ModifyUser(userModifyBody);
+        User response = userService.modifyUser(userModifyBody);
         return new ResponseTemplate<>(response, "유저 수정 성공");
     }
 

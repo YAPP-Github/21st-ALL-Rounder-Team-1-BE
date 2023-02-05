@@ -105,7 +105,4 @@ public class JwtTokenProvider {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "잘못된 접근입니다.\n로그인 후 다시 접근해주세요");
         }
     }
-
-
 }
-
