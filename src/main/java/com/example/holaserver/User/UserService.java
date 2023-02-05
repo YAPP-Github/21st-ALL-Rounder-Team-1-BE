@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.sql.Timestamp;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -28,14 +29,14 @@ public class UserService {
     private final AuthService authService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public String saveKakaoUser(UserSaveBody userSaveBody) {
+    public String saveUser(UserSaveBody userSaveBody) {
         User user = User.builder()
                 .name(userSaveBody.getName())
                 .email(userSaveBody.getEmail())
                 .rating((byte) 1)
                 .imgPath(userSaveBody.getImgPath())
                 .oauthIdentity(userSaveBody.getOauthIdentity())
-                .oauthType("Kakao")
+                .oauthType(userSaveBody.getOauthType())
                 .build();
         return jwtTokenProvider.createToken(userRepository.save(user).getId());
     }
@@ -74,6 +75,14 @@ public class UserService {
         return userRepository.findById(authService.getPayloadByToken());
     }
 
+    public Long removeUser() throws NotFoundException{
+        Long userId = authService.getPayloadByToken();
+        if(userId == null) throw new NotFoundException("올바르지 않은 토큰입니다.");
+        User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
+        user.removeUser();
+        return userId;   
+    }
+    
     public User findUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
     }
