@@ -61,10 +61,9 @@ public class UserController {
         return new ResponseTemplate<>(response, "사장님 정보 입력 성공");
     }
 
-
     @PatchMapping("/user")
-    public ResponseTemplate<User> userModify(@RequestBody User userModifyBody) throws NotFoundException {
-        User response = userService.ModifyUser(userModifyBody);
+    public ResponseTemplate<User> editProfile(@RequestBody User userModifyBody) throws NotFoundException {
+        User response = userService.modifyUser(userModifyBody);
         return new ResponseTemplate<>(response, "유저 수정 성공");
     }
 

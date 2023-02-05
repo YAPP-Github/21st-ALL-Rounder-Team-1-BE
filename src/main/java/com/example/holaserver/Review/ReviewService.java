@@ -33,6 +33,7 @@ public class ReviewService {
 
     @Transactional
     public Map<String, Object> saveReviewAndRelationInfo(ReviewSaveBody reviewSaveBody) {
+        authService.getPayloadByToken();
         ModelMap result = new ModelMap();
         Long reviewId = this.saveReview(reviewSaveBody);
         /* 이미지나 리뷰 태그를 달지 않을 수도 있어서 null 예외처리 X */
@@ -75,6 +76,7 @@ public class ReviewService {
     }
 
     public List<Review> loadReviewByUserId() {
+        
         return reviewRepository.findReviewsByUserId(authService.getPayloadByToken());
     }
 }
