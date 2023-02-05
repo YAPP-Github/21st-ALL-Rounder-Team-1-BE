@@ -34,4 +34,8 @@ public class ItemService {
         storeService.updateStoreStatusById(storeId, isReady);
         return result.getModel();
     }
+
+    public List<Item> findByStoreId(Long storeId) {
+        return itemRepository.findItemsByStoreId(storeId);
+    }
 }

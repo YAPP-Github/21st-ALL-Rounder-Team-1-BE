@@ -1,4 +1,6 @@
 server:
+  error:
+    include-message: always
   port: 3000
   servlet:
     context-path: /api

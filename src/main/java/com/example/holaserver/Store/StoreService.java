@@ -2,16 +2,20 @@ package com.example.holaserver.Store;
 
 import com.example.holaserver.Auth.AuthService;
 import com.example.holaserver.Store.DTO.StoreBody;
+import com.example.holaserver.Store.DTO.StoreByLongitudeAndLatitudeInterface;
+import com.example.holaserver.Store.DTO.StoreByLongitudeAndLatitudeResponse;
+import com.example.holaserver.Store.DTO.StoreDeleteBody;
+import com.example.holaserver.Store.ImgStore.ImgStore;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.zip.DataFormatException;
 
 @Service
@@ -22,22 +26,55 @@ public class StoreService {
     private final AuthService authService;
 
     @Transactional
-    public Map<String, Object> saveStoreAndRelationInfo(StoreBody storeDto) {
-        Long storeId = this.saveStore(storeDto);
-        List<Long> imgPathIds = this.saveImgStores(storeId, storeDto.getImgPath());
-        if (imgPathIds.size() == 0) throw new Error("이미지 저장 에러");
-        ModelAndView result = new ModelAndView();
-        result.addObject("storeId", storeId);
-        result.addObject("imgStoreIds", imgPathIds);
-        return result.getModel();
+    public Map<String, Object> saveStoreAndRelationInfo(StoreBody storeDto, Boolean isUpdate) {
+        ModelMap result = new ModelMap();
+        Long storeId; List<Long> imgPathIds;
+
+        if (isUpdate) {
+            boolean isExist = storeRepository.existsById(storeDto.getId());
+            if (!isExist) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "업데이트 대상 가게가 없습니다.");
+            storeId = this.updateStore(storeDto);
+        }
+        else {
+            if (storeDto.getId() != null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "가게 신규 생성때는 ID를 넣으면 안됩니다.");
+            storeId = this.saveStoreByUserId(storeDto);
+        }
+        this.removedImgStoresByStoreId(storeId);
+        imgPathIds = this.saveImgStores(storeId, storeDto.getImgPath());
+
+        result.addAttribute("storeId", storeId);
+        result.addAttribute("imgStoreIds", imgPathIds);
+        return result;
     }
 
-    private Long saveStore(StoreBody storeDto) {
+    @Transactional
+    public Map<String, Object> deleteStoreById(StoreDeleteBody storeDeleteBody) {
+        ModelMap result = new ModelMap();
+        this.deleteStore(storeDeleteBody.getStoreId());
+        result.addAttribute("storeId", storeDeleteBody.getStoreId());
+        return result;
+    }
+
+    private Long saveStoreByUserId(StoreBody storeDto) {
         return storeRepository.save(storeDto.createSaveStoreBuilder(authService.getPayloadByToken())).getId();
     }
+
+    private Long updateStore(StoreBody storeDto) {
+        return storeRepository.save(storeDto.updateStoreBuilder(storeDto, authService.getPayloadByToken())).getId();
+    }
+
+    public void deleteStore(Long storeId) {
+        Store store = storeRepository.findById(storeId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "이 아이디에 해당하는 가게가 없습니다."));
+        store.removeStore();
+    }
     
-    private List<Long> saveImgStores(Long storeId, String pathDatas) {
+    private List<Long> saveImgStores(Long storeId, String[] pathDatas) {
+        if (pathDatas == null) return new ArrayList<Long>();
         return this.imgStoreService.saveImgStores(storeId, pathDatas);
+    }
+
+    private void removedImgStoresByStoreId(Long storeId) {
+        imgStoreService.deleteByStoreId(storeId);
     }
 
     public void updateStoreStatusById(Long storeId, Boolean isReady) {
@@ -48,12 +85,16 @@ public class StoreService {
     }
 
     /* 해당 유저가 가지고 있는 가게 2개 이상일 시 Error */
-    public Store findStoreByUserId() throws DataFormatException {
-        return storeRepository.findByUserId(authService.getPayloadByToken()).orElseThrow(DataFormatException::new);
+    public Store findStoreByUserId() {
+        return storeRepository.findByUserId(authService.getPayloadByToken())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "이 유저가 속해있는 가게가 없습니다"));
     }
 
-    public Long updateStore(StoreBody storeDto) {
-
-        return storeRepository.save(storeDto.updateStoreBuilder(storeDto, authService.getPayloadByToken())).getId();
+    public List<StoreByLongitudeAndLatitudeResponse> findStoresByLongitudeAndLatitude(String longitude, String latitude) {
+        List<StoreByLongitudeAndLatitudeInterface> stores = this.storeRepository.findStoreByLatitudeAndLongitude(longitude, latitude);
+        return stores.stream().map(store -> {
+            List<ImgStore> imgStores = imgStoreService.findImgStoreByStoreId(store.getId());
+            return new StoreByLongitudeAndLatitudeResponse(store, imgStores);
+        }).collect(Collectors.toList());
     }
 }
