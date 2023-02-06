@@ -35,4 +35,13 @@ public class SocialLoginResponse {
         this.oauthIdentity = oauthIdentity;
         this.jwt = token;
     }
+
+    @Builder
+    public SocialLoginResponse(NaverUserInfoDto user, String oauthIdentity, String token){
+        this.name = user.getResponse().getName();
+        this.email = user.getResponse().getEmail();
+        this.oauthType = "NAVER";
+        this.oauthIdentity = oauthIdentity;
+        this.jwt = token;
+    }
 }
