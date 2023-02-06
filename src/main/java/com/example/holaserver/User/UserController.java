@@ -77,4 +77,10 @@ public class UserController {
         Long response = userService.removeUser();
         return new ResponseTemplate<>(response, "유저 탈퇴 성공");
     }
+
+    @GetMapping("/user/random-nickname")
+    public ResponseTemplate<String> generateNickname() {
+        String response = userService.randomNickname();
+        return new ResponseTemplate<>(response, "닉네임 생성 성공");
+    }
 }
