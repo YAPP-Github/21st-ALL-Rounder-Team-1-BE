@@ -26,7 +26,6 @@ public class UserController {
     private final UserService userService;
     private final OauthService oauthService;
     @GetMapping("/login/oauth/kakao")
-
     public ResponseTemplate<SocialLoginResponse> kakaoLogin(@RequestParam String accessToken){
         SocialLoginResponse socialLoginResponse = oauthService.kakaoLogin(accessToken);
         return new ResponseTemplate<>(socialLoginResponse, "로그인 성공");
@@ -76,5 +75,11 @@ public class UserController {
     public ResponseTemplate<Long> userRemove() throws NotFoundException{
         Long response = userService.removeUser();
         return new ResponseTemplate<>(response, "유저 탈퇴 성공");
+    }
+
+    @GetMapping("/user/random-nickname")
+    public ResponseTemplate<String> generateNickname() {
+        String response = userService.randomNickname();
+        return new ResponseTemplate<>(response, "닉네임 생성 성공");
     }
 }
