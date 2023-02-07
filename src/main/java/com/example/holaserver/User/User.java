@@ -40,8 +40,9 @@ public class User extends BaseTimeEntity {
     private Timestamp removedAt;
 
     @Builder
-    public User(String name, String email, Type type, String oauthType, Byte rating, String imgPath, String oauthIdentity) {
+    public User(String name, String nickname, String email, Type type, String oauthType, Byte rating, String imgPath, String oauthIdentity) {
         this.name = name;
+        this.nickname = nickname;
         this.email = email;
         this.type = type;
         this.rating = rating;
