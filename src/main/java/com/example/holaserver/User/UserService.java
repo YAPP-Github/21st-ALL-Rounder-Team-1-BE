@@ -34,6 +34,7 @@ public class UserService {
                 .email(userSaveBody.getEmail())
                 .rating((byte) 1)
                 .imgPath(userSaveBody.getImgPath())
+                .type(userSaveBody.getType())
                 .oauthIdentity(userSaveBody.getOauthIdentity())
                 .oauthType(userSaveBody.getOauthType())
                 .build();
