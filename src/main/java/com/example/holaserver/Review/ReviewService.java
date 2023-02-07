@@ -51,6 +51,7 @@ public class ReviewService {
     }
 
     public List<ReviewByStoreResponse> findReviewAndRelationInfo(Long storeId) throws Exception {
+        authService.getPayloadByToken();
         List<Review> reviews = reviewRepository.findReviewsByStoreId(storeId);
         return reviews.stream().map(review -> new ReviewByStoreResponse(
                 review,

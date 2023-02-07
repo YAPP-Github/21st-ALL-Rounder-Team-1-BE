@@ -1,6 +1,7 @@
 package com.example.holaserver.CustomerSatisfaction;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
@@ -25,5 +26,11 @@ public class CustomerSatisfaction {
     private String content;
     private Timestamp removedAt;
 
-
+    @Builder
+    public CustomerSatisfaction(Long userId, Integer type, String content) {
+        this.userId = userId;
+        this.type = type;
+        this.content = content;
+    }
 }
+
