@@ -58,13 +58,11 @@ public class User extends BaseTimeEntity {
     }
 
     public void modifyUser(User user){
-        this.name = user.getName();
         this.nickname = user.getNickname();
-        this.email = user.email;
-        this.phoneNumber = user.getPhoneNumber();
-        this.type = user.getType();
-        this.oauthType = user.getOauthType();
-        this.oauthIdentity = user.getOauthIdentity();
+        if(user.getEmail() != null)
+            this.email = user.getEmail();
+        if(user.getPhoneNumber() != null)
+            this.phoneNumber = user.getPhoneNumber();
         this.rating = user.getRating();
         this.imgPath = user.getImgPath();
     }
