@@ -35,6 +35,7 @@ public class UserService {
         }
         User user = User.builder()
                 .name(userSaveBody.getName())
+                .nickname(randomNickname())
                 .email(userSaveBody.getEmail())
                 .rating((byte) 1)
                 .imgPath(userSaveBody.getImgPath())
