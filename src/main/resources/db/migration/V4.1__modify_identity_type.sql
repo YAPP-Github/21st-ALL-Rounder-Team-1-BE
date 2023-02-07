@@ -1,0 +1,1 @@
+ALTER TABLE user MODIFY COLUMN oauth_type Enum('KAKAO', 'APPLE', 'NAVER');
