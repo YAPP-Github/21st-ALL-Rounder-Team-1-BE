@@ -29,6 +29,10 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public String saveUser(UserSaveBody userSaveBody) {
+        if(userRepository.findByOauthIdentity(userSaveBody.getOauthIdentity()) != null){
+            Long userId = userRepository.findByOauthIdentity(userSaveBody.getOauthIdentity()).getId();
+            return jwtTokenProvider.createToken(userId);
+        }
         User user = User.builder()
                 .name(userSaveBody.getName())
                 .email(userSaveBody.getEmail())
