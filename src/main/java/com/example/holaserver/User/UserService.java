@@ -29,11 +29,17 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public String saveUser(UserSaveBody userSaveBody) {
+        if(userRepository.findByOauthIdentity(userSaveBody.getOauthIdentity()) != null){
+            Long userId = userRepository.findByOauthIdentity(userSaveBody.getOauthIdentity()).getId();
+            return jwtTokenProvider.createToken(userId);
+        }
         User user = User.builder()
                 .name(userSaveBody.getName())
+                .nickname(randomNickname())
                 .email(userSaveBody.getEmail())
                 .rating((byte) 1)
                 .imgPath(userSaveBody.getImgPath())
+                .type(userSaveBody.getType())
                 .oauthIdentity(userSaveBody.getOauthIdentity())
                 .oauthType(userSaveBody.getOauthType())
                 .build();

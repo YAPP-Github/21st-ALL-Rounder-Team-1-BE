@@ -40,8 +40,9 @@ public class User extends BaseTimeEntity {
     private Timestamp removedAt;
 
     @Builder
-    public User(String name, String email, Type type, String oauthType, Byte rating, String imgPath, String oauthIdentity) {
+    public User(String name, String nickname, String email, Type type, String oauthType, Byte rating, String imgPath, String oauthIdentity) {
         this.name = name;
+        this.nickname = nickname;
         this.email = email;
         this.type = type;
         this.rating = rating;
@@ -58,13 +59,11 @@ public class User extends BaseTimeEntity {
     }
 
     public void modifyUser(User user){
-        this.name = user.getName();
         this.nickname = user.getNickname();
-        this.email = user.email;
-        this.phoneNumber = user.getPhoneNumber();
-        this.type = user.getType();
-        this.oauthType = user.getOauthType();
-        this.oauthIdentity = user.getOauthIdentity();
+        if(user.getEmail() != null)
+            this.email = user.getEmail();
+        if(user.getPhoneNumber() != null)
+            this.phoneNumber = user.getPhoneNumber();
         this.rating = user.getRating();
         this.imgPath = user.getImgPath();
     }
