@@ -9,13 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewSaveBody {
-    private Long userId;
     private Long storeId;
     private String reviewText;
     private String[] imgPath;
     private Long[] reviewTagIds;
 
-    public Review createReviewBuilder(){
+    public Review createReviewBuilder(Long userId){
         return Review.builder()
                 .storeId(storeId)
                 .userId(userId)

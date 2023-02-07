@@ -39,7 +39,7 @@ public class ReviewService {
         /* 이미지나 리뷰 태그를 달지 않을 수도 있어서 null 예외처리 X */
         List<Long> imgReviewIds = imgReviewService.saveImgReview(reviewId, reviewSaveBody.getImgPath());
         List<Long> reviewTagLogIds = reviewTagLogService.saveReviewTagLog(
-                reviewSaveBody.getUserId(),
+                authService.getPayloadByToken(),
                 reviewSaveBody.getStoreId(),
                 reviewId,
                 reviewSaveBody.getReviewTagIds()
@@ -62,11 +62,7 @@ public class ReviewService {
 
 
     private Long saveReview(ReviewSaveBody reviewSaveBody){
-        return reviewRepository.save(reviewSaveBody.createReviewBuilder()).getId();
-    }
-
-    private List<Review> findReviewByStoreId(Long storeId) {
-        return reviewRepository.findReviewsByStoreId(storeId);
+        return reviewRepository.save(reviewSaveBody.createReviewBuilder(authService.getPayloadByToken())).getId();
     }
 
     public ReviewResponse loadReview(Long reviewId){
