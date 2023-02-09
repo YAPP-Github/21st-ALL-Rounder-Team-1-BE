@@ -1,10 +1,7 @@
 package com.example.holaserver.Store;
 
 import com.example.holaserver.Common.response.ResponseTemplate;
-import com.example.holaserver.Store.DTO.StoreBody;
-import com.example.holaserver.Store.DTO.StoreByLongitudeAndLatitudeInterface;
-import com.example.holaserver.Store.DTO.StoreByLongitudeAndLatitudeResponse;
-import com.example.holaserver.Store.DTO.StoreDeleteBody;
+import com.example.holaserver.Store.DTO.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +15,7 @@ public class StoreController {
     private final StoreService storeService;
 
     @GetMapping("/user/store")
-    public ResponseTemplate<Store> storeDetailsByUserId() throws DataFormatException {
+    public ResponseTemplate<StoreResponse> storeDetailsByUserId() throws DataFormatException {
         return new ResponseTemplate<>(storeService.findStoreByUserId(), "가게 정보 불러오기 성공");
     }
 

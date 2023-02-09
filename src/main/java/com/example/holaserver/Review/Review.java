@@ -5,11 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Builder
+@Where(clause = "removed_at IS NULL")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Review extends BaseTimeEntity {
