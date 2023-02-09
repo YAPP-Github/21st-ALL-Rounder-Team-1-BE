@@ -1,10 +1,7 @@
 package com.example.holaserver.Store;
 
 import com.example.holaserver.Auth.AuthService;
-import com.example.holaserver.Store.DTO.StoreBody;
-import com.example.holaserver.Store.DTO.StoreByLongitudeAndLatitudeInterface;
-import com.example.holaserver.Store.DTO.StoreByLongitudeAndLatitudeResponse;
-import com.example.holaserver.Store.DTO.StoreDeleteBody;
+import com.example.holaserver.Store.DTO.*;
 import com.example.holaserver.Store.ImgStore.ImgStore;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
 import lombok.RequiredArgsConstructor;
@@ -84,9 +81,12 @@ public class StoreService {
     }
 
     /* 해당 유저가 가지고 있는 가게 2개 이상일 시 Error */
-    public Store findStoreByUserId() {
-        return storeRepository.findByUserId(authService.getPayloadByToken())
+    public StoreResponse findStoreByUserId() {
+        authService.getPayloadByToken();
+        Store store = storeRepository.findByUserId(authService.getPayloadByToken())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "이 유저가 속해있는 가게가 없습니다"));
+        List<ImgStore> imgStores = imgStoreService.findImgStoreByStoreId(store.getId());
+        return new StoreResponse(store, imgStores);
     }
 
     public List<StoreByLongitudeAndLatitudeResponse> findStoresByLongitudeAndLatitude(String longitude, String latitude) {

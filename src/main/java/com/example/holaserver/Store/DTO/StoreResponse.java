@@ -1,7 +1,10 @@
 package com.example.holaserver.Store.DTO;
 
+import com.example.holaserver.Store.ImgStore.ImgStore;
 import com.example.holaserver.Store.Store;
 import lombok.Getter;
+
+import java.util.List;
 
 @Getter
 public class StoreResponse {
@@ -19,8 +22,9 @@ public class StoreResponse {
     private final String registrationNumber;
     private final Boolean isDayOff;
     private final Boolean isReady;
+    private final List<ImgStore> imgStore;
 
-    public StoreResponse(Store entity) {
+    public StoreResponse(Store entity, List<ImgStore> imgStore) {
         this.id = entity.getId();
         this.userId = entity.getUserId();
         this.name = entity.getName();
@@ -35,5 +39,6 @@ public class StoreResponse {
         this.registrationNumber = entity.getRegistrationNumber();
         this.isDayOff = entity.getIsDayOff();
         this.isReady = entity.getIsReady();
+        this.imgStore = imgStore;
     }
 }

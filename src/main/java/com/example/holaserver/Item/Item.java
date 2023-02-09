@@ -3,12 +3,14 @@ package com.example.holaserver.Item;
 import com.example.holaserver.Common.BaseTimeEntity;
 import com.example.holaserver.Item.Enum.Unit;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Where(clause = "removed_at IS NULL")
 @Builder
 @Getter
 public class Item extends BaseTimeEntity {
