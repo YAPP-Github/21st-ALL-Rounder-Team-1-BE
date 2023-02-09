@@ -4,6 +4,9 @@ import com.example.holaserver.Store.ImgStore.ImgStore;
 import com.example.holaserver.Store.Store;
 import lombok.Getter;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -22,6 +25,8 @@ public class StoreResponse {
     private final String registrationNumber;
     private final Boolean isDayOff;
     private final Boolean isReady;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime modifiedAt;
     private final List<ImgStore> imgStore;
 
     public StoreResponse(Store entity, List<ImgStore> imgStore) {
@@ -39,6 +44,8 @@ public class StoreResponse {
         this.registrationNumber = entity.getRegistrationNumber();
         this.isDayOff = entity.getIsDayOff();
         this.isReady = entity.getIsReady();
+        this.createdAt = entity.getCreatedAt();
+        this.modifiedAt = entity.getModifiedAt();
         this.imgStore = imgStore;
     }
 }
