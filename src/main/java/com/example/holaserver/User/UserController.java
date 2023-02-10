@@ -3,9 +3,7 @@ package com.example.holaserver.User;
 import com.example.holaserver.Auth.Dto.SocialLoginResponse;
 import com.example.holaserver.Auth.OauthService;
 import com.example.holaserver.Common.response.ResponseTemplate;
-import com.example.holaserver.User.Dto.BossSaveBody;
-import com.example.holaserver.User.Dto.UserInfoResponse;
-import com.example.holaserver.User.Dto.UserSaveBody;
+import com.example.holaserver.User.Dto.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -72,14 +70,16 @@ public class UserController {
     }
 
     @DeleteMapping("/user")
-    public ResponseTemplate<Long> userRemove() throws NotFoundException{
-        Long response = userService.removeUser();
+    public ResponseTemplate<UserDeleteResponse> userRemove() throws NotFoundException{
+        Long userId = userService.removeUser();
+        UserDeleteResponse response = new UserDeleteResponse(userId);
         return new ResponseTemplate<>(response, "유저 탈퇴 성공");
     }
 
     @GetMapping("/user/random-nickname")
-    public ResponseTemplate<String> generateNickname() {
-        String response = userService.randomNickname();
+    public ResponseTemplate<NicknameResponse> generateNickname() {
+        String nickname = userService.randomNickname();
+        NicknameResponse response = new NicknameResponse(nickname);
         return new ResponseTemplate<>(response, "닉네임 생성 성공");
     }
 }
