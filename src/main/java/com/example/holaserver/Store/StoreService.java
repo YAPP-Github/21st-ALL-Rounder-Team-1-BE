@@ -86,7 +86,7 @@ public class StoreService {
         ModelMap result = new ModelMap();
         // TODO: 아직 확정 아니라서 stash OR 반영
         authService.getPayloadByToken();
-        if (storeRepository.findByUserId(authService.getPayloadByToken()).isPresent()) return result.addAttribute("result", null);
+        if (!storeRepository.findByUserId(authService.getPayloadByToken()).isPresent()) return result.addAttribute("result", null);
         Store store = storeRepository.findByUserId(authService.getPayloadByToken())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "이 유저가 속해있는 가게가 없습니다"));
         List<ImgStore> imgStores = imgStoreService.findImgStoreByStoreId(store.getId());
