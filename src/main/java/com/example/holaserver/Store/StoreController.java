@@ -15,7 +15,7 @@ public class StoreController {
     private final StoreService storeService;
 
     @GetMapping("/user/store")
-    public ResponseTemplate<StoreResponse> storeDetailsByUserId() throws DataFormatException {
+    public ResponseTemplate<Map<String, Object>> storeDetailsByUserId() throws DataFormatException {
         return new ResponseTemplate<>(storeService.findStoreByUserId(), "가게 정보 불러오기 성공");
     }
 
