@@ -7,6 +7,7 @@ import com.example.holaserver.Store.ImgStore.ImgStoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelExtensionsKt;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -63,7 +64,7 @@ public class StoreService {
         Store store = storeRepository.findById(storeId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "이 아이디에 해당하는 가게가 없습니다."));
         store.removeStore();
     }
-    
+
     private List<Long> saveImgStores(Long storeId, String[] pathDatas) {
         if (pathDatas == null) return new ArrayList<Long>();
         return this.imgStoreService.saveImgStores(storeId, pathDatas);
@@ -81,12 +82,16 @@ public class StoreService {
     }
 
     /* 해당 유저가 가지고 있는 가게 2개 이상일 시 Error */
-    public StoreResponse findStoreByUserId() {
+    public Map<String, Object> findStoreByUserId() {
+        ModelMap result = new ModelMap();
+        // TODO: 아직 확정 아니라서 stash OR 반영
         authService.getPayloadByToken();
+        if (storeRepository.findByUserId(authService.getPayloadByToken()).isPresent()) return result.addAttribute("result", null);
         Store store = storeRepository.findByUserId(authService.getPayloadByToken())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "이 유저가 속해있는 가게가 없습니다"));
         List<ImgStore> imgStores = imgStoreService.findImgStoreByStoreId(store.getId());
-        return new StoreResponse(store, imgStores);
+
+        return result.addAttribute("result", new StoreResponse(store, imgStores));
     }
 
     public List<StoreByLongitudeAndLatitudeResponse> findStoresByLongitudeAndLatitude(String longitude, String latitude) {
