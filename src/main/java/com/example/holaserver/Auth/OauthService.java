@@ -79,8 +79,8 @@ public class OauthService {
     Boolean findUser (String oauthIdentity, String oauthType) {
         return userRepository.existsByOauthIdentityAndOauthType(oauthIdentity, oauthType);
     }
-    public SocialLoginResponse naverLogin(String code, String state){
-        String accessToken = getAccessToken(code, state);
+    public SocialLoginResponse naverLogin(String accessToken){
+        //String accessToken = getAccessToken(code, state);
         NaverUserInfoDto naverUserInfo = getNaverUserInfo(accessToken);
         String oauthIdentity = naverUserInfo.getResponse().getId();
         User naverUser;

@@ -39,8 +39,8 @@ public class UserController {
     }
 
     @GetMapping("/login/oauth/naver")
-    public ResponseTemplate<SocialLoginResponse> naverLogin(@RequestParam String code, @RequestParam String state){
-        SocialLoginResponse socialLoginResponse = oauthService.naverLogin(code, state);
+    public ResponseTemplate<SocialLoginResponse> naverLogin(@RequestParam String accessToken){
+        SocialLoginResponse socialLoginResponse = oauthService.naverLogin(accessToken);
         return new ResponseTemplate<>(socialLoginResponse, "로그인 성공");
     }
 
