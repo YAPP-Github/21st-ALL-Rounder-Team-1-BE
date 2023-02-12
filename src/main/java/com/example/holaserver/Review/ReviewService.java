@@ -45,7 +45,8 @@ public class ReviewService {
                 reviewId,
                 reviewSaveBody.getReviewTagIds()
         );
-        userService.updateUserRating(userId, reviewRepository.findReviewsByStoreId(reviewSaveBody.getStoreId(), Sort.by(Sort.Order.desc("createdAt"))).size());
+        userService.updateUserRating(userId, reviewRepository.findReviewsByUserId(authService.getPayloadByToken(),
+                Sort.by(Sort.Order.desc("createdAt"))).size());
 
         result.addAttribute("reviewId", reviewId);
         result.addAttribute("imgReviewIds", imgReviewIds);
@@ -76,7 +77,6 @@ public class ReviewService {
     }
 
     public List<Review> loadReviewByUserId() {
-        
-        return reviewRepository.findReviewsByUserId(authService.getPayloadByToken());
+        return reviewRepository.findReviewsByUserId(authService.getPayloadByToken(), Sort.by(Sort.Order.desc("createdAt")));
     }
 }
