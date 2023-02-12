@@ -1,9 +1,6 @@
 package com.example.holaserver.Auth;
 
-import com.example.holaserver.Auth.Dto.ApplePublicKeyResponse;
-import com.example.holaserver.Auth.Dto.SocialLoginResponse;
-import com.example.holaserver.Auth.Dto.OauthTokenResponse;
-import com.example.holaserver.Auth.Dto.KakaoUserInfoDto;
+import com.example.holaserver.Auth.Dto.*;
 import com.example.holaserver.User.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,9 +42,12 @@ public class OauthService {
 
     @Value("${CLIENT_ID}")
     String CLIENT_ID;
-
     @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     String REDIRECT_URI;
+    @Value("${NAVER_CLIENT_ID}")
+    String NAVER_CLIENT_ID;
+    @Value("${NAVER_CLIENT_SECRET}")
+    String NAVER_CLIENT_SECRET;
 
 
     public SocialLoginResponse kakaoLogin(String accessToken) {
@@ -62,31 +62,6 @@ public class OauthService {
         SocialLoginResponse response = new SocialLoginResponse(kakaoUserInfo, oauthIdentity, token);
         return response;
     }
-
-    private String getAccessToken(String code) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
-        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("grant_type", "authorization_code");
-        body.add("client_id", CLIENT_ID);
-        body.add("redirect_uri", REDIRECT_URI);
-        body.add("code", code);
-
-        URI uri = UriComponentsBuilder
-                .fromUriString("https://kauth.kakao.com/oauth/token")
-                .encode()
-                .build()
-                .toUri();
-        ResponseEntity<OauthTokenResponse> result = restTemplate.postForEntity(uri, body, OauthTokenResponse.class);
-
-        OauthTokenResponse response = result.getBody();
-
-        String token = response.getAccess_token();
-
-        return token;
-    }
-
     private KakaoUserInfoDto getKakaoUserInfo(String accessToken) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
@@ -104,6 +79,58 @@ public class OauthService {
     Boolean findUser (String oauthIdentity, String oauthType) {
         return userRepository.existsByOauthIdentityAndOauthType(oauthIdentity, oauthType);
     }
+    public SocialLoginResponse naverLogin(String accessToken){
+        //String accessToken = getAccessToken(code, state);
+        NaverUserInfoDto naverUserInfo = getNaverUserInfo(accessToken);
+        String oauthIdentity = naverUserInfo.getResponse().getId();
+        User naverUser;
+        String token = null;
+        if(findUser(oauthIdentity, "NAVER")){
+            naverUser = userRepository.findByOauthIdentity(oauthIdentity);
+            token = jwtTokenProvider.createToken(naverUser.getId());
+        }
+        SocialLoginResponse response = new SocialLoginResponse(naverUserInfo, oauthIdentity, token);
+        return response;
+    }
+
+    private String getAccessToken(String code, String state) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "authorization_code");
+        body.add("client_id", NAVER_CLIENT_ID);
+        body.add("client_secret", NAVER_CLIENT_SECRET);
+        body.add("code", code);
+        body.add("state", state);
+
+        URI uri = UriComponentsBuilder
+                .fromUriString("https://nid.naver.com/oauth2.0/token")
+                .encode()
+                .build()
+                .toUri();
+        ResponseEntity<OauthTokenResponse> result = restTemplate.postForEntity(uri, body, OauthTokenResponse.class);
+
+        OauthTokenResponse response = result.getBody();
+
+        String token = response.getAccess_token();
+
+        return token;
+    }
+
+    private NaverUserInfoDto getNaverUserInfo(String accessToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + accessToken);
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        HttpEntity<String> request = new HttpEntity<String>(headers);
+        ResponseEntity<NaverUserInfoDto> response = restTemplate.exchange(
+                "https://openapi.naver.com/v1/nid/me",
+                HttpMethod.GET,
+                request,
+                NaverUserInfoDto.class);
+        return response.getBody();
+    }
 
     public SocialLoginResponse appleLogin(String identityToken) throws UnsupportedEncodingException, InvalidKeySpecException, NoSuchAlgorithmException, JsonProcessingException {
         Claims userInfo = getAppleUserInfo(identityToken);
@@ -120,6 +147,7 @@ public class OauthService {
         SocialLoginResponse response = new SocialLoginResponse(oauthIdentity, token);
         return response;
     }
+
     public ApplePublicKeyResponse getAppleAuthPublicKey(){
         HttpHeaders headers = new HttpHeaders();
         HttpEntity request = new HttpEntity(headers);
