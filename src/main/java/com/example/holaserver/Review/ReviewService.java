@@ -45,7 +45,7 @@ public class ReviewService {
                 reviewId,
                 reviewSaveBody.getReviewTagIds()
         );
-        userService.updateUserRating(userId);
+        userService.updateUserRating(userId, reviewRepository.findReviewsByStoreId(reviewSaveBody.getStoreId()).size());
 
         result.addAttribute("reviewId", reviewId);
         result.addAttribute("imgReviewIds", imgReviewIds);
