@@ -102,7 +102,7 @@ public class UserService {
 
         result = ad.get(adIndex) + " " + animal.get(animalIndex);
         int count = userRepository.countUserByNicknameContaining(result);
-        result += String.format("%02d",count);
+        result += String.format("%02d",count + 1);
         return result;
     }
 }

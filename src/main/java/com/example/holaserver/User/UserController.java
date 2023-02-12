@@ -35,6 +35,12 @@ public class UserController {
         return new ResponseTemplate<>(socialLoginResponse, "로그인 성공");
     }
 
+    @GetMapping("/login/oauth/naver")
+    public ResponseTemplate<SocialLoginResponse> naverLogin(@RequestParam String accessToken){
+        SocialLoginResponse socialLoginResponse = oauthService.naverLogin(accessToken);
+        return new ResponseTemplate<>(socialLoginResponse, "로그인 성공");
+    }
+
     @PostMapping("/user/register")
     public ResponseTemplate<String> saveKakaoUser(@RequestBody UserSaveBody userSaveBody){
         String token = userService.saveUser(userSaveBody);
