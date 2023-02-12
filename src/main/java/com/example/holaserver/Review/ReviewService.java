@@ -45,7 +45,7 @@ public class ReviewService {
                 reviewId,
                 reviewSaveBody.getReviewTagIds()
         );
-        userService.updateUserRating(userId, reviewRepository.findReviewsByStoreId(reviewSaveBody.getStoreId()).size());
+        userService.updateUserRating(userId, reviewRepository.findReviewsByStoreId(reviewSaveBody.getStoreId(), Sort.by(Sort.Order.desc("createdAt"))).size());
 
         result.addAttribute("reviewId", reviewId);
         result.addAttribute("imgReviewIds", imgReviewIds);
@@ -55,7 +55,7 @@ public class ReviewService {
 
     public List<ReviewByStoreResponse> findReviewAndRelationInfo(Long storeId) throws Exception {
         authService.getPayloadByToken();
-        List<Review> reviews = reviewRepository.findReviewsByStoreId(storeId);
+        List<Review> reviews = reviewRepository.findReviewsByStoreId(storeId, Sort.by(Sort.Order.desc("createdAt")));
         return reviews.stream().map(review -> new ReviewByStoreResponse(
                 review,
                 userService.findUserById(review.getUserId()),
