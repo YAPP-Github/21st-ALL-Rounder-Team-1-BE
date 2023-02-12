@@ -68,6 +68,11 @@ public class UserService {
         return user;
     }
 
+    public void updateUserRating(Long userId, int reviewSize) {
+        User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
+        user.modifyUserRating(reviewSize >= 5 ? 4 : reviewSize >= 3 ? 3 : reviewSize >= 1 ? 2 : 0);
+    }
+
     public User modifyUser(User userModifyBody) throws NotFoundException {
         Long userId = authService.getPayloadByToken();
         User user = userRepository.findById(userId)
@@ -105,4 +110,6 @@ public class UserService {
         result += String.format("%02d",count + 1);
         return result;
     }
+
+
 }

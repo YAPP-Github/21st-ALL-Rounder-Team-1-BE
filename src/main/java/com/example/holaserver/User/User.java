@@ -71,4 +71,8 @@ public class User extends BaseTimeEntity {
     public void removeUser(){
         this.removedAt = new Timestamp(System.currentTimeMillis());
     }
+
+    public void modifyUserRating(int rating) {
+        this.rating = (byte) rating;
+    }
 }
