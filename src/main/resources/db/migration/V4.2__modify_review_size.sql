@@ -1,0 +1,1 @@
+ALTER TABLE review MODIFY COLUMN review_text VARCHAR(550);
