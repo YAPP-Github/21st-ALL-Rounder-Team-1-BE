@@ -12,6 +12,7 @@ import com.example.holaserver.User.User;
 import com.example.holaserver.User.UserService;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
@@ -33,17 +34,19 @@ public class ReviewService {
 
     @Transactional
     public Map<String, Object> saveReviewAndRelationInfo(ReviewSaveBody reviewSaveBody) {
-        authService.getPayloadByToken();
+        Long userId = authService.getPayloadByToken();
         ModelMap result = new ModelMap();
         Long reviewId = this.saveReview(reviewSaveBody);
         /* 이미지나 리뷰 태그를 달지 않을 수도 있어서 null 예외처리 X */
         List<Long> imgReviewIds = imgReviewService.saveImgReview(reviewId, reviewSaveBody.getImgPath());
         List<Long> reviewTagLogIds = reviewTagLogService.saveReviewTagLog(
-                authService.getPayloadByToken(),
+                userId,
                 reviewSaveBody.getStoreId(),
                 reviewId,
                 reviewSaveBody.getReviewTagIds()
         );
+        userService.updateUserRating(userId);
+
         result.addAttribute("reviewId", reviewId);
         result.addAttribute("imgReviewIds", imgReviewIds);
         result.addAttribute("reviewTagLogIds", reviewTagLogIds);
