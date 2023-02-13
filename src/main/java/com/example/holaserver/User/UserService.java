@@ -3,12 +3,22 @@ package com.example.holaserver.User;
 import com.example.holaserver.Auth.AuthService;
 import com.example.holaserver.Auth.JwtTokenProvider;
 import com.example.holaserver.Auth.OauthService;
+import com.example.holaserver.Recommendation.Recommendation;
+import com.example.holaserver.Recommendation.RecommendationRepository;
+import com.example.holaserver.Review.ImgReview.ImgReview;
+import com.example.holaserver.Review.ImgReview.ImgReviewRepository;
+import com.example.holaserver.Review.Review;
+import com.example.holaserver.Review.ReviewRepository;
+import com.example.holaserver.Review.ReviewTagLog.ReviewTagLog;
+import com.example.holaserver.Review.ReviewTagLog.ReviewTagLogRepository;
+import com.example.holaserver.Store.StoreRepository;
 import com.example.holaserver.User.Dto.BossSaveBody;
 import com.example.holaserver.User.Dto.UserInfoResponse;
 import com.example.holaserver.User.Dto.UserSaveBody;
 import javassist.NotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +33,10 @@ import java.util.*;
 @Transactional
 public class UserService {
     private final UserRepository userRepository;
+    private final ReviewRepository reviewRepository;
+    private final ReviewTagLogRepository reviewTagLogRepository;
+    private final ImgReviewRepository imgReviewRepository;
+    private final RecommendationRepository recommendationRepository;
 
     private final OauthService oauthService;
     private final AuthService authService;
@@ -90,6 +104,18 @@ public class UserService {
         if(userId == null) throw new NotFoundException("올바르지 않은 토큰입니다.");
         User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
         user.removeUser();
+        List<Review> reviews =  reviewRepository.findReviewsByUserId(user.getId(),  Sort.by(Sort.Order.desc("createdAt")));
+        for(int i = 0; i < reviews.size(); i++){
+            List<ReviewTagLog> tag = reviewTagLogRepository.findReviewTagLogByReviewId(reviews.get(i).getId());
+            for(int j = 0; j < tag.size(); j++)
+                tag.get(j).setRemovedAt(new Timestamp(System.currentTimeMillis()));
+            List<ImgReview> imgReviews = imgReviewRepository.findImgReviewsByReviewId(reviews.get(i).getId());
+            for(int k = 0; k < imgReviews.size(); k++)
+                imgReviews.get(k).setRemovedAt(new Timestamp(System.currentTimeMillis()));
+        }
+        List<Recommendation> recommendations = recommendationRepository.findAllByUserId(user.getId());
+        for(int i = 0; i < recommendations.size(); i++)
+            recommendations.get(i).setRemovedAt(new Timestamp(System.currentTimeMillis()));
         return userId;   
     }
     
