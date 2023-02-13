@@ -4,7 +4,12 @@ import com.example.holaserver.Auth.AuthService;
 import com.example.holaserver.Store.DTO.*;
 import com.example.holaserver.Store.ImgStore.ImgStore;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONObject;
+import org.springframework.boot.json.JsonParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelExtensionsKt;
@@ -97,9 +102,14 @@ public class StoreService {
     public List<StoreByLongitudeAndLatitudeResponse> findStoresByLongitudeAndLatitude(String longitude, String latitude) {
         authService.getPayloadByToken();
         List<StoreByLongitudeAndLatitudeInterface> stores = this.storeRepository.findStoreByLatitudeAndLongitude(longitude, latitude);
+
         return stores.stream().map(store -> {
             List<ImgStore> imgStores = imgStoreService.findImgStoreByStoreId(store.getId());
-            return new StoreByLongitudeAndLatitudeResponse(store, imgStores);
+            try {
+                return new StoreByLongitudeAndLatitudeResponse(store, imgStores);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         }).collect(Collectors.toList());
     }
 

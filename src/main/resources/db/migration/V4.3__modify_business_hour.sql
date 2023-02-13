@@ -1,0 +1,1 @@
+ALTER TABLE store MODIFY COLUMN business_hour JSON;

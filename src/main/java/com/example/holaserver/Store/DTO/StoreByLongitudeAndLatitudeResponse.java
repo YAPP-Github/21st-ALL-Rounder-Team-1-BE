@@ -1,12 +1,22 @@
 package com.example.holaserver.Store.DTO;
 
 import com.example.holaserver.Store.ImgStore.ImgStore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysql.cj.xdevapi.JsonArray;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.json.JSONArray;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class StoreByLongitudeAndLatitudeResponse {
     private Long id;
@@ -15,7 +25,7 @@ public class StoreByLongitudeAndLatitudeResponse {
     private String status;
     private String longitude;
     private String latitude;
-    private String businessHour;
+    private List<Map<String, Object>> businessHour;
     private String notice;
     private String address;
     private String instaAccount;
@@ -25,14 +35,15 @@ public class StoreByLongitudeAndLatitudeResponse {
     private String distance;
     private List<ImgStore> imgStores;
 
-    public StoreByLongitudeAndLatitudeResponse(StoreByLongitudeAndLatitudeInterface store, List<ImgStore> imgStores) {
+    public StoreByLongitudeAndLatitudeResponse(StoreByLongitudeAndLatitudeInterface store, List<ImgStore> imgStores) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
         this.id = store.getId();
         this.userId = store.getUserId();
         this.name = store.getName();
         this.status = store.getStatus();
         this.longitude = store.getLongitude();
         this.latitude = store.getLatitude();
-        this.businessHour = store.getBusiness_Hour();
+        this.businessHour = mapper.readValue(store.getBusiness_Hour(), new TypeReference<>() {});
         this.notice = store.getNotice();
         this.address = store.getAddress();
         this.instaAccount = store.getInsta_Account();
