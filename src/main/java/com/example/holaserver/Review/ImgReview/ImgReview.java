@@ -1,16 +1,14 @@
 package com.example.holaserver.Review.ImgReview;
 
 import com.example.holaserver.Common.BaseTimeEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.sql.Timestamp;
 
 @Entity
 @Getter
@@ -22,6 +20,8 @@ public class ImgReview extends BaseTimeEntity {
     private Long id;
     private Long reviewId;
     private String path;
+    @Setter
+    private Timestamp removedAt;
 
     @Builder
     public ImgReview(Long reviewId, String path) {

@@ -19,6 +19,7 @@ public class Recommendation extends BaseTimeEntity {
     private Long id;
     private Long userId;
     private Long storeId;
+    @Setter
     private Timestamp removedAt;
 
     @Builder
