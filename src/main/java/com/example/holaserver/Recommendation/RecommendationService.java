@@ -40,7 +40,7 @@ public class RecommendationService {
         ModelMap result = new ModelMap();
         // pre-check 필요
         if (!storeService.existStoreById(recommendationBody.getStoreId()))
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 가게입니다 \uD83D\uDE2D  \\n 다른 가게를 이용해 주세요.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 가게입니다 \uD83D\uDE2D  \n 다른 가게를 이용해 주세요.");
         if (recommendationRepository.existsByUserIdAndStoreId(authService.getPayloadByToken(), recommendationBody.getStoreId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 추천한 가게입니다 \uD83D\uDE1C");
         }
@@ -58,7 +58,7 @@ public class RecommendationService {
     public Map<String, Object> removeRecommendation(RecommendationBody recommendationBody) {
         ModelMap result = new ModelMap();
         if (!storeService.existStoreById(recommendationBody.getStoreId()))
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 가게입니다 \uD83D\uDE2D  \\n 다른 가게를 이용해 주세요.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 가게입니다 \uD83D\uDE2D  \n 다른 가게를 이용해 주세요.");
         if (!recommendationRepository.existsByUserIdAndStoreId(authService.getPayloadByToken(), recommendationBody.getStoreId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 완료된 요청입니다 \uD83D\uDE09 ");
         }
