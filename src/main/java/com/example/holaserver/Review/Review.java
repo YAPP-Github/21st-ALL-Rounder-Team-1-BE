@@ -1,14 +1,12 @@
 package com.example.holaserver.Review;
 
 import com.example.holaserver.Common.BaseTimeEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Getter
@@ -27,4 +25,6 @@ public class Review extends BaseTimeEntity {
     private Long userId;
 
     private String reviewText;
+    @Setter
+    private Timestamp removedAt;
 }
