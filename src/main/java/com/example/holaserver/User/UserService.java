@@ -112,6 +112,7 @@ public class UserService {
             List<ImgReview> imgReviews = imgReviewRepository.findImgReviewsByReviewId(reviews.get(i).getId());
             for(int k = 0; k < imgReviews.size(); k++)
                 imgReviews.get(k).setRemovedAt(new Timestamp(System.currentTimeMillis()));
+            reviews.get(i).setRemovedAt(new Timestamp(System.currentTimeMillis()));
         }
         List<Recommendation> recommendations = recommendationRepository.findAllByUserId(user.getId());
         for(int i = 0; i < recommendations.size(); i++)
