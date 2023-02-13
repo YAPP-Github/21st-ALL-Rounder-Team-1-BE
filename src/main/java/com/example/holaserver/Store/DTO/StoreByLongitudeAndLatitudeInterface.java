@@ -7,12 +7,12 @@ public interface StoreByLongitudeAndLatitudeInterface {
     String getStatus();
     String getLongitude();
     String getLatitude();
-    String getBusinessHour();
+    String getBusiness_Hour();
     String getNotice();
     String getAddress();
-    String getInstaAccount();
-    String getCallNumber();
-    String getRegistrationNumber();
+    String getInsta_Account();
+    String getCall_Number();
+    String getRegistration_Number();
     Boolean getIsReady();
     String getDistance();
 }

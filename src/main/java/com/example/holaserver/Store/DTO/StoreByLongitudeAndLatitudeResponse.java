@@ -32,15 +32,14 @@ public class StoreByLongitudeAndLatitudeResponse {
         this.status = store.getStatus();
         this.longitude = store.getLongitude();
         this.latitude = store.getLatitude();
-        this.businessHour = store.getBusinessHour();
+        this.businessHour = store.getBusiness_Hour();
         this.notice = store.getNotice();
         this.address = store.getAddress();
-        this.instaAccount = store.getInstaAccount();
-        this.callNumber = store.getCallNumber();
-        this.registrationNumber = store.getRegistrationNumber();
+        this.instaAccount = store.getInsta_Account();
+        this.callNumber = store.getCall_Number();
+        this.registrationNumber = store.getRegistration_Number();
         this.isReady = store.getIsReady();
         this.distance = store.getDistance();
         this.imgStores = imgStores;
-
     }
 }
