@@ -19,11 +19,13 @@ public class SocialLoginResponse {
 
     @Builder
     public SocialLoginResponse(KakaoUserInfoDto user, String oauthIdentity, String token){
-        if(user.getKakao_account().getProfile() != null){
-            this.name = user.getKakao_account().getProfile().getNickname();
-            this.imgPath = user.getKakao_account().getProfile().getProfile_image_url();
+        if(user.getKakao_account() != null){
+            this.email = user.getKakao_account().getEmail();
+            if(user.getKakao_account().getProfile() != null) {
+                this.name = user.getKakao_account().getProfile().getNickname();
+                this.imgPath = user.getKakao_account().getProfile().getProfile_image_url();
+            }
         }
-        this.email = user.getKakao_account().getEmail();
         this.oauthType = "KAKAO";
         this.oauthIdentity = oauthIdentity;
         this.jwt = token;
