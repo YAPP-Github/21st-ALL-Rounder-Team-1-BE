@@ -22,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.Timestamp;
@@ -41,6 +42,7 @@ public class UserService {
     private final OauthService oauthService;
     private final AuthService authService;
     private final JwtTokenProvider jwtTokenProvider;
+    private final Long TEST_ACCOUNT_PK = 83L;
 
     public String saveUser(UserSaveBody userSaveBody) {
         if(userRepository.findByOauthIdentity(userSaveBody.getOauthIdentity()) != null){
@@ -138,5 +140,8 @@ public class UserService {
         return result;
     }
 
-
+    public Map<String, Object> createTestAccountToken() {
+        ModelMap result = new ModelMap();
+        return result.addAttribute("jwt", jwtTokenProvider.createAccessToken(this.TEST_ACCOUNT_PK));
+    }
 }

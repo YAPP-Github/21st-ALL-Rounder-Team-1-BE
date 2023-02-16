@@ -1,5 +1,6 @@
 package com.example.holaserver.Item;
 
+import com.example.holaserver.Auth.AuthService;
 import com.example.holaserver.Item.DTO.ItemSaveBody;
 import com.example.holaserver.Store.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class ItemService {
     private final ItemRepository itemRepository;
     private final StoreService storeService;
+    private final AuthService authService;
 
     @Transactional
     public Map<String, Object> saveItems(Long storeId, ItemSaveBody[] itemSaveBodies, Boolean isReady) {
@@ -37,6 +39,7 @@ public class ItemService {
     }
 
     public List<Item> findByStoreId(Long storeId) {
+        authService.getPayloadByToken();
         if (!storeService.existStoreById(storeId))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 가게입니다 \uD83D\uDE2D  \\n 다른 가게를 이용해 주세요.");
         return itemRepository.findItemsByStoreId(storeId);
