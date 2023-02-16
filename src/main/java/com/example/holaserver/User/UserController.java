@@ -8,12 +8,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -87,5 +89,10 @@ public class UserController {
         String nickname = userService.randomNickname();
         NicknameResponse response = new NicknameResponse(nickname);
         return new ResponseTemplate<>(response, "닉네임 생성 성공");
+    }
+
+    @GetMapping("/user/test-account")
+    public ResponseTemplate<Map<String, Object>> generateTestToken() {
+        return new ResponseTemplate<>(userService.createTestAccountToken(), "둘러보기 토큰 발급 성공");
     }
 }
