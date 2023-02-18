@@ -24,6 +24,8 @@ public class ItemService {
 
     @Transactional
     public Map<String, Object> saveItems(Long storeId, ItemSaveBody[] itemSaveBodies, Boolean isReady) {
+        if (!storeService.existStoreById(storeId))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 가게입니다 \uD83D\uDE2D  \\n 다른 가게를 이용해 주세요.");
         List<Item> items = Arrays.stream(itemSaveBodies).map(item -> {
             if (item.getId() == 0)
                 return item.createSaveItemBuilder(storeId, isReady);
