@@ -2,6 +2,7 @@ package com.example.holaserver.Store;
 
 import com.example.holaserver.Common.response.ResponseTemplate;
 import com.example.holaserver.Store.DTO.*;
+import com.example.holaserver.Store.StoreRefillGuide.StoreRefillGuide;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +43,8 @@ public class StoreController {
         return new ResponseTemplate<>(storeService.findStoresByLongitudeAndLatitude(longitude, latitude), "유저 위치 가게 정보 불러오기 성공");
     }
 
-
-
+    @GetMapping("/{storeId}/refill-guide")
+    public ResponseTemplate<List<StoreRefillGuide>> storeRefillGuideListByStoreId(@PathVariable Long storeId) {
+        return new ResponseTemplate<>(storeService.findRefillGuideByStoreId(storeId), "리필 가이드 불러오기 성공");
+    }
 }
