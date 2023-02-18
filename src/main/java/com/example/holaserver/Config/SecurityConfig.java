@@ -1,7 +1,10 @@
 package com.example.holaserver.Config;
 
+import com.example.holaserver.Auth.CustomAuthenticationEntryPoint;
 import com.example.holaserver.Auth.JwtAuthenticationFilter;
+import com.example.holaserver.Auth.JwtExceptionFilter;
 import com.example.holaserver.Auth.JwtTokenProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +22,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
+    private final ObjectMapper objectMapper;
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
        http
@@ -31,7 +35,11 @@ public class SecurityConfig {
                .authorizeRequests()
                .anyRequest().permitAll()
                .and()
-               .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+               .exceptionHandling()
+               .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+               .and()
+               .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+               .addFilterBefore(new JwtExceptionFilter(objectMapper), JwtAuthenticationFilter.class);
         return http.build();
     }
     @Bean
