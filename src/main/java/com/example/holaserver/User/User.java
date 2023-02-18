@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="User")
+@Table(name="user")
 @Getter
 @Where(clause = "removed_at IS NULL")
 @AllArgsConstructor
