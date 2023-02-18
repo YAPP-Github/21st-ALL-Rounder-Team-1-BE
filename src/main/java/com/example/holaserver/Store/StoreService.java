@@ -4,6 +4,9 @@ import com.example.holaserver.Auth.AuthService;
 import com.example.holaserver.Store.DTO.*;
 import com.example.holaserver.Store.ImgStore.ImgStore;
 import com.example.holaserver.Store.ImgStore.ImgStoreService;
+import com.example.holaserver.Store.StoreRefillGuide.StoreRefillGuide;
+import com.example.holaserver.Store.StoreRefillGuide.StoreRefillGuideRepository;
+import com.example.holaserver.Store.StoreRefillGuide.StoreRefillGuideService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 public class StoreService {
     private final StoreRepository storeRepository;
     private final ImgStoreService imgStoreService;
+    private final StoreRefillGuideService storeRefillGuideService;
     private final AuthService authService;
 
     @Transactional
@@ -105,8 +109,9 @@ public class StoreService {
 
         return stores.stream().map(store -> {
             List<ImgStore> imgStores = imgStoreService.findImgStoreByStoreId(store.getId());
+            List<StoreRefillGuide> storeRefillGuides = storeRefillGuideService.findAllByStoreId(store.getId());
             try {
-                return new StoreByLongitudeAndLatitudeResponse(store, imgStores);
+                return new StoreByLongitudeAndLatitudeResponse(store, imgStores, storeRefillGuides);
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
@@ -115,5 +120,10 @@ public class StoreService {
 
     public Boolean existStoreById(Long storeId) {
         return storeRepository.existsStoreById(storeId);
+    }
+
+    public List<StoreRefillGuide> findRefillGuideByStoreId(Long storeId) {
+        authService.getPayloadByToken();
+        return storeRefillGuideService.findAllByStoreId(storeId);
     }
 }

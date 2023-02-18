@@ -1,6 +1,7 @@
 package com.example.holaserver.Store.DTO;
 
 import com.example.holaserver.Store.ImgStore.ImgStore;
+import com.example.holaserver.Store.StoreRefillGuide.StoreRefillGuide;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,8 +35,9 @@ public class StoreByLongitudeAndLatitudeResponse {
     private Boolean isReady;
     private String distance;
     private List<ImgStore> imgStores;
+    private List<StoreRefillGuide> storeRefillGuides;
 
-    public StoreByLongitudeAndLatitudeResponse(StoreByLongitudeAndLatitudeInterface store, List<ImgStore> imgStores) throws JsonProcessingException {
+    public StoreByLongitudeAndLatitudeResponse(StoreByLongitudeAndLatitudeInterface store, List<ImgStore> imgStores, List<StoreRefillGuide> storeRefillGuides) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         this.id = store.getId();
         this.userId = store.getUserId();
@@ -52,5 +54,6 @@ public class StoreByLongitudeAndLatitudeResponse {
         this.isReady = store.getIsReady();
         this.distance = store.getDistance();
         this.imgStores = imgStores;
+        this.storeRefillGuides = storeRefillGuides;
     }
 }

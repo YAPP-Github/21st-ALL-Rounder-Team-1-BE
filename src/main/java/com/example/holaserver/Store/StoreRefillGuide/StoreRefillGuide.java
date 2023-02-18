@@ -18,9 +18,7 @@ public class StoreRefillGuide extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private Long stroeId;
-
+    private Long storeId;
     private String imgPath;
     private Timestamp removedAt;
 }
