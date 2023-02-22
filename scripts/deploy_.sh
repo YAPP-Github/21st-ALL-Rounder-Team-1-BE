@@ -1,0 +1,11 @@
+echo [PUMP SERVER DEPLOYMENT SYSTEM] - START SERVER
+DEPLOY_FLAG=$1
+# shellcheck disable=SC2086
+echo [PUMP SERVER DEPLOYMENT SYSTEM] - DEPLOY_FLAG = $DEPLOY_FLAG
+echo [PUMP SERVER DEPLOYMENT SYSTEM] - REMOVE EXISTING APPLICATION PROCESS
+# shellcheck disable=SC2046
+kill $(lsof -t -i:3000)
+echo [PUMP SERVER DEPLOYMENT SYSTEM] - APPLICATION CLEAN BUILD
+./gradlew clean build
+echo [PUMP SERVER DEPLOYMENT SYSTEM] - RUNNING APPLICATION
+nohup java -jar "-Dspring.profiles.active=development" ./build/libs/hola-api-deploy-0.0.1-SNAPSHOT.jar &
