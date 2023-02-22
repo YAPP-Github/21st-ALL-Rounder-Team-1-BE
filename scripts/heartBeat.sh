@@ -1,10 +1,10 @@
 #!/bin/bash
 echo "[HOLA_DEPLOYMENT_SYSTEM] Start Health Check"
-echo "[HOLA_DEPLOYMENT_SYSTEM] curl -s http://localhost:3000/api/heartbeat"
+echo "[HOLA_DEPLOYMENT_SYSTEM] curl -s http://localhost:3000/api/common/heartbeat"
 
 for RETRY_COUNT in {1..15}
 do
-  RESPONSE=$(curl -s http://localhost:3000/api/heartbeat)
+  RESPONSE=$(curl -s http://localhost:3000/api/common/heartbeat)
   UP_COUNT=$(echo $RESPONSE | grep 'OK' | wc -l)
 
   if [ $UP_COUNT -ge 1 ]
