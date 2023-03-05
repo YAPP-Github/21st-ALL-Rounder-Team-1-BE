@@ -18,6 +18,7 @@ spring:
         - prod_RDS
         - common
     include: oauth
+
 ---
 spring:
   config:
@@ -57,6 +58,7 @@ spring:
             user-name-attribute: id
 jasypt:
   encryptor:
+    charset: UTF-8
     bean: jasyptStringEncryptor
 ---
 spring:
@@ -65,19 +67,15 @@ spring:
       on-profile: local_docker_mysql
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysqldb:3306/hola_db
+    url: jdbc:mysql://localhost:3306/hola_db
     username: admin
     password: hola-db-pw
   flyway:
     enabled: true    # 임시
     baseline-on-migrate: true
-    url: jdbc:mysql://mysqldb:3306/hola_db
+    url: jdbc:mysql://localhost:3306/hola_db
     user: admin
-#    password: hola-db-pw
     password: hola-db-pw
-#    url: ${FLYWAY_URL}
-#    user: ${FLYWAY_USER}
-#    password: ${FLYWAY_PASSWORD}
   security:
     oauth2:
       client:
@@ -124,7 +122,10 @@ spring:
     password: ENC(7WUN/qb/1UYvOAtFHuv7iSRRhWGWbfCn)
 ---
 logging:
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS
   level:
     org.hibernate:SQL: debug
     org.hibernate:type: trace
+    org.springframework.web: DEBUG
 #  config: 'classpath: logback-${spring.profiles.active}.xml'

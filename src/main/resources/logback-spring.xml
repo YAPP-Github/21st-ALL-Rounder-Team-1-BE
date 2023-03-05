@@ -21,31 +21,22 @@
     </appender>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%d{HH:mm:ss.SSS} [%-5level] - %msg%n</Pattern>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] - %msg%n</Pattern>
         </layout>
     </appender>
 
     <!-- Loggers -->
-    <!-- <logger name="org.apache.catalina" level="ERROR">
-    </logger>
+<!--    <logger name="org.apache.catalina" level="ERROR">-->
+<!--    </logger>-->
 
-    <logger name="org.apache.commons" level="ERROR">
-    </logger>
+<!--    <logger name="org.apache.commons" level="ERROR">-->
+<!--    </logger>-->
 
-    <logger name="org.springframework" level="DEBUG" >
-    </logger>
+<!--    <logger name="org.springframework" level="DEBUG" >-->
+<!--    </logger>-->
 
-    <logger name="egovframework.*" level="DEBUG">
-    </logger>
-
-    <logger name="java.sql" level="DEBUG">
-    </logger>
-
-    <logger name="org.mybatis.spring" level="DEBUG">
-    </logger>
-
-    <logger name="egovframework.sqlmappers" level="TRACE">
-    </logger> -->
+<!--    <logger name="java.sql" level="DEBUG">-->
+<!--    </logger>-->
 
     <root level="INFO">
         <appender-ref ref="ROLLING"/>
